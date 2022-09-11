@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Read">
+      <UniqueIdentifier>{cd065dae-6109-4536-9361-2877b2560cef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Convert">
+      <UniqueIdentifier>{6e85e8d7-fa48-4924-88e9-3c609f5a7f5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Assets">
+      <UniqueIdentifier>{a09d5392-d073-4729-92a3-f41101a29b65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Convert\Geometry">
+      <UniqueIdentifier>{d717542f-e3dd-4eb5-92e6-48b1a2c39c2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Read\Registry">
+      <UniqueIdentifier>{fcdb386b-d61a-42a7-928c-830e040553ae}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Convert\Converter.cpp">
+      <Filter>Source Files\Convert</Filter>
+    </ClCompile>
+    <ClCompile Include="Convert\Filter.cpp">
+      <Filter>Source Files\Convert</Filter>
+    </ClCompile>
+    <ClCompile Include="Convert\Geometry\MarchingCubes.cpp">
+      <Filter>Source Files\Convert\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Read\DataElement.cpp">
+      <Filter>Source Files\Read</Filter>
+    </ClCompile>
+    <ClCompile Include="Read\DataSet.cpp">
+      <Filter>Source Files\Read</Filter>
+    </ClCompile>
+    <ClCompile Include="Read\FileSet.cpp">
+      <Filter>Source Files\Read</Filter>
+    </ClCompile>
+    <ClCompile Include="Read\Parser.cpp">
+      <Filter>Source Files\Read</Filter>
+    </ClCompile>
+    <ClCompile Include="Read\Reader.cpp">
+      <Filter>Source Files\Read</Filter>
+    </ClCompile>
+    <ClCompile Include="Read\Registry\DataDictionary.cpp">
+      <Filter>Source Files\Read\Registry</Filter>
+    </ClCompile>
+    <ClCompile Include="Convert\Geometry\Volume.cpp">
+      <Filter>Source Files\Convert\Geometry</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Convert\Converter.h">
+      <Filter>Source Files\Convert</Filter>
+    </ClInclude>
+    <ClInclude Include="Convert\Filter.h">
+      <Filter>Source Files\Convert</Filter>
+    </ClInclude>
+    <ClInclude Include="Convert\Hounsfield.h">
+      <Filter>Source Files\Convert</Filter>
+    </ClInclude>
+    <ClInclude Include="Convert\Geometry\Cloud3D.h">
+      <Filter>Source Files\Convert\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Convert\Geometry\MarchingCubes.h">
+      <Filter>Source Files\Convert\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Read\DataElement.h">
+      <Filter>Source Files\Read</Filter>
+    </ClInclude>
+    <ClInclude Include="Read\DataSet.h">
+      <Filter>Source Files\Read</Filter>
+    </ClInclude>
+    <ClInclude Include="Read\FileSet.h">
+      <Filter>Source Files\Read</Filter>
+    </ClInclude>
+    <ClInclude Include="Read\Parser.h">
+      <Filter>Source Files\Read</Filter>
+    </ClInclude>
+    <ClInclude Include="Read\Reader.h">
+      <Filter>Source Files\Read</Filter>
+    </ClInclude>
+    <ClInclude Include="Read\ValueField.h">
+      <Filter>Source Files\Read</Filter>
+    </ClInclude>
+    <ClInclude Include="Read\ValueRepresentation.h">
+      <Filter>Source Files\Read</Filter>
+    </ClInclude>
+    <ClInclude Include="Read\Registry\DataElementTags.h">
+      <Filter>Source Files\Read\Registry</Filter>
+    </ClInclude>
+    <ClInclude Include="Read\Registry\UIDRegistry.h">
+      <Filter>Source Files\Read\Registry</Filter>
+    </ClInclude>
+    <ClInclude Include="Read\Registry\DataDictionary.h">
+      <Filter>Source Files\Read\Registry</Filter>
+    </ClInclude>
+    <ClInclude Include="Convert\Geometry\Geometry.h">
+      <Filter>Source Files\Convert\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Convert\Geometry\Volume.h">
+      <Filter>Source Files\Convert\Geometry</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Read\Registry\DataElementRegistry.csv">
+      <Filter>Source Files\Read\Registry</Filter>
+    </None>
+    <None Include="Read\Registry\ModuleRegistry.dreg">
+      <Filter>Source Files\Read\Registry</Filter>
+    </None>
+  </ItemGroup>
+</Project>

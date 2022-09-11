@@ -1,0 +1,564 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Assets">
+      <UniqueIdentifier>18c38228-bd5e-4f92-bb5a-77b6c4e50863</UniqueIdentifier>
+      <Extensions>bmp;fbx;gif;jpg;jpeg;tga;tiff;tif;png</Extensions>
+    </Filter>
+    <Image Include="Assets\LockScreenLogo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square150x150Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square44x44Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Wide310x150Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Filter Include="Application">
+      <UniqueIdentifier>{f95a2ae7-b783-4d4c-a836-f2c32a2d4e04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rendering">
+      <UniqueIdentifier>{71bf3968-2750-4860-ba04-a03175688e95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{d6cd1291-94ee-4e0e-83da-4ccfbc265393}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pipeline">
+      <UniqueIdentifier>{e85b4f20-8890-4578-b934-2f84a1bc4a8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Ankle">
+      <UniqueIdentifier>{32e6ebb3-40f0-4790-b9fb-818f15bf6eec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DICOM">
+      <UniqueIdentifier>{94b62642-11d9-427a-86b8-4faf58e4dce2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shapes">
+      <UniqueIdentifier>{c23d37f1-42c3-4314-9796-f872f5b2aa1d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Program.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Pipeline.cpp">
+      <Filter>Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="DICOMLoader.cpp">
+      <Filter>DICOM</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Renderer.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Pipeline.h">
+      <Filter>Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DICOMLoader.h">
+      <Filter>DICOM</Filter>
+    </ClInclude>
+    <ClInclude Include="PointCloud.h">
+      <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Wireframe.h">
+      <Filter>Shapes</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Pixel Shader.hlsl">
+      <Filter>Pipeline</Filter>
+    </FxCompile>
+    <FxCompile Include="Vertex Shader.hlsl">
+      <Filter>Pipeline</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Ankle\vhf.1.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.2.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.3.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.4.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.5.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.6.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.7.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.8.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.9.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.10.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.11.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.12.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.13.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.14.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.15.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.16.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.17.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.18.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.19.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.20.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.21.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.22.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.23.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.24.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.25.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.26.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.27.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.28.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.29.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.30.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.31.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.32.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.33.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.34.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.35.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.36.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.37.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.38.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.39.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.40.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.41.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.42.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.43.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.44.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.45.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.46.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.47.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.48.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.49.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.50.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.51.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.52.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.53.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.54.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.55.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.56.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.57.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.58.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.59.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.60.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.61.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.62.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.63.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.64.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.65.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.66.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.67.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.68.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.69.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.70.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.71.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.72.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.73.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.74.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.75.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.76.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.77.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.78.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.79.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.80.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.81.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.82.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.83.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.84.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.85.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.86.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.87.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.88.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.89.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.90.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.91.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.92.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.93.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.94.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.95.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.96.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.97.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.98.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.99.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.100.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.101.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.102.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.103.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.104.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.105.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.106.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.107.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.108.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.109.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.110.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.111.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.112.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.113.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.114.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.115.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.116.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.117.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.118.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.119.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.120.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.121.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.122.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.123.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.124.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.125.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.126.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.127.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.128.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.129.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.130.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.131.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.132.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.133.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.134.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.135.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.136.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.137.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.138.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.139.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.140.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.141.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.142.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.143.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.144.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.145.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.146.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.147.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.148.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.149.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+    <None Include="Assets\Ankle\vhf.150.dcm">
+      <Filter>Assets\Ankle</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{4f2d4d93-7c40-49a8-9039-90416e04c0cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Common">
+      <UniqueIdentifier>{7a717260-b6f1-47a6-9d08-09664d80ce97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Content">
+      <UniqueIdentifier>{db19efac-797b-440b-af1e-11f2da689b38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lighting">
+      <UniqueIdentifier>{aa21224a-dd1f-4817-9436-686282f0129b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lighting\HLSL">
+      <UniqueIdentifier>{78bef8ec-6195-4b8d-be6f-7c0eb89f6424}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Models">
+      <UniqueIdentifier>{4d87f85d-2317-4fac-a571-2a406de78c1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Models\Basic Shapes">
+      <UniqueIdentifier>{9ab85b2b-5648-48fb-88db-e49265a16cae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Models\Generated Shapes">
+      <UniqueIdentifier>{5811f32f-3f0b-4049-b8ca-a2915be03a1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pipeline Resources">
+      <UniqueIdentifier>{519303e6-3547-40fd-99f3-fe42e27b944c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pipeline Resources\Buffers">
+      <UniqueIdentifier>{ed8c558d-8f8d-4e13-a57b-6c7ed33feb36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pipeline Resources\Textures">
+      <UniqueIdentifier>{605bdceb-91cd-4ca6-b8f5-585c77669b62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pipeline Stages">
+      <UniqueIdentifier>{5b90d296-55f2-4977-978e-0b62b73f3db3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pipeline Stages\Shaders">
+      <UniqueIdentifier>{b7509e94-0bd5-4e91-b718-a7fb540e4496}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{afe26c97-53bf-4398-bb4c-d33e30180819}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Cameras">
+      <UniqueIdentifier>{af5d06a6-96e8-4f49-bfec-3ceacf9cc4c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Input">
+      <UniqueIdentifier>{a8f16767-4904-4eb2-b3b6-8c9372c46ba9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Transforms">
+      <UniqueIdentifier>{b5bfd447-eeba-4454-821b-6322876996e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Third Party">
+      <UniqueIdentifier>{61c58f7d-4b0d-4893-9b70-6602f26c8f60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Third Party\DirectX Tool Kit">
+      <UniqueIdentifier>{f384d9d7-d251-4a28-aeb1-d3c0f27dd5ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Third Party\DirectX Tool Kit\DDS">
+      <UniqueIdentifier>{e85d2f69-0bf2-40db-93d9-2c5f08a96fc5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Core\App.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Common\Vanity Core.cpp">
+      <Filter>Core\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Content\SampleFpsTextRenderer.cpp">
+      <Filter>Core\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Pipeline Resources\Resource Factory.cpp">
+      <Filter>Pipeline Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Pipeline Resources\Textures\Texture2D.cpp">
+      <Filter>Pipeline Resources\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="Pipeline Stages\State Factory.cpp">
+      <Filter>Pipeline Stages</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Cameras\FirstPerson Camera.cpp">
+      <Filter>Scene\Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="Third Party\DirectX Tool Kit\VertexTypes.cpp">
+      <Filter>Third Party\DirectX Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="Third Party\DirectX Tool Kit\DDS\DDSTextureLoader.cpp">
+      <Filter>Third Party\DirectX Tool Kit\DDS</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Content\RendererBase3D.cpp">
+      <Filter>Core\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Input\Input Controller.cpp">
+      <Filter>Scene\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Pipeline Stages\Shaders\Pixel Shader.cpp">
+      <Filter>Pipeline Stages\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Cameras\Camera Base.cpp">
+      <Filter>Scene\Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Transforms\Projection Transform.cpp">
+      <Filter>Scene\Transforms</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Transforms\View Transform.cpp">
+      <Filter>Scene\Transforms</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Transforms\World Transforms.cpp">
+      <Filter>Scene\Transforms</Filter>
+    </ClCompile>
+    <ClCompile Include="Pipeline Resources\Textures\Texture Base.cpp">
+      <Filter>Pipeline Resources\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Main Loop.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Vanity.cpp" />
+    <ClCompile Include="Models\Basic Shapes\CubePC.cpp">
+      <Filter>Models\Basic Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Basic Shapes\CubePN.cpp">
+      <Filter>Models\Basic Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Basic Shapes\CubePNT.cpp">
+      <Filter>Models\Basic Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Basic Shapes\PyramidPC.cpp">
+      <Filter>Models\Basic Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Basic Shapes\TrinaglePC.cpp">
+      <Filter>Models\Basic Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Scene Object.h">
+      <Filter>Scene</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="Core\App.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Common\Vanity Core.h">
+      <Filter>Core\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Common\DirectXHelper.h">
+      <Filter>Core\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Common\StepTimer.h">
+      <Filter>Core\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Common\SwapChainDescription.h">
+      <Filter>Core\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Content\RendererBase3D.h">
+      <Filter>Core\Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Content\SampleFpsTextRenderer.h">
+      <Filter>Core\Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Lighting\Directional Light.h">
+      <Filter>Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="Lighting\Light Base.h">
+      <Filter>Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="Lighting\Material.h">
+      <Filter>Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Explicit Surface.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Mesh.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Basic Shapes\Cubes.h">
+      <Filter>Models\Basic Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Basic Shapes\Pyramids.h">
+      <Filter>Models\Basic Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Basic Shapes\Triangles.h">
+      <Filter>Models\Basic Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Generated Shapes\Grid.h">
+      <Filter>Models\Generated Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Pipeline Resources\Resource Factory.h">
+      <Filter>Pipeline Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Pipeline Resources\Buffers\Buffer Base.h">
+      <Filter>Pipeline Resources\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Pipeline Resources\Buffers\Constant Buffer.h">
+      <Filter>Pipeline Resources\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Pipeline Resources\Buffers\Index Buffer.h">
+      <Filter>Pipeline Resources\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Pipeline Resources\Buffers\Vertex Buffer.h">
+      <Filter>Pipeline Resources\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Pipeline Resources\Textures\Texture Base.h">
+      <Filter>Pipeline Resources\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="Pipeline Resources\Textures\Texture2D.h">
+      <Filter>Pipeline Resources\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="Pipeline Stages\State Factory.h">
+      <Filter>Pipeline Stages</Filter>
+    </ClInclude>
+    <ClInclude Include="Pipeline Stages\Shaders\Pixel Shader.h">
+      <Filter>Pipeline Stages\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Pipeline Stages\Shaders\Shader Base.h">
+      <Filter>Pipeline Stages\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Pipeline Stages\Shaders\Vertex Shader.h">
+      <Filter>Pipeline Stages\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Cameras\Camera Base.h">
+      <Filter>Scene\Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Cameras\FirstPerson Camera.h">
+      <Filter>Scene\Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="Third Party\DirectX Tool Kit\VertexTypes.h">
+      <Filter>Third Party\DirectX Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="Third Party\DirectX Tool Kit\DDS\DDS.h">
+      <Filter>Third Party\DirectX Tool Kit\DDS</Filter>
+    </ClInclude>
+    <ClInclude Include="Third Party\DirectX Tool Kit\DDS\DDSTextureLoader.h">
+      <Filter>Third Party\DirectX Tool Kit\DDS</Filter>
+    </ClInclude>
+    <ClInclude Include="Third Party\DirectX Tool Kit\DDS\PlatformHelpers.h">
+      <Filter>Third Party\DirectX Tool Kit\DDS</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Application Factory.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Input\Input Controller.h">
+      <Filter>Scene\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Input\Keyboard.h">
+      <Filter>Scene\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Input\Pointer.h">
+      <Filter>Scene\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Transforms\Data Transfer.h">
+      <Filter>Scene\Transforms</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Transforms\Position.h">
+      <Filter>Scene\Transforms</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Transforms\Projection Transform.h">
+      <Filter>Scene\Transforms</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Transforms\View Transform.h">
+      <Filter>Scene\Transforms</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Transforms\World Transforms.h">
+      <Filter>Scene\Transforms</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities.h" />
+    <ClInclude Include="Helpers.h" />
+    <ClInclude Include="Core\Main Loop.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Content\IRenderer.h">
+      <Filter>Core\Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Vanity.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Lighting\HLSL\Directional Light.hlsli">
+      <Filter>Lighting\HLSL</Filter>
+    </None>
+    <None Include="Lighting\HLSL\Material.hlsli">
+      <Filter>Lighting\HLSL</Filter>
+    </None>
+    <None Include="Pipeline Stages\Shaders\Vertex Shader.inl">
+      <Filter>Pipeline Stages\Shaders</Filter>
+    </None>
+    <None Include="Pipeline Resources\Buffers\Constant Buffer.inl">
+      <Filter>Pipeline Resources\Buffers</Filter>
+    </None>
+    <None Include="Pipeline Resources\Buffers\Vertex Buffer.inl">
+      <Filter>Pipeline Resources\Buffers</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Pipeline Resources\Buffers\Index Buffer.inl">
+      <Filter>Pipeline Resources\Buffers</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

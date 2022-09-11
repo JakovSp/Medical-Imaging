@@ -1,0 +1,882 @@
+Table 8.8-1a "Basic Code Sequence Macro Attributes"
+00080100 1C
+00080102 1C
+00080103 1C
+00080104 1
+00080119 1C
+00080120 1C
+
+Table 8.8-1b "Enhanced Code Sequence Macro Attributes"
+0008010F 3
+00080117 3
+00080105 1C
+00080118 3
+00080122 3
+00080106 1C
+0008010B 3
+00080107 1C
+0008010D 1C
+
+Table 8.8-1 "Code Sequence Macro Attributes"
+Include Table 8.8-1a
+00080121 3
+>Include Table 8.8-1a
+>Include Table 8.8-1b
+Include Table 8.8-1b
+
+Table 10-1. "Person Identification Macro Attributes"
+00401101 1
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+00401102 3
+00401103 3
+00401104 3
+00080080 1C
+00080081 3
+00080082 1C
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+00081040 3
+00081041 3
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+
+Table 10-2 "Content Item Macro Attributes"
+0040A040 1
+0040A032 3
+0040A033 3
+0040A043 1
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+0040A120 1C
+0040A121 1C
+0040A122 1C
+0040A123 1C
+0040A124 1C
+0040A160 1C
+0040A168 1C
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+0040A30A 1C
+0040A161 1C
+0040A162 1C
+0040A163 1C
+004008EA 1C
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+00081199 1C
+>Include Table 10-11 “SOP Instance Reference Macro Attributes”
+>00081160 1C
+>0062000B 1C
+>0040A0B0 1C
+
+Table 10.2.1-1 "Content Item with Modifiers Macro Attributes"
+Include Table 10-2 “Content Item Macro Attributes”
+00400441 3
+>Include Table 10-2 “Content Item Macro Attributes”
+Include Table 10-11 “SOP Instance Reference Macro Attributes”
+
+Table 10-3 "Image SOP Instance Reference Macro Attributes"
+Include Table 10-11 “SOP Instance Reference Macro Attributes”
+00081160 1C
+0062000B 1C
+
+Table 10-3b. "Referenced Instances and Access Macro Attributes"
+0040E020 1
+0020000D 1C
+0020000E 1C
+00081199 1
+>00081150 1
+>00081155 1
+>0040E001 1C
+>00081160 1C
+>0062000B 1C
+0040E021 1C
+>00080054 1
+0040E022 1C
+>00880130 2
+>00880140 1
+0040E023 1C
+>0040E010 1
+0040E024 1C
+>0040E030 1
+>0040E031 3
+0040E025 1C
+>00081190 1
+
+Table 10-3c "Storage Macro Attributes"
+00081150 1C
+00404071 1C
+>21000140 1
+00404072 1C
+>00404073 1
+00404074 1C
+>0040E030 1
+>0040E031 3
+
+Table 10-4 "Series and Instance Reference Macro Attributes"
+00081115 1
+>0020000E 1
+>0008114A 1
+>>Include Table 10-11 “SOP Instance Reference Macro Attributes”
+
+Table 10-5 "General Anatomy Mandatory Macro Attributes"
+00082218 1
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+>00082220 3
+>>Include Table 8.8-1 “Code Sequence Macro Attributes”
+
+Table 10-6 "General Anatomy Required Macro Attributes"
+00082218 2
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+>00082220 3
+>>Include Table 8.8-1 “Code Sequence Macro Attributes”
+
+Table 10-7 "General Anatomy Optional Macro Attributes"
+00082218 3
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+>00082220 3
+>>Include Table 8.8-1 “Code Sequence Macro Attributes”
+
+Table 10-7b "Multiple Site General Anatomy Optional Macro Attributes"
+00082218 3
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+>00082220 3
+>>Include Table 8.8-1 “Code Sequence Macro Attributes”
+
+Table 10-8 "Primary Anatomic Structure Macro Attributes"
+00082228 3
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+>00082230 3
+>>Include Table 8.8-1 “Code Sequence Macro Attributes”
+
+Table 10-9 "Request Attributes Macro Attributes"
+00401001 1C
+00080050 3
+00080051 3
+>Include Table 10-17 “HL7v2 Hierarchic Designator Macro Attributes”
+0020000D 3
+00081110 3
+>Include Table 10-11 “SOP Instance Reference Macro Attributes”
+00321060 3
+00321064 3
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+00401002 3
+0040100A 3
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+00400009 1C
+00400007 3
+00400008 3
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+>00400440 3
+>>Include Table 10-2 “Content Item Macro Attributes”
+>>00400441 3
+>>>Include Table 10-2 “Content Item Macro Attributes”
+
+Table 10-10 "Basic Pixel Spacing Calibration Macro Attributes"
+00280030 1C
+00280A02 3
+00280A04 1C
+
+Table 10-11 "SOP Instance Reference Macro Attributes"
+00081150 1
+00081155 1
+
+Table 10-12 "Content Identification Macro Attributes"
+00200013 1
+00700080 1
+00700081 2
+0040A043 3
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+00700087 3
+>00700081 1
+>00080006 1
+>>Include Table 8.8-1 “Code Sequence Macro Attributes”
+>0040A043 3
+>>Include Table 8.8-1 “Code Sequence Macro Attributes”
+Include Table 10.9.3-1 “Content Creator Macro Attributes”
+
+Table 10.9.1-1 "Enhanced Content Identification Macro Attributes"
+30100033 1
+00700081 2
+Include Table 10.9.3-1 “Content Creator Macro Attributes”
+
+Table 10.9.2-1 "Extended Content Identification Macro Attributes"
+30100034 1
+00700081 2
+Include Table 10.9.3-1 “Content Creator Macro Attributes”
+
+Table 10.9.3-1 "Content Creator Macro Attributes"
+00700084 3
+00700086 3
+>Include Table 10-1 “Person Identification Macro Attributes”
+
+Table 10-13 "General Contributing Sources Macro Attributes"
+00209529 1C
+>0020000D 1
+>00081115 1
+>>0020000E 1
+>>00200011 2
+>>0008114A 1
+>>>Include Table 10-11 “SOP Instance Reference Macro Attributes”
+>>>00200013 2
+00080070 2
+00081090 1C
+00181000 1C
+00181020 1C
+0008002A 1C
+00081010 1C
+00081070 1C
+00081072 1C
+>Include Table 10-1 “Person Identification Macro Attributes”
+00181030 1C
+00400260 1C
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+00189423 1C
+
+Table 10-14 "Contributing Image Sources Macro Attributes"
+00280010 1
+00280011 1
+00280101 1
+00282110 1C
+00282112 1C
+00282114 1C
+
+Table 10-15 "Patient Orientation Macro Attributes"
+00540410 1
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+>00540412 1C
+>>Include Table 8.8-1 “Code Sequence Macro Attributes”
+00540414 3
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+
+Table 10-15a "Patient Orientation And Equipment Relationship Macro Attributes"
+00540410 1
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+>00540412 1C
+>>Include Table 8.8-1 “Code Sequence Macro Attributes”
+30100030 1
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+
+Table 10-16 "Performed Procedure Step Summary Macro Attributes"
+00400253 3
+00400244 3
+00400245 3
+00400250 3
+00400251 3
+00400254 3
+00400260 3
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+>00400440 3
+>>Include Table 10-2 “Content Item Macro Attributes”
+>>00400441 3
+>>>Include Table 10-2 “Content Item Macro Attributes”
+00400280 3
+
+Table 10-17 "HL7v2 Hierarchic Designator Macro Attributes"
+00400031 1C
+00400032 1C
+00400033 1C
+
+Table 10-18 "Issuer of Patient ID Macro Attributes"
+00100021 3
+00100024 3
+>00400032 3
+>00400033 1C
+>00400035 3
+>00400036 3
+>>Include Table 10-17 “HL7v2 Hierarchic Designator Macro Attributes”
+>00400039 3
+>>Include Table 8.8-1 “Code Sequence Macro Attributes”
+>0040003A 3
+>>Include Table 8.8-1 “Code Sequence Macro Attributes”
+
+Table 10-19 "Algorithm Identification Macro Attributes"
+0066002F 1
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+00660030 3
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+00660036 1
+00660031 1
+00660032 3
+00240202 3
+
+Table 10-20 "Selector Attribute Macro Attributes"
+00720026 1C
+00720028 1C
+00720052 1C
+00720054 1C
+00741057 1C
+00720056 1C
+
+Table 10-20a "Extended Selector Attribute Macro Attributes"
+00820018 1
+00820019 3
+00720050 1
+Include Table 10-20 “Selector Attribute Macro Attributes”
+
+Table 10-22 "Externally-Sourced Data Set Identification Macro Attributes"
+00240306 1
+00240307 1
+00240308 1
+00240309 3
+
+Table 10-23 "Exposure Index Macro Attributes"
+00181411 3
+00181412 3
+00181413 3
+
+Table 10-24 "Mandatory View and Slice Progression Direction Macro Attributes"
+00540220 1
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+>00540222 2C
+>>Include Table 8.8-1 “Code Sequence Macro Attributes”
+00540500 1C
+
+Table 10-26 "Numeric Value Macro Attributes"
+0040A043 1
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+0040A30A 1
+004008EA 1
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+
+Table 10-27 "RT Equipment Correlation Macro Attributes"
+300A0122 3
+300A0140 3
+300A0144 3
+300A0129 3
+300A012A 3
+
+Table 10-28 "Device Motion Control Macro Attributes"
+300A0450 3
+>300A0453 1
+>>Include Table 8.8-1 “Code Sequence Macro Attributes”
+>300A0451 1C
+>300A0452 1C
+
+Table 10.25-1 "Attribute Value Constraint Macro Attributes"
+Include Table 10-20a “Extended Selector Attribute Macro Attributes”
+00820032 1
+00820036 3
+00820037 1C
+00820034 1C
+>Include Table 10.26-1 “Attribute Value Macro Attributes”
+00820035 3
+>Include Table 10.26-1 “Attribute Value Macro Attributes”
+004008EA 3
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+00820033 3
+
+Table 10.26-1 "Attribute Value Macro Attributes"
+0072005E 1C
+0072005F 1C
+00720060 1C
+00720062 1C
+00720061 1C
+00720072 1C
+00720063 1C
+00720074 1C
+00720076 1C
+00720064 1C
+00720066 1C
+00720068 1C
+00720065 1C
+00720073 1C
+00720067 1C
+00720075 1C
+00720081 1C
+00720069 1C
+0072006A 1C
+0072006C 1C
+0072007C 1C
+0072007E 1C
+0072006E 1C
+00720082 1C
+0072006B 1C
+0072006F 1C
+0072007F 1C
+00720078 1C
+0072006D 1C
+00720071 1C
+0072007A 1C
+00720070 1C
+00720083 1C
+00720080 1C
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+
+Table 10.27-1 "Reference Location Macro Attributes"
+00189900 1
+00189901 3
+00189902 1
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+00189903 1
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+00189904 3
+00189905 1C
+
+Table 10.28-1 "Protocol Element Identification Macro Attributes"
+00189921 1
+00189922 2
+00189924 3
+00189923 3
+
+Table 10.29-1 "UDI Macro Attributes"
+00181009 1
+00500020 3
+
+Table 10.30-1 "Assertion Macro Attributes"
+00440101 1
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+00440102 1
+00440103 1
+>Include Table C.17-3b “Identified Person or Device Macro Attributes”
+00440104 1
+00440105 3
+00440106 3
+00380100 3
+>00081150 3
+>00081155 3
+>0040E001 3
+>0040E010 3
+00440107 3
+>00440108 1
+
+Table 10.31-1 "Entity Labeling Macro Attributes"
+30100035 1
+30100036 3
+30100037 3
+
+Table 10.32-1 "Entity Long Labeling Macro Attributes"
+30100038 1
+30100037 3
+
+Table 10.33-1. Conceptual Volume Macro Attributes
+30100006 1
+30100007 1C
+>Include Table 10-11 “SOP Instance Reference Macro Attributes”
+3010000A 3
+>3010000B 1
+>30100009 1
+>>Include Table 10-11 “SOP Instance Reference Macro Attributes”
+30100014 3
+>00082111 3
+>30100018 1
+>>30100015 1
+>>3010000D 1
+>>30100012 2
+>>>3010004A 1
+>>>>Include Table 10-11 “SOP Instance Reference Macro Attributes”
+>>>30100020 1
+>30100016 3
+>>Include Table 10-19 “Algorithm Identification Macro Attributes”
+
+Table 10.34-1 "Conceptual Volume Segmentation Reference And Combination Macro Attributes"
+Include Table 10.33-1 “Conceptual Volume Macro Attributes”
+3010000E 1
+30100008 1C
+>3010000D 1
+>30100013 1
+>30100007 1
+>>Include Table 10-11 “SOP Instance Reference Macro Attributes”
+>30100012 1C
+>>3010004A 1
+>>>Include Table 10-11 “SOP Instance Reference Macro Attributes”
+>>30100020 1
+3010000C 1C
+3010000F 2C
+30100010 1
+30100011 1C
+>3010004A 1
+>>Include Table 10-11 “SOP Instance Reference Macro Attributes”
+>30100020 1
+
+Table 10.35-1 "Device Model Macro Attributes"
+00080070 2
+00081090 2
+3010001A 2
+
+Table 10.36-1 "Device Identification Macro Attributes"
+3010002E 1
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+3010002D 1
+00500021 3
+00181000 2
+00181020 2
+0018100A 3
+>Include Table 10.29-1 “UDI Macro Attributes”
+30100043 2
+3010001B 2
+3010001C 1C
+3010001D 1C
+
+Table 10.37-1 "Related Information Entities Macro Attributes"
+0040A170 1
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+00081110 1
+>0020000D 1
+>30100052 3
+>00081115 3
+>>0020000E 1
+>>30100053 3
+>>00081140 3
+>>>Include Table 10-3 “Image SOP Instance Reference Macro Attributes”
+>>0008114A 3
+>>>Include Table 10-11 “SOP Instance Reference Macro Attributes”
+
+Table 10.38-1 "Outline Definition Macro Attributes"
+00181630 1
+00181631 1C
+00181632 1C
+00181633 1C
+00181634 1C
+00181635 1C
+00181636 1C
+00181637 1C
+00181638 1C
+
+Table 10.39-1 "Patient to Equipment Relationship Macro Attributes"
+00289520 1
+300600C8 3
+300600C9 2
+>00686590 1
+>300600CA 1
+>>Include Table 8.8-1 “Code Sequence Macro Attributes”.
+300600CB 2
+>Include Table 10.40-1 “Patient Support Position Macro Attributes”.
+
+Table 10.40-1 "Patient Support Position Macro Attributes"
+300A065C 1
+300A065D 1C
+>300A0607 1C
+>300A065E 1C
+>300A065B 1
+>>300A065F 1C
+>>Include Table 10-2 “Content Item Macro Attributes”.
+
+Table 10.41-1 "General Procedure Protocol Reference Macro Attributes"
+0018990C 1C
+>Include Table 10-11 “SOP Instance Reference Macro Attributes”
+>00189938 3
+>0018993A 3
+0018990D 1C
+>Include Table 10-11 “SOP Instance Reference Macro Attributes”
+>00189938 3
+>0018993A 3
+
+Table 10.42-1 "Hierarchical Evidence Reference Macro Attributes"
+00089121 3
+>Include Table C.17-3 “Hierarchical SOP Instance Reference Macro Attributes”
+0008113A 3
+>Include Table C.17-3 “Hierarchical SOP Instance Reference Macro Attributes”
+00089092 1C
+>Include Table C.17-3 “Hierarchical SOP Instance Reference Macro Attributes”
+00089154 1C
+>Include Table C.17-3 “Hierarchical SOP Instance Reference Macro Attributes”
+00089237 1C
+>Include Table C.17-3 “Hierarchical SOP Instance Reference Macro Attributes”
+
+Table C.7-9 "General Image Module Attributes"
+00200013 2
+00200020 2C
+00080023 2C
+00080033 2C
+00080008 3
+00204000 3
+00280300 3
+00280301 3
+00280302 3
+00282110 3
+00282112 3
+00282114 3
+00880200 3
+>Include Table C.7-11b “Image Pixel Macro Attributes”
+20500020 3
+00409096 3
+>Include Table C.7.6.16-12b “Real World Value Mapping Item Macro Attributes”
+00200062 3
+Include Table 10-7 “General Anatomy Optional Macro Attributes”
+
+Table C.7-10 "Image Plane Module Attributes"
+00280030 1
+00200037 1
+00200032 1
+00180050 2
+00180088 3
+00201041 3
+
+Table C.7-11a "Image Pixel Module Attributes"
+Include Table C.7-11c “Image Pixel Description Macro Attributes”
+7FE00010 1C
+00287FE0 1C
+00280121 1C
+7FE00001 3
+7FE00002 1C
+
+Table C.7-11b "Image Pixel Macro Attributes"
+Include Table C.7-11c “Image Pixel Description Macro Attributes”
+7FE00010 1
+
+Table C.7-11c "Image Pixel Description Macro Attributes"
+00280002 1
+00280004 1
+00280010 1
+00280011 1
+00280100 1
+00280101 1
+00280102 1
+00280103 1
+00280006 1C
+00280034 1C
+00280106 3
+00280107 3
+00281101 1C
+00281102 1C
+00281103 1C
+00281201 1C
+00281202 1C
+00281203 1C
+00282000 3
+00282002 3
+
+Table C.7-14 "Multi-frame Module Attributes"
+00280008 1
+00280009 1
+00220028 3
+
+Table C.7-15 "Frame Pointers Module Attributes"
+00286010 3
+00286020 3
+00286022 3
+00286023 3
+
+Table C.7.6.16-1 "Multi-frame Functional Groups Module Attributes"
+52009229 1
+>52009230.
+52009230 1C
+>Include one or more Functional Group Macros.
+00200013 1
+00080023 1
+00080033 1
+00280008 1
+00220028 3
+00209228 1C
+00286010 3
+00209161 1C
+00200242 1C
+00209162 1C
+00209163 3
+
+Table C.7.6.16-2 "Pixel Measures Macro Attributes"
+00289110 1
+>00280030 1C
+>00180050 1C
+>00180088 1C
+
+Table C.7.6.16-3 "Frame Content Macro Attributes"
+00209111 1
+>00209156 3
+>00189151 1C
+>00189074 1C
+>00189220 1C
+>00189236 3
+>00189214 3
+>00209157 1C
+>00209128 1C
+>00209056 1C
+>00209057 1C
+>00209158 3
+>00209453 3
+
+Table C.7.6.16-4 "Plane Position Patient Macro Attributes"
+00209113 1
+>00200032 1C
+
+Table C.7.6.16-5 "Plane Orientation Patient Macro Attributes"
+00209116 1
+>00200037 1C
+
+Table C.7.6.16-6 "Referenced Image Macro Attributes"
+00081140 2
+>Include Table 10-3 “Image SOP Instance Reference Macro Attributes”
+>0040A170 1C
+>>Include Table 8.8-1 “Code Sequence Macro Attributes”
+
+Table C.7.6.16-7 "Derivation Image Macro Attributes"
+00089124 2
+>00082111 3
+>00089215 1C
+>>Include Table 8.8-1 “Code Sequence Macro Attributes”
+>00082112 2
+>>Include Table 10-3 “Image SOP Instance Reference Macro Attributes”
+>>0040A170 1C
+>>>Include Table 8.8-1 “Code Sequence Macro Attributes”
+>>0028135A 3
+>>00200020 1C
+
+Table C.7.6.16-8 "Cardiac Synchronization Macro Attributes"
+00189118 1
+>00209241 1C
+>00209153 1
+>00209252 1C
+>00209154 3
+>00209155 3
+>00181083 3
+>00181084 3
+>00181088 3
+>00209251 1C
+>00181081 3
+>00181082 3
+
+Table C.7.6.16-9 "Frame Anatomy Macro Attributes"
+00209071 1
+>00209072 1
+>Include Table 10-5 “General Anatomy Mandatory Macro Attributes”
+
+Table C.7.6.16-10 "Pixel Value Transformation Macro Attributes"
+00289145 1
+>00281052 1
+>00281053 1
+>00281054 1
+
+Table C.7.6.16-10b "Identity Pixel Value Transformation Macro Attributes"
+00289145 1
+>00281052 1
+>00281053 1
+>00281054 1
+
+Table C.7.6.16-11 "Frame VOI LUT Macro Attributes"
+00289132 1
+>00281050 1
+>00281051 1
+>00281055 3
+>00281056 3
+
+Table C.7.6.16-11b "Frame VOI LUT with LUT Macro Attributes"
+00289132 1
+>Include Table C.11-2b “VOI LUT Macro Attributes”
+
+Table C.7.6.16-12 "Real World Value Mapping Macro Attributes"
+00409096 1
+>Include Table C.7.6.16-12b “Real World Value Mapping Item Macro Attributes”
+
+Table C.7.6.16-12b. Real World Value Mapping Item Macro Attributes
+00409216 1C
+00409211 1C
+00409214 1C
+00409213 1C
+00409224 1C
+00409225 1C
+00409212 1C
+00283003 1
+00409210 1
+004008EA 1
+>Include Table 8.8-1 “Code Sequence Macro Attributes”
+00409220 3
+>Include Table 10.2.1-1 “Content Item with Modifiers Macro Attributes”
+
+Table C.7.16-13 "Contrast/Bolus Usage Macro Attributes"
+00189341 1
+>00189337 1
+>00189342 1
+>00189343 2
+>00189344 2C
+
+Table C.7.6.16-14 "Pixel Intensity Relationship LUT Macro Attributes"
+00289422 1
+>00283002 1
+>00283006 1
+>00289474 1
+
+Table C.7.6.16-15 "Frame Pixel Shift Macro Attributes"
+00289415 1
+>00289416 1
+>00286114 1
+
+Table C.7.6.16-16 "Patient Orientation in Frame Macro Attributes"
+00209450 1
+>00200020 1
+
+Table C.7.6.16-17 "Frame Display Shutter Macro Attributes"
+00189472 1
+>Include Table C.7-17a “Display Shutter Macro Attributes”
+
+Table C.7.6.16-18 "Respiratory Synchronization Macro Attributes"
+00209253 1
+>00209254 1C
+>00209245 1C
+>00209255 1
+>00209257 1C
+>00209246 1C
+>00209247 1C
+>00209248 1C
+>00209249 1C
+
+Table C.7.6.16-19 "Irradiation Event Identification Macro Attributes"
+00189477 1
+>00083010 1
+
+Table C.7.6.16.2-20. Radiopharmaceutical Usage Macro Attributes
+00189737 1
+>00189729 1
+
+Table C.7.6.16.2-21 "Patient Physiological State Macro Attributes"
+00189771 1
+>00189772 1
+>>Include Table 8.8-1 “Code Sequence Macro Attributes”
+
+Table C.7.6.16.2.21-1 "Plane Position Volume Macro Attributes"
+0020930E 1
+>00209301 1
+
+Table C.7.6.16.2.22-1. Plane Orientation Volume Macro Attributes
+0020930F 1
+>00209302 1
+
+Table C.7.6.16.2.23-1 "Temporal Position Macro Attributes"
+00209310 1
+>0020930D 1
+
+
+Table C.7.6.16.2.24-1 "Image Data Type Macro Attributes"
+00189807 1
+>00189808 1
+>0018980B 1
+>00189810 1C
+
+Table C.7.6.16.2.25.1-1 "Unassigned Shared Converted Attributes Macro Attributes"
+00209170 1C
+
+Table C.7.6.16.2.25.2-1 "Unassigned Per-Frame Converted Attributes Macro Attributes"
+00209171 1C
+
+Table C.7.6.16.2.25.3-1 "Image Frame Conversion Source Macro Attributes"
+00209172 1
+>Include Table 10-3 “Image SOP Instance Reference Macro Attributes”
+
+Table C.7.6.16.2.26-1 "Stored Value Color Range Macro Attributes"
+00281230 1
+>00281231 1
+>00281232 1
+
+Table C.7.6.16.2.27-1 "Frame Usefulness Functional Group Macro Attributes"
+00340009 1
+>0034000C 3
+>00340008 3
+
+Table C.7.6.16.2.28-1 "Camera Position Functional Group Macro Attributes"
+0034000B 1
+>00701602 1
+>00701603 1
+>00701604 1
+>00701605 1
+>00701606 1
+
+Table C.7.6.16.2.29-1 "Time of Frame Functional Group Macro Attributes"
+0034000D 1
+>00340007 1
+
+Table C.7.6.17-1 "Multi-frame Dimension Module Attributes"
+00209221 1
+>00209164 1
+00209311 3
+00209222 1C
+>00209165 1
+>00209213 1C
+>00209167 1C
+>00209238 1C
+>00209164 1
+>00209421 3
