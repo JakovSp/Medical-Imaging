@@ -4,7 +4,7 @@
 #include <limits>
 
 namespace vxe::utl {
-	std::byte WindowClip(long double c, long double w, uint16_t x);
+	uint8_t WindowClip(long double c, long double w, uint16_t x);
 
 	inline bool criterion(float value, float threshold) {
 		return value >= threshold ? true : false;

@@ -38,6 +38,14 @@ namespace vxe::utl {
 		BITMAPFILEHEADER biFH;
 		BITMAPINFOHEADER biIH;
 	};
+
+	struct TextureDescription {
+		uint32_t width;
+		uint32_t height;
+		uint32_t depth;
+		uint16_t mipmap;
+		uint16_t elsize;
+	};
 	#pragma pack(pop)
 }
 

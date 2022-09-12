@@ -1,19 +1,25 @@
 
 //
 //	Pixel Shader.hlsl
-//  Defining a pixel shader
+//  Defining a sample pixel shader for texturing
 //
 //  © VanityXS - DirectX 11.2 Student Engine. Zoraja Consulting d.o.o. All rights reserved.
-//	vJan22 
+//	vJan22
 //
+
+Texture3D Texture : register(t0);
+SamplerState Sampler : register(s0);
 
 struct PixelShaderInput
 {
 	float4 pos : SV_POSITION;
-	// float4 color : COLOR0;
+	float3 tex : TEXCOORD0;
 };
 
-float4 main(PixelShaderInput input) : SV_Target
+float4 main(PixelShaderInput input) : SV_TARGET
 {
-	return float4(1.0f, 1.0f, 1.0f, 1.0f);
+	float4 color = Texture.Sample(Sampler, input.tex);
+	color = float4(color.x, color.x, color.x, 1.0f - color.x);
+
+	return color;
 }

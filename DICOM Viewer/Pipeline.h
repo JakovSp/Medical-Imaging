@@ -19,7 +19,7 @@
 namespace vxe {
 
 	class Pipeline {
-		using VertexType_t = DirectX::VertexPosition;
+		using VertexType_t = DirectX::VertexPositionTexture3;
 
 	public:
 		Pipeline();

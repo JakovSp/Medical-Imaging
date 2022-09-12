@@ -118,21 +118,26 @@ Cloud3D<uint8_t> DICOMVolume::GenerateIsoTexture3D(int lowerbound, int upperboun
 	size_t depth = Volume.Depth();
 	size_t width = Volume.Width();
 	size_t height = Volume.Height();
-	Cloud3D<uint8_t> IsoCloud(width, height, depth);
+	long double wc = series[0][0][WindowCenter].FetchValue<long double>();
+	long double ww = series[0][0][WindowWidth].FetchValue<long double>();
+	Cloud3D<uint8_t> IsoTexture(width, height, depth);
 
 	for (size_t i = 0; i < depth; i++) {
 		for (size_t j = 0; j < width; j++) {
 			for (size_t k = 0; k < height; k++) {
 				if (criterion<uint16_t>(Volume[i][j][k], lowerbound, upperbound)) {
-					IsoCloud[i][j][k] = numeric_limits<uint8_t>::max();
+					IsoTexture[i][j][k] = WindowClip(wc, ww, Volume[i][j][k]);
 				}
 				else {
-					IsoCloud[i][j][k] = numeric_limits<uint8_t>::min();
+					IsoTexture[i][j][k] = 0;
 				}
 			}
 		}
 	}
-	return IsoCloud;
+
+//	uint8_t* texturedata = IsoTexture.Points();
+//	auto texturecontainer = vector<uint8_t>(texturedata, texturedata + depth * width * height);
+	return IsoTexture;
 }
 
 Cloud3D<uint8_t> DICOMVolume::GenerateIsoTexture3D(Matter matter) {

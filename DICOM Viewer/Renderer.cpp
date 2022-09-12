@@ -40,6 +40,8 @@ void Renderer::CreateDeviceResources()
 	when_all(tasks.begin(), tasks.end()).then([this]() {
 		_loadingcomplete = true;
 		DebugPrint(string("\t -- A lambda: Loading is complete! \n"));
+
+		_scene->SetTextures(_vanitycore);
 	});
 }
 

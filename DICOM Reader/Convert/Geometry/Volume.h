@@ -26,7 +26,6 @@ namespace vxe::med {
 		long double Position[3];
 	};
 
-
 	class DICOMVolume {
 	public:
 		DICOMVolume(std::string FOR);

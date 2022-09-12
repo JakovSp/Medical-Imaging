@@ -6,6 +6,7 @@ Convert.h
 #pragma once
 
 #include "pch.h"
+#include "Textures.h"
 #include <DICOM Reader/Read/Reader.h>
 #include <DICOM Reader/Convert/Converter.h>
 
@@ -26,6 +27,8 @@ namespace vxe::med {
 
 		std::vector<char> LoadPointCloud();
 		std::vector<char> LoadWireframeMesh();
+		SceneTexture<Texture3D> LoadTexture3D(	std::vector<concurrency::task<void>>& tasks,
+												std::shared_ptr<VanityCore>& vanitycore);
 
 	private:
 		DICOMConverter converter;

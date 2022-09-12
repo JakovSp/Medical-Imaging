@@ -30,7 +30,7 @@ void DICOMConverter::WriteBMP(DICOMInstance& instance, std::filesystem::path fil
 	long double windowcenter = instance.MainDataSet[WindowCenter].FetchValue<long double>();
 	long double windowwidth = instance.MainDataSet[WindowWidth].FetchValue<long double>();
 
-	std::vector<std::byte> realpixeldata;
+	std::vector<uint8_t> realpixeldata;
 	if (PixelDataDE.vr == OW) {
 		size_t step = 2;
 		const std::vector<uint16_t>& pixeldata = PixelDataDE.FetchContainer<uint16_t>();
@@ -49,6 +49,7 @@ void DICOMConverter::WriteBMP(DICOMInstance& instance, std::filesystem::path fil
 }
 
 void DICOMConverter::WriteTexture(Cloud3D<uint8_t>& Volume, std::filesystem::path filename) {
+	TextureDescription desc;
 	FILE* imgfp;
 	fopen_s(&imgfp, filename.string().c_str(), "wb+");
 	if (!imgfp) {
@@ -56,7 +57,14 @@ void DICOMConverter::WriteTexture(Cloud3D<uint8_t>& Volume, std::filesystem::pat
 		return;
 	}
 
-	fwrite(Volume.Points(), Volume.Height() * Volume.Width() * Volume.Depth(), 1, imgfp);
+	desc.depth = Volume.Depth();
+	desc.width = Volume.Width();
+	desc.height = Volume.Height();
+	desc.mipmap = 1;
+	desc.elsize = 1; // sizeof(uint8_t)
+
+	fwrite(&desc, sizeof(desc), 1, imgfp);
+	fwrite(Volume.Points(), desc.elsize, Volume.Height() * Volume.Width() * Volume.Depth(), imgfp);
 	fclose(imgfp);
 }
 

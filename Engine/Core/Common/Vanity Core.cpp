@@ -416,7 +416,7 @@ void VanityCore::CreateWindowSizeDependentResources()
 		lround(m_d3dRenderTargetSize.Height),
 		1, 1, D3D11_BIND_DEPTH_STENCIL);
 
-	ResourceFactory::Instance().CreateDepthStencilView(m_d3dDevice.Get(), &t2desc, &m_d3dDepthStencilView);
+	// ResourceFactory::Instance().CreateDepthStencilView(m_d3dDevice.Get(), &t2desc, &m_d3dDepthStencilView);
 
 	// Set the 3D rendering viewport to target the entire window.
 	m_screenViewport = CD3D11_VIEWPORT{ 0.0f, 0.0f, m_d3dRenderTargetSize.Width, m_d3dRenderTargetSize.Height };

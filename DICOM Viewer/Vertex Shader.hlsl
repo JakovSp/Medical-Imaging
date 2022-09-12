@@ -1,10 +1,10 @@
 
 //
 //	Vertex Shader.hlsl
-//  Defining a vertex shader
+//  Defining a sample vertex shader
 //
 //  © VanityXS - DirectX 11.2 Student Engine. Zoraja Consulting d.o.o. All rights reserved.
-//	vJan22 
+//	vJan22
 //
 
 cbuffer WorldTransforms : register(b0)
@@ -23,29 +23,38 @@ cbuffer ProjectionTransforms : register(b2)
 	matrix Projection;
 };
 
-struct VertexShaderInput
+cbuffer TextureBuffer : register(b3)
 {
-	float3 pos : SV_Position;
-// 	vector<float, 4> color : COLOR;
+	float vertZ;
+	float texZ;
 };
 
+// Per-vertex data used as input to the vertex shader.
+struct VertexShaderInput
+{
+	float3 pos : SV_POSITION;
+	float3 tex : TEXCOORD0;
+};
+
+// Per-pixel color data passed through the pixel shader.
 struct VertexShaderOutput
 {
 	float4 pos : SV_POSITION;
-//	float4 color : COLOR0;
+	float3 tex : TEXCOORD0;
 };
 
 VertexShaderOutput main(VertexShaderInput input)
 {
 	VertexShaderOutput output;
-	float4 pos = float4(input.pos, 1.0f);
+	float4 pos = float4(input.pos.xy, vertZ, 1.0f);
 
 	pos = mul(pos, World);
 	pos = mul(pos, View);
 	pos = mul(pos, Projection);
 	output.pos = pos;
 
-	//output.color = input.color;
+	output.tex = input.tex;
+	output.tex.z = texZ;
 
 	return output;
 }
