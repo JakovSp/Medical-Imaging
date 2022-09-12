@@ -4,7 +4,8 @@
 #include <limits>
 
 namespace vxe::utl {
-	uint8_t WindowClip(long double c, long double w, uint16_t x);
+	uint8_t LinearWindowClip(long double c, long double w, uint16_t x);
+	uint8_t SigmoidWindowClip(long double c, long double w, uint16_t x);
 
 	inline bool criterion(float value, float threshold) {
 		return value >= threshold ? true : false;

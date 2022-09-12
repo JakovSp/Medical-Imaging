@@ -136,7 +136,7 @@ Cloud3D<uint8_t> DICOMVolume::GenerateIsoTexture3D(int lowerbound, int upperboun
 		for (size_t j = 0; j < _width; j++) {
 			for (size_t k = 0; k < _height; k++) {
 				if (criterion<uint16_t>(Volume[i][j][k], lowerbound, upperbound)) {
-					IsoTexture[i][j][k] = WindowClip(wc, ww, Volume[i][j][k]);
+					IsoTexture[i][j][k] = LinearWindowClip(wc, ww, Volume[i][j][k]);
 				}
 				else {
 					IsoTexture[i][j][k] = 0;
@@ -201,7 +201,7 @@ vector<vert3> DICOMVolume::GenerateIsoPointCloud(Matter matter) {
 
 Cloud3D<uint8_t> DICOMVolume::GenerateWindowedVolume() {
 	Cloud3D<uint8_t> Windowed(_width, _height, _depth);
-	//if(series[0][0][])
+	DataElement VOI = series[0][0][WindowCenter];
 	//long double wc = series[0][0][WindowCenter].FetchValue<long double>();
 	//long double ww = series[0][0][WindowWidth].FetchValue<long double>();
 	for (size_t i = 0; i < _depth; i++) {

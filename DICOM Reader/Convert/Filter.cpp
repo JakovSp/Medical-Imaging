@@ -1,7 +1,7 @@
 #include "Filter.h"
 
 namespace vxe::utl {
-	uint8_t WindowClip(long double c, long double w, uint16_t x) {
+	uint8_t LinearWindowClip(long double c, long double w, uint16_t x) {
 		uint8_t y = 0;
 		if (x <= c - 0.5 - (w - 1) / 2) {
 			y = 0;

@@ -37,7 +37,7 @@ void DICOMConverter::WriteBMP(DICOMInstance& instance, std::filesystem::path fil
 
 		realpixeldata.reserve(pixeldata.size());
 		for (size_t i = 0; i < pixeldata.size(); i++) {
-			realpixeldata.push_back(WindowClip(windowcenter, windowwidth, pixeldata[i]));
+			realpixeldata.push_back(LinearWindowClip(windowcenter, windowwidth, pixeldata[i]));
 			realpixeldata.push_back(realpixeldata.back());
 			realpixeldata.push_back(realpixeldata.back());
 		}
