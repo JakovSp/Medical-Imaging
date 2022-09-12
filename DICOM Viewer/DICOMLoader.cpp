@@ -64,18 +64,19 @@ std::vector<char> DICOMLoader::LoadWireframeMesh() {
 
 SceneTexture<Texture3D> DICOMLoader::LoadTexture3D(vector<task<void>>& tasks, shared_ptr<VanityCore>& vanitycore) {
 	converter.volumes[0].LoadVolume();
-	auto IsoTexture = converter.volumes[0].GenerateIsoTexture3D(CorticalBone);
-	size_t depth = IsoTexture.Depth();
-	size_t width = IsoTexture.Width();
-	size_t height = IsoTexture.Height();
+	auto VolumeTexture = converter.volumes[0].GenerateWindowedVolume();
+	size_t depth = VolumeTexture.Depth();
+	size_t width = VolumeTexture.Width();
+	size_t height = VolumeTexture.Height();
 
 	auto device = vanitycore->GetD3DDevice();
 	auto texture3D = make_shared<Texture3D>(device, DXGI_FORMAT_R8_UNORM, width, height, depth, 1,
 										D3D11_BIND_SHADER_RESOURCE, D3D11_USAGE_IMMUTABLE);
 
 	SceneTexture<Texture3D> scenetexture3D(texture3D);
-	uint8_t* texturedata = IsoTexture.Points();
+	uint8_t* texturedata = VolumeTexture.Points();
 	scenetexture3D.Load(tasks, vector<uint8_t>(texturedata, texturedata + depth * width * height));
+	auto texturecontainer = vector<uint8_t>(texturedata, texturedata + depth * width * height);
 
 	return scenetexture3D;
 }
