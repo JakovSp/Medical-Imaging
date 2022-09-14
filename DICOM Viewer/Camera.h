@@ -25,7 +25,7 @@ namespace vxe {
 		void Release();
 
 	private:
-		DirectX::XMFLOAT3 _eye { 0.0f, 0.0f, 3.0f};
+		DirectX::XMFLOAT3 _eye { 0.0f, 0.0f, 1.8f};
 		DirectX::XMFLOAT3 _lookat{ 0.0f, 0.0f, 0.0f };
 		DirectX::XMFLOAT3 _up{ 0.0f, 1.0f, 0.0f };
 
