@@ -76,7 +76,6 @@ SceneTexture<Texture3D> DICOMLoader::LoadTexture3D(vector<task<void>>& tasks, sh
 	SceneTexture<Texture3D> scenetexture3D(texture3D);
 	uint8_t* texturedata = VolumeTexture.Points();
 	scenetexture3D.Load(tasks, vector<uint8_t>(texturedata, texturedata + depth * width * height));
-	auto texturecontainer = vector<uint8_t>(texturedata, texturedata + depth * width * height);
 
 	return scenetexture3D;
 }

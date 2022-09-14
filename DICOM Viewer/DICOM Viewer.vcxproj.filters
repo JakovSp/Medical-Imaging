@@ -111,9 +111,6 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="Package.appxmanifest" />
-  </ItemGroup>
-  <ItemGroup>
     <FxCompile Include="Pixel Shader.hlsl">
       <Filter>Pipeline</Filter>
     </FxCompile>
@@ -575,5 +572,10 @@
     <None Include="Assets\VolumeTexture">
       <Filter>Assets</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <Filter>Shapes</Filter>
+    </AppxManifest>
   </ItemGroup>
 </Project>

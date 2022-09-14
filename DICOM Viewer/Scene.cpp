@@ -42,21 +42,13 @@ void Scene::LoadAssets(vector<task<void>>& tasks, shared_ptr<VanityCore>& vanity
  	DICOMLoader DICOMdata(L"Assets\\Ankle");
 	
 	auto device = vanitycore->GetD3DDevice();
+	auto world = make_shared<WorldTransforms>(device);
 
-
+	_texture3D = make_shared<SceneTexture<Texture3D>>(DICOMdata.LoadTexture3D(tasks, vanitycore));
 	shared_ptr<Mesh<VertexPositionTexture3, uint16_t>> quad;
 	quad = make_shared<Quad<VertexPositionTexture3, uint16_t>>();
 	tasks.push_back(quad->CreateAsync(device));
 
-
-	_texture3D = make_shared<SceneTexture<Texture3D>>(DICOMdata.LoadTexture3D(tasks, vanitycore));
- 	//auto texture3Dz = make_shared<Texture3D>(device, DXGI_FORMAT_R8_UNORM, 512, 512, 150, 1,
- 	//									D3D11_BIND_SHADER_RESOURCE, D3D11_USAGE_IMMUTABLE);
- 
- 	//_texture3D = make_shared<SceneTexture<Texture3D>>(texture3Dz);
- 	//_texture3D->Load(tasks, L"Assets\\VolumeTexture");
-
-	auto world = make_shared<WorldTransforms>(device);
 	_volumetric = make_shared<SceneObject<VertexPositionTexture3, uint16_t>>();
 	_volumetric->SetMesh(quad);
 	_volumetric->SetWorld(world);

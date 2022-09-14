@@ -43,7 +43,7 @@ namespace vxe {
 
       // Loading from a file
 
-      return Mesh::CreateAsync(device, vertices, indices, D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
+      return Mesh::CreateAsync(device, vertices, indices, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
     }
 
     virtual concurrency::task<void> CreateAsync(_In_ ID3D11Device2* device, const std::vector<char>& data) 
@@ -55,7 +55,7 @@ namespace vxe {
 
       // Loading from a file
 
-      return Mesh::CreateAsync(device, vertices, indices, D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
+      return Mesh::CreateAsync(device, vertices, indices, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
     }
 
   };
