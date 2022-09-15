@@ -6,17 +6,17 @@
 
 namespace vxe {
 
-  template <typename T, typename U> class PointCloud : public Mesh<T, U> {};
+  template <typename T, typename U> class PointCloud2 : public Mesh<T, U> {};
 
   template <>
-  class PointCloud<DirectX::VertexPosition, uint16_t> : public Mesh<DirectX::VertexPosition, uint16_t>{
+  class PointCloud2<DirectX::VertexPosition, uint16_t> : public Mesh<DirectX::VertexPosition, uint16_t>{
 
   public:
-    PointCloud() { }
+    PointCloud2() { }
 
     virtual concurrency::task<void> CreateAsync(_In_ ID3D11Device2* device) 
     {
-      // DebugPrint("\t PointCloud<Position> Vertex, uint16_t>::CreateAsync() ...\n");
+      // DebugPrint("\t PointCloud2<Position> Vertex, uint16_t>::CreateAsync() ...\n");
 
 		std::vector<DirectX::VertexPosition> vertices;
         std::vector<uint16_t> indices;

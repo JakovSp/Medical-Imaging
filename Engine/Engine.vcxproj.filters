@@ -141,6 +141,9 @@
     <ClCompile Include="Scene\Scene Object.h">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Pipeline Stages\Shaders\Geometry Shader.cpp">
+      <Filter>Pipeline Stages\Shaders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -280,6 +283,9 @@
       <Filter>Core\Content</Filter>
     </ClInclude>
     <ClInclude Include="Vanity.h" />
+    <ClInclude Include="Pipeline Stages\Shaders\Geometry Shader.h">
+      <Filter>Pipeline Stages\Shaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Lighting\HLSL\Directional Light.hlsli">

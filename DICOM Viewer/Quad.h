@@ -16,7 +16,7 @@ namespace vxe {
 
     virtual concurrency::task<void> CreateAsync(_In_ ID3D11Device2* device) 
     {
-      // DebugPrint("\t PointCloud<Position3DTexture> Vertex, uint16_t>::CreateAsync() ...\n");
+      // DebugPrint("\t PointCloud2<Position3DTexture> Vertex, uint16_t>::CreateAsync() ...\n");
 
       std::vector<DirectX::VertexPositionTexture3> vertices = {
         DirectX::VertexPositionTexture3(DirectX::XMFLOAT3(-1.0f,-1.0f, -1.0f), DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f)),
@@ -36,7 +36,7 @@ namespace vxe {
 
     virtual concurrency::task<void> LoadAsync(_In_ ID3D11Device2* device, const std::wstring&) 
     {
-      // DebugPrint("\t PointCloud<PositionNormalVertex, unsigned>::CreateAsync() ...\n");
+      // DebugPrint("\t PointCloud2<PositionNormalVertex, unsigned>::CreateAsync() ...\n");
 
       std::vector <DirectX::VertexPositionTexture3> vertices;
       std::vector<uint16_t> indices;
@@ -48,7 +48,7 @@ namespace vxe {
 
     virtual concurrency::task<void> CreateAsync(_In_ ID3D11Device2* device, const std::vector<char>& data) 
     {
-      // DebugPrint("\t PointCloud<PositionNormalVertex, unsigned>::CreateAsync() ...\n");
+      // DebugPrint("\t PointCloud2<PositionNormalVertex, unsigned>::CreateAsync() ...\n");
 
       std::vector <DirectX::VertexPositionTexture3> vertices;
       std::vector<uint16_t> indices;

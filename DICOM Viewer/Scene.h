@@ -24,12 +24,13 @@ namespace vxe {
 		float texZ;
 	}TransferZ;
 
+	enum SceneObjectType {
+		PointCloud, Volumetric, TriMesh, NumberOfObjects
+	};
 	class Scene {
-		using VertexType_t = DirectX::VertexPositionTexture3;
 		using IndexType_t = uint16_t;
 	public:
 		Scene();
-
 		void LoadAssets(std::vector<concurrency::task<void>>&, std::shared_ptr<VanityCore>&);
 		void SetCamera(std::shared_ptr<VanityCore>&);
 		void SetTextures(std::shared_ptr<VanityCore>&);
@@ -37,13 +38,14 @@ namespace vxe {
 		void Render(std::shared_ptr<VanityCore>&);
 		void Release();
 
-	private:
-		void Draw(std::shared_ptr<VanityCore>&, bool=true);
+		void DrawVolumetric(std::shared_ptr<VanityCore>&, bool=true);
+		void DrawTriMesh(std::shared_ptr<VanityCore>&, bool=false);
+		void DrawPointCloud(std::shared_ptr<VanityCore>&, bool=false);
 
 	private:
-		std::shared_ptr<SceneObject<DirectX::VertexPosition, uint16_t>> _PCobject;
-		std::shared_ptr<SceneObject<DirectX::VertexPosition, uint16_t>> _MCobject;
-		std::shared_ptr<SceneObject<DirectX::VertexPositionTexture3, uint16_t>> _volumetric;
+		std::shared_ptr<SceneObject<DirectX::VertexPosition, uint16_t>> _pointcloud;
+		std::shared_ptr<SceneObject<DirectX::VertexPosition, uint16_t>> _trisurface;
+		std::shared_ptr<SceneObject<DirectX::VertexPositionTexture3, uint16_t>> _volumetricslice;
 		std::shared_ptr<SceneTexture<Texture3D>> _texture3D;
 		Animation _animation{};
 

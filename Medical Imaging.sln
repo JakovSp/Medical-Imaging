@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Engine", "Engine\Engine.vcxproj", "{B6B00C7D-D5A0-4677-85CF-D26AD05004B9}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DICOM Viewer", "DICOM Viewer\DICOM Viewer.vcxproj", "{C2120F08-49E5-4FAB-B17E-562D1893926B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4F26F084-EB26-4B85-9324-46750FE08E71} = {4F26F084-EB26-4B85-9324-46750FE08E71}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DICOM Reader", "DICOM Reader\DICOM Reader.vcxproj", "{4F26F084-EB26-4B85-9324-46750FE08E71}"
 EndProject

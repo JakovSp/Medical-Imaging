@@ -71,9 +71,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Renderer.h">
-      <Filter>Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Scene</Filter>
     </ClInclude>
@@ -89,9 +86,6 @@
     <ClInclude Include="DICOMLoader.h">
       <Filter>DICOM</Filter>
     </ClInclude>
-    <ClInclude Include="PointCloud.h">
-      <Filter>Shapes</Filter>
-    </ClInclude>
     <ClInclude Include="Wireframe.h">
       <Filter>Shapes</Filter>
     </ClInclude>
@@ -104,6 +98,12 @@
     <ClInclude Include="Quad.h">
       <Filter>Shapes</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="PointCloud.h">
+      <Filter>Shapes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">
@@ -111,10 +111,16 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Pixel Shader.hlsl">
+    <FxCompile Include="VolumetricPS.hlsl">
       <Filter>Pipeline</Filter>
     </FxCompile>
-    <FxCompile Include="Vertex Shader.hlsl">
+    <FxCompile Include="VolumetricVS.hlsl">
+      <Filter>Pipeline</Filter>
+    </FxCompile>
+    <FxCompile Include="WireframeVS.hlsl">
+      <Filter>Pipeline</Filter>
+    </FxCompile>
+    <FxCompile Include="WireframePS.hlsl">
       <Filter>Pipeline</Filter>
     </FxCompile>
   </ItemGroup>
@@ -574,8 +580,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="Package.appxmanifest">
-      <Filter>Shapes</Filter>
-    </AppxManifest>
+    <AppxManifest Include="Package.appxmanifest" />
   </ItemGroup>
 </Project>

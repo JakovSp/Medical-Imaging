@@ -24,8 +24,12 @@ Renderer::Renderer() :
 {
 	DebugPrint(string("\t Renderer::Ctor... \n"));
 
+	_inputcontroller = ref new InputController();
 	_scene = make_shared<Scene>();
-	_pipeline = make_shared<Pipeline>();
+	_volumetricpipeline = make_shared<Pipeline<VertexPositionTexture3>>(
+		L"VolumetricVS.cso", L"VolumetricPS.cso");
+	_wireframepipeline = make_shared<Pipeline<VertexPosition>>(
+		L"WireframeVS.cso", L"WireframePS.cso");
 }
 
 void Renderer::CreateDeviceResources()
@@ -35,7 +39,8 @@ void Renderer::CreateDeviceResources()
 	vector<task<void>> tasks;
 
 	_scene->LoadAssets(tasks, _vanitycore);
-	_pipeline->LoadShaders(tasks, _vanitycore);
+	_volumetricpipeline->LoadShaders(tasks, _vanitycore);
+	_wireframepipeline->LoadShaders(tasks, _vanitycore);
 	
 	when_all(tasks.begin(), tasks.end()).then([this]() {
 		_loadingcomplete = true;
@@ -43,6 +48,8 @@ void Renderer::CreateDeviceResources()
 
 		_scene->SetTextures(_vanitycore);
 	});
+
+	_objectbound = Volumetric;
 }
 
 void Renderer::CreateWindowResources()
@@ -55,19 +62,34 @@ void Renderer::CreateWindowResources()
 void Renderer::Render()
 {
 	if (!_loadingcomplete) return;
-
+	
 	//_pipeline->SetRenderTargets(_vanitycore);
-	_pipeline->BindShaders(_vanitycore);
-
-	_scene->Render(_vanitycore);
-
+	switch (_objectbound) {
+	case TriMesh:
+		_wireframepipeline->BindShaders(_vanitycore);
+		_scene->DrawTriMesh(_vanitycore);
+		break;
+	case PointCloud:
+		_wireframepipeline->BindShaders(_vanitycore);
+		_scene->DrawPointCloud(_vanitycore);
+		break;
+	case Volumetric:
+		_volumetricpipeline->BindShaders(_vanitycore);
+		_scene->DrawVolumetric(_vanitycore);
+		break;
+	}
 	_vanitycore->SetRasterizerState();
 }
 
 void Renderer::Update(const DX::StepTimer& timer)
 {
+	if (_inputcontroller->IsKeyDown(Windows::System::VirtualKey::Space)) {
+		_objectbound = (SceneObjectType)((_objectbound + 1 ) % NumberOfObjects);
+		_inputcontroller->ResetSates();
+	}
 	_scene->Update(timer);
 }
+
 
 void Renderer::ReleaseDeviceResources()
 {
@@ -76,5 +98,12 @@ void Renderer::ReleaseDeviceResources()
 	_loadingcomplete = false;
 
 	_scene->Release();
-	_pipeline->Release();
+	switch (_objectbound) {
+	case PointCloud: TriMesh:
+		_volumetricpipeline->Release();
+		break;
+	case Volumetric:
+		_wireframepipeline->Release();
+		break;
+	}
 }
