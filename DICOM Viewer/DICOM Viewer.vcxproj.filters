@@ -89,7 +89,7 @@
     <ClInclude Include="Textures.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Quad.h">
+    <ClInclude Include="ObjectAlignedSlices.h">
       <Filter>Shapes</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h">

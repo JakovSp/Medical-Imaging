@@ -410,4 +410,26 @@ namespace DirectX
 		static const int InputElementCount = 1;
 		static const D3D11_INPUT_ELEMENT_DESC InputElements[InputElementCount];
 	};
+
+	struct VertexPosition2TextureInstanced
+	{
+		VertexPosition2TextureInstanced()
+		{ }
+
+		VertexPosition2TextureInstanced(XMFLOAT2 const& position, XMFLOAT2 const& textureCoordinate)
+		  : position(position)
+		  : textureCoordinate(textureCoordinate)
+		{ }
+
+		VertexPosition2TextureInstanced(FXMVECTOR position, FXMVECTOR textureCoordinate) {
+		  XMStoreFloat2(&this->position, position);
+		  XMStoreFloat2(&this->textureCoordinate, textureCoordinate);
+		}
+
+		XMFLOAT2 position;
+		XMFLOAT2 textureCoordinate;
+
+		static const int InputElementCount = 2;
+		static const D3D11_INPUT_ELEMENT_DESC InputElements[InputElementCount];
+	};
 }
