@@ -46,7 +46,7 @@ namespace vxe {
 		std::shared_ptr<SceneObject<DirectX::VertexPosition, uint16_t>> _pointcloud;
 		std::shared_ptr<SceneObject<DirectX::VertexPosition, uint16_t>> _trisurface;
 		std::shared_ptr<SceneObject<DirectX::VertexPositionTexture3, uint16_t>> _volumetricslice;
-		std::shared_ptr<SceneTexture<Texture3D>> _texture3D;
+		std::shared_ptr<SceneTexture<Texture2D>> _texArray;
 		Animation _animation{};
 
 		Camera _camera{};

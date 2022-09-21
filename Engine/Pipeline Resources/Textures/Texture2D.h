@@ -43,6 +43,7 @@ namespace vxe {
 			DebugPrint(std::string("\t Texture2D::Ctor ...\n"));
 		}
 
+		concurrency::task<void> CreateAsyncFromMemory(const uint8_t* data, uint32_t = 1024, uint32_t slicepitch = 0);
 		concurrency::task<void> CreateAsync(const std::wstring&, uint32_t = 1024, uint32_t = 0);
 
 		// The wrappers for DirectX Tool Kit DDS functions

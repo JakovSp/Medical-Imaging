@@ -10,7 +10,7 @@
 //
 
 #include <Engine\Pipeline Resources\Textures\Texture2D.h>
-#include "Texture3D.h"
+#include <Engine\Pipeline Resources\Textures\Texture3D.h>
 
 namespace vxe {
 
@@ -32,9 +32,9 @@ namespace vxe {
 			tasks.push_back(_texture->CreateAsync(filename));
 		}
 
-		void Load(std::vector<concurrency::task<void>>& tasks, std::vector<uint8_t> data){
+		void Load(std::vector<concurrency::task<void>>& tasks, const uint8_t* data){
 			DebugPrint(string("\t Textures::Load() ... \n"));
-			tasks.push_back(_texture->CreateAsync(data));
+			tasks.push_back(_texture->CreateAsyncFromMemory(data));
 		}
 
 		void Initialize(std::shared_ptr<VanityCore>& vanitycore) {

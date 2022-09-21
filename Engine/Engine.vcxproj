@@ -239,6 +239,7 @@
     <ClInclude Include="Pipeline Resources\Buffers\Index Buffer.h" />
     <ClInclude Include="Pipeline Resources\Buffers\Vertex Buffer.h" />
     <ClInclude Include="Pipeline Resources\Resource Factory.h" />
+    <ClInclude Include="Pipeline Resources\Textures\Texture3D.h" />
     <ClInclude Include="Pipeline Resources\Textures\Texture Base.h" />
     <ClInclude Include="Pipeline Resources\Textures\Texture2D.h" />
     <ClInclude Include="Pipeline Stages\Shaders\Geometry Shader.h" />
@@ -286,6 +287,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Pipeline Resources\Resource Factory.cpp" />
+    <ClCompile Include="Pipeline Resources\Textures\Texture3D.cpp" />
     <ClCompile Include="Pipeline Resources\Textures\Texture Base.cpp" />
     <ClCompile Include="Pipeline Resources\Textures\Texture2D.cpp" />
     <ClCompile Include="Pipeline Stages\Shaders\Geometry Shader.cpp" />

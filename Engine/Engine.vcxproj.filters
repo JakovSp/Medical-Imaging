@@ -144,6 +144,7 @@
     <ClCompile Include="Pipeline Stages\Shaders\Geometry Shader.cpp">
       <Filter>Pipeline Stages\Shaders</Filter>
     </ClCompile>
+    <ClCompile Include="Pipeline Resources\Textures\Texture3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -286,6 +287,7 @@
     <ClInclude Include="Pipeline Stages\Shaders\Geometry Shader.h">
       <Filter>Pipeline Stages\Shaders</Filter>
     </ClInclude>
+    <ClInclude Include="Pipeline Resources\Textures\Texture3D.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Lighting\HLSL\Directional Light.hlsli">

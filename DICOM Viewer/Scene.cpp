@@ -43,7 +43,7 @@ void Scene::LoadAssets(vector<task<void>>& tasks, shared_ptr<VanityCore>& vanity
 	auto device = vanitycore->GetD3DDevice();
 	auto world = make_shared<WorldTransforms>(device);
 
-	_texture3D = make_shared<SceneTexture<Texture3D>>(DICOMdata.LoadTexture3D(tasks, vanitycore));
+	_texArray = make_shared<SceneTexture<Texture2D>>(DICOMdata.LoadTextureArray(tasks, vanitycore));
 	shared_ptr<Mesh<VertexPositionTexture3, uint16_t>> quad;
 	quad = make_shared<Quad<VertexPositionTexture3, uint16_t>>();
 	tasks.push_back(quad->CreateAsync(device));
@@ -68,9 +68,9 @@ void Scene::LoadAssets(vector<task<void>>& tasks, shared_ptr<VanityCore>& vanity
 }
 
 void Scene::SetTextures(shared_ptr<VanityCore>& vanitycore) {
-	if (_texture3D) {
-		_texture3D->Initialize(vanitycore);
-		_texture3D->Bind(vanitycore);
+	if (_texArray) {
+		_texArray->Initialize(vanitycore);
+		_texArray->Bind(vanitycore);
 	}
 }
 
@@ -121,17 +121,17 @@ void Scene::DrawVolumetric(shared_ptr<VanityCore>& vanitycore, bool indexed) {
 	shared_ptr<ConstantBuffer<TransferZ>> instancebuffer;
 	instancebuffer = make_shared<ConstantBuffer<TransferZ>>(device);
 
-	vanitycore->SetBlenderState();
- 	for (float z = -1.0f; z < 0.0f; z += 1.0f / _texture3D->GetTexture()->GetTexDepth()) {
- 		TransferZ sliceindex;
- 		sliceindex.vertZ = z;
- 		sliceindex.texZ = (z + 1.0f) / 1.0f;
- 		instancebuffer->Update(context, sliceindex);
- 		instancebuffer->Bind(context, ProgrammableStage::VertexShaderStage, 3);
- 
-		_volumetricslice->Bind(context);
-		_volumetricslice->Draw(context);
- 	}
+//	vanitycore->SetBlenderState();
+// 	for (float z = -1.0f; z < 0.0f; z += 1.0f / _texArray->GetTexture()->GetTexDepth()) {
+// 		TransferZ sliceindex;
+// 		sliceindex.vertZ = z;
+// 		sliceindex.texZ = (z + 1.0f) / 1.0f;
+// 		instancebuffer->Update(context, sliceindex);
+// 		instancebuffer->Bind(context, ProgrammableStage::VertexShaderStage, 3);
+// 
+//		_volumetricslice->Bind(context);
+//		_volumetricslice->Draw(context);
+// 	}
 
 }
 

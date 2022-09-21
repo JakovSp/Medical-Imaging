@@ -269,7 +269,6 @@
     <ClInclude Include="Quad.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="Texture3D.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="Wireframe.h" />
   </ItemGroup>
@@ -290,7 +289,6 @@
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="Texture3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

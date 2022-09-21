@@ -29,6 +29,8 @@ namespace vxe::med {
 		std::vector<char> LoadWireframeMesh();
 		SceneTexture<Texture3D> LoadTexture3D(	std::vector<concurrency::task<void>>& tasks,
 												std::shared_ptr<VanityCore>& vanitycore);
+		SceneTexture<Texture2D> LoadTextureArray(	std::vector<concurrency::task<void>>& tasks,
+													std::shared_ptr<VanityCore>& vanitycore);
 
 	private:
 		DICOMConverter converter;

@@ -70,12 +70,28 @@ SceneTexture<Texture3D> DICOMLoader::LoadTexture3D(vector<task<void>>& tasks, sh
 	size_t height = VolumeTexture.Height();
 
 	auto device = vanitycore->GetD3DDevice();
-	auto texture3D = make_shared<Texture3D>(device, DXGI_FORMAT_R8_UNORM, width, height, depth, 1,
+	auto tex3D = make_shared<Texture3D>(device, DXGI_FORMAT_R8_UNORM, width, height, depth, 1,
 										D3D11_BIND_SHADER_RESOURCE, D3D11_USAGE_IMMUTABLE);
 
-	SceneTexture<Texture3D> scenetexture3D(texture3D);
-	uint8_t* texturedata = VolumeTexture.Points();
-	scenetexture3D.Load(tasks, vector<uint8_t>(texturedata, texturedata + depth * width * height));
+	SceneTexture<Texture3D> scenetex3D(tex3D);
+	scenetex3D.Load(tasks, VolumeTexture.Points());
 
-	return scenetexture3D;
+	return scenetex3D;
+}
+
+SceneTexture<Texture2D> DICOMLoader::LoadTextureArray(vector<task<void>>& tasks, shared_ptr<VanityCore>& vanitycore) {
+	converter.volumes[0].LoadVolume();
+	auto VolumeTexture = converter.volumes[0].GenerateWindowedVolume();
+	size_t depth = VolumeTexture.Depth();
+	size_t width = VolumeTexture.Width();
+	size_t height = VolumeTexture.Height();
+
+	auto device = vanitycore->GetD3DDevice();
+	auto texarray = make_shared<Texture2D>(device, DXGI_FORMAT_R8_UNORM, width, height, depth, 1,
+										D3D11_BIND_SHADER_RESOURCE, D3D11_USAGE_IMMUTABLE);
+
+	SceneTexture<Texture2D> scenetexarray(texarray);
+	scenetexarray.Load(tasks, VolumeTexture.Points());
+
+	return scenetexarray;
 }
