@@ -43,7 +43,7 @@ namespace vxe {
 			DebugPrint(std::string("\t Texture2D::Ctor ...\n"));
 		}
 
-		concurrency::task<void> CreateAsyncFromMemory(const uint8_t* data, uint32_t = 1024, uint32_t slicepitch = 0);
+		concurrency::task<void> CreateAsyncFromMemory(const std::vector<uint8_t>& data, uint32_t = 1024, uint32_t slicepitch = 0);
 		concurrency::task<void> CreateAsync(const std::wstring&, uint32_t = 1024, uint32_t = 0);
 
 		// The wrappers for DirectX Tool Kit DDS functions
@@ -54,7 +54,14 @@ namespace vxe {
 		virtual bool CreateShaderResourceView() override
 		{
 			DebugPrint(std::string("\t Texture2D::CreateShaderResourceView() \n"));
-			CD3D11_SHADER_RESOURCE_VIEW_DESC desc(D3D11_SRV_DIMENSION_TEXTURE2D, _description.Format, 0, _description.MipLevels);
+			CD3D11_SHADER_RESOURCE_VIEW_DESC desc;
+			if (_description.ArraySize > 1) {
+				desc = CD3D11_SHADER_RESOURCE_VIEW_DESC(D3D11_SRV_DIMENSION_TEXTURE2DARRAY, _description.Format, 0,\
+														_description.MipLevels, 0, _description.ArraySize);
+			}
+			else {
+				desc = CD3D11_SHADER_RESOURCE_VIEW_DESC(D3D11_SRV_DIMENSION_TEXTURE2D, _description.Format, 0, _description.MipLevels);
+			}
 
 			ResourceFactory::Instance().CreateShaderResourceView(_device.Get(), _texture.Get(), &desc, &_srv);
 
@@ -77,6 +84,8 @@ namespace vxe {
 		uint32_t GetWidth() const { return _description.Width; }
 
 		uint32_t GetHeight() const { return _description.Height; }
+
+		uint32_t GetDepth() const { return _description.ArraySize; }
 
 		void Reset()
 		{

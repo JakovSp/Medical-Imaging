@@ -32,7 +32,7 @@ namespace vxe {
 			tasks.push_back(_texture->CreateAsync(filename));
 		}
 
-		void Load(std::vector<concurrency::task<void>>& tasks, const uint8_t* data){
+		void Load(std::vector<concurrency::task<void>>& tasks, const std::vector<uint8_t>& data){
 			DebugPrint(string("\t Textures::Load() ... \n"));
 			tasks.push_back(_texture->CreateAsyncFromMemory(data));
 		}

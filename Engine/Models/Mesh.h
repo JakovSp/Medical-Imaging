@@ -158,8 +158,20 @@ namespace vxe {
 			if (_indexed) context->DrawIndexed(_indexcount, startindex, startvertex);
 		}
 
+		virtual void DrawInstanced(_In_ ID3D11DeviceContext2* context, uint32_t startvertex = 0, uint32_t startinstancelocation = 0) {
+			if (_instanced)
+				context->DrawInstanced(_vertexcount, _instancecount, startvertex, startinstancelocation);
+		}
+
+		virtual void DrawIndexedInstanced(_In_ ID3D11DeviceContext2* context, uint32_t startindex = 0, uint32_t startvertex = 0, uint32_t startinstancelocation = 0)
+		{
+			if (_instanced && _indexed)
+				context->DrawIndexedInstanced(_indexcount, _instancecount, startindex, startvertex, startinstancelocation);
+		}
+
 		T* GetVertices() { return _vertices; }
 		uint32_t GetVertexCount() { return _vertexcount; }
+		uint32_t GetInstanceCount() { return _instancecount; }
 
 		void Reset()
 		{
@@ -179,6 +191,12 @@ namespace vxe {
 		std::shared_ptr<IndexBuffer<U>> _indexbuffer;
 		U* _indices;
 		DXGI_FORMAT _format;
+
+		bool _instanced;
+		uint32_t _instancecount;
+		// std::shared_ptr<IndexBuffer<U>> _instancebuffer;
+		// U* _instances;
+		// DXGI_FORMAT _format;
 
 		D3D11_PRIMITIVE_TOPOLOGY _topology;
 	};

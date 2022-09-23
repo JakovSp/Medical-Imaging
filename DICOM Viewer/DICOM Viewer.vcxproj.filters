@@ -56,9 +56,6 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Pipeline.cpp">
-      <Filter>Pipeline</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
@@ -109,12 +106,6 @@
       <Filter>Pipeline</Filter>
     </FxCompile>
     <FxCompile Include="VolumetricVS.hlsl">
-      <Filter>Pipeline</Filter>
-    </FxCompile>
-    <FxCompile Include="WireframeVS.hlsl">
-      <Filter>Pipeline</Filter>
-    </FxCompile>
-    <FxCompile Include="WireframePS.hlsl">
       <Filter>Pipeline</Filter>
     </FxCompile>
   </ItemGroup>

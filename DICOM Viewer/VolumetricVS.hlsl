@@ -23,38 +23,34 @@ cbuffer ProjectionTransforms : register(b2)
 	matrix Projection;
 };
 
-cbuffer TextureBuffer : register(b3)
-{
-	float vertZ;
-	float texZ;
+cbuffer Slices : register(b3) {
+	uint NumberOfSlices;
 };
 
-// Per-vertex data used as input to the vertex shader.
 struct VertexShaderInput
 {
-	float3 pos : SV_POSITION;
-	float3 tex : TEXCOORD0;
+	float2 pos : SV_POSITION;
+	float2 tex : TEXCOORD;
 };
 
-// Per-pixel color data passed through the pixel shader.
 struct VertexShaderOutput
 {
 	float4 pos : SV_POSITION;
 	float3 tex : TEXCOORD0;
 };
 
-VertexShaderOutput main(VertexShaderInput input)
+VertexShaderOutput main(VertexShaderInput input, uint InstanceID : SV_InstanceID)
 {
 	VertexShaderOutput output;
-	float4 pos = float4(input.pos.xy, vertZ, 1.0f);
+	float4 pos = float4(input.pos.xy, (float)InstanceID/NumberOfSlices, 1.0f);
 
 	pos = mul(pos, World);
 	pos = mul(pos, View);
 	pos = mul(pos, Projection);
 	output.pos = pos;
 
-	output.tex = input.tex;
-	output.tex.z = texZ;
+	output.tex.xy = input.tex.xy;
+	output.tex.z = InstanceID;
 
 	return output;
 }

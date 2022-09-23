@@ -18,9 +18,8 @@
 #include <Engine\Models\Basic Shapes\Pyramids.h>
 
 #include "DICOMLoader.h"
-#include "PointCloud.h"
 #include "Wireframe.h"
-#include "Quad.h"
+#include "ObjectAlignedSlices.h"
 #include "Textures.h"
 
 using namespace std;
@@ -44,26 +43,26 @@ void Scene::LoadAssets(vector<task<void>>& tasks, shared_ptr<VanityCore>& vanity
 	auto world = make_shared<WorldTransforms>(device);
 
 	_texArray = make_shared<SceneTexture<Texture2D>>(DICOMdata.LoadTextureArray(tasks, vanitycore));
-	shared_ptr<Mesh<VertexPositionTexture3, uint16_t>> quad;
-	quad = make_shared<Quad<VertexPositionTexture3, uint16_t>>();
-	tasks.push_back(quad->CreateAsync(device));
-	_volumetricslice = make_shared<SceneObject<VertexPositionTexture3, uint16_t>>();
-	_volumetricslice->SetMesh(quad);
+	shared_ptr<Mesh<VertexPositionTextureInstanced, uint16_t>> slice;
+	slice = make_shared<ObjectAlignedSlices<VertexPositionTextureInstanced, uint16_t>>(_texArray->GetTexture()->GetDepth());
+	tasks.push_back(slice->CreateAsync(device));
+	_volumetricslice = make_shared<SceneObject<VertexPositionTextureInstanced, uint16_t>>();
+	_volumetricslice->SetMesh(slice);
 	_volumetricslice->SetWorld(world);
 
-	shared_ptr<Mesh<VertexPosition, uint16_t>> trimesh;
-	trimesh = make_shared<Wireframe<VertexPosition, uint16_t>>();
-	tasks.push_back(trimesh->CreateAsync(device, DICOMdata.LoadWireframeMesh()));
-	_trisurface = make_shared<SceneObject<VertexPosition, uint16_t>>();
-	_trisurface->SetMesh(trimesh);
-	_trisurface->SetWorld(world);
+	// shared_ptr<Mesh<VertexPosition, uint16_t>> trimesh;
+	// trimesh = make_shared<Wireframe<VertexPosition, uint16_t>>();
+	// tasks.push_back(trimesh->CreateAsync(device, DICOMdata.LoadWireframeMesh()));
+	// _trisurface = make_shared<SceneObject<VertexPosition, uint16_t>>();
+	// _trisurface->SetMesh(trimesh);
+	// _trisurface->SetWorld(world);
 
-	shared_ptr<Mesh<VertexPosition, uint16_t>> pointmesh;
-	pointmesh = make_shared<PointCloud2<VertexPosition, uint16_t>>();
-	tasks.push_back(pointmesh->CreateAsync(device, DICOMdata.LoadPointCloud()));
-	_pointcloud = make_shared<SceneObject<VertexPosition, uint16_t>>();
-	_pointcloud->SetMesh(pointmesh);
-	_pointcloud->SetWorld(world);
+	// shared_ptr<Mesh<VertexPosition, uint16_t>> pointmesh;
+	// pointmesh = make_shared<PointCloud2<VertexPosition, uint16_t>>();
+	// tasks.push_back(pointmesh->CreateAsync(device, DICOMdata.LoadPointCloud()));
+	// _pointcloud = make_shared<SceneObject<VertexPosition, uint16_t>>();
+	// _pointcloud->SetMesh(pointmesh);
+	// _pointcloud->SetWorld(world);
 
 }
 
@@ -72,6 +71,7 @@ void Scene::SetTextures(shared_ptr<VanityCore>& vanitycore) {
 		_texArray->Initialize(vanitycore);
 		_texArray->Bind(vanitycore);
 	}
+
 }
 
 void Scene::SetCamera(shared_ptr<VanityCore>& vanitycore)
@@ -87,7 +87,7 @@ void Scene::Update(DX::StepTimer const& timer)
 	__Once(DebugPrint(string("Scene::Update() ...\n")));
 
 	auto angle = _animation.Angle(static_cast<float>(timer.GetElapsedSeconds()));
-	// _volumetricslice->GetWorld()->RotateY(angle);
+	_volumetricslice->GetWorld()->RotateY(angle);
 	//	_PCobject->GetWorld()->RotateY(angle);
 	// _MCobject->GetWorld()->RotateY(angle);
 }
@@ -117,27 +117,19 @@ void Scene::DrawVolumetric(shared_ptr<VanityCore>& vanitycore, bool indexed) {
 
 	auto device = vanitycore->GetD3DDevice();
 	auto context = vanitycore->GetD3DDeviceContext();
+	shared_ptr<ConstantBuffer<uint32_t>> instancecount;
+	instancecount = make_shared<ConstantBuffer<uint32_t>>(device);
+	instancecount->Update(context, _volumetricslice->GetMesh()->GetInstanceCount());
+	instancecount->Bind(context, ProgrammableStage::VertexShaderStage, 3);
 
-	shared_ptr<ConstantBuffer<TransferZ>> instancebuffer;
-	instancebuffer = make_shared<ConstantBuffer<TransferZ>>(device);
-
-//	vanitycore->SetBlenderState();
-// 	for (float z = -1.0f; z < 0.0f; z += 1.0f / _texArray->GetTexture()->GetTexDepth()) {
-// 		TransferZ sliceindex;
-// 		sliceindex.vertZ = z;
-// 		sliceindex.texZ = (z + 1.0f) / 1.0f;
-// 		instancebuffer->Update(context, sliceindex);
-// 		instancebuffer->Bind(context, ProgrammableStage::VertexShaderStage, 3);
-// 
-//		_volumetricslice->Bind(context);
-//		_volumetricslice->Draw(context);
-// 	}
+	 vanitycore->SetBlenderState();
+	_volumetricslice->Bind(context);
+	_volumetricslice->DrawInstanced(context);
 
 }
 
 void Scene::Render(shared_ptr<VanityCore>& vanitycore) {
 	__Once(DebugPrint(string("Scene::Render() ...\n")));
-
 	DrawVolumetric(vanitycore, true);
 }
 

@@ -24,8 +24,7 @@ using namespace Windows::System;
 using namespace DirectX;
 using namespace DX;
 
-
-task<void> Texture2D::CreateAsyncFromMemory(const uint8_t* data, uint32_t pitch, uint32_t slicepitch)
+task<void> Texture2D::CreateAsyncFromMemory(const std::vector<uint8_t>& data, uint32_t pitch, uint32_t slicepitch)
 {
 	DebugPrint(wstring(L"\t Texture2D::CreateAsyncFromMemory() of ...\n" + to_wstring(\
 		_description.Width * _description.Height * _description.ArraySize) + L" bytes in size ...\n"));
@@ -33,12 +32,12 @@ task<void> Texture2D::CreateAsyncFromMemory(const uint8_t* data, uint32_t pitch,
 	return create_task([this, data, pitch, slicepitch]() {
 
 		DebugPrint(string("\t -- A lambda: Creating a Texture2D \n"));
-
+		uint32_t slicepitch = _description.Width * _description.Height;
 		D3D11_SUBRESOURCE_DATA* srd = new D3D11_SUBRESOURCE_DATA[_description.ArraySize];
 		for (size_t i = 0; i < _description.ArraySize; i++) {
-			srd[i].pSysMem = data;
+			srd[i].pSysMem = data.data() + i * slicepitch;
 			srd[i].SysMemPitch = _description.Width;
-			srd[i].SysMemSlicePitch = _description.Width * _description.Height;
+			srd[i].SysMemSlicePitch = slicepitch;
 		}
 
 		ThrowIfFailed(_device->CreateTexture2D(

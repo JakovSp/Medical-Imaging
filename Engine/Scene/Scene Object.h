@@ -47,6 +47,11 @@ namespace vxe {
 			else _mesh->Draw(context);
 		}
 
+		void DrawInstanced(_In_ ID3D11DeviceContext2* context, bool indexed=true) {
+			if (indexed) _mesh->DrawIndexedInstanced(context);
+			else _mesh->DrawInstanced(context);
+		}
+
 		void Acivate() { _active = true; }
 		void Deactivate() { _active = false; }
 

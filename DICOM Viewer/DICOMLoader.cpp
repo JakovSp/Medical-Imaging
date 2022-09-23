@@ -74,7 +74,7 @@ SceneTexture<Texture3D> DICOMLoader::LoadTexture3D(vector<task<void>>& tasks, sh
 										D3D11_BIND_SHADER_RESOURCE, D3D11_USAGE_IMMUTABLE);
 
 	SceneTexture<Texture3D> scenetex3D(tex3D);
-	scenetex3D.Load(tasks, VolumeTexture.Points());
+	//scenetex3D.Load(tasks, VolumeTexture.Points());
 
 	return scenetex3D;
 }
@@ -91,7 +91,8 @@ SceneTexture<Texture2D> DICOMLoader::LoadTextureArray(vector<task<void>>& tasks,
 										D3D11_BIND_SHADER_RESOURCE, D3D11_USAGE_IMMUTABLE);
 
 	SceneTexture<Texture2D> scenetexarray(texarray);
-	scenetexarray.Load(tasks, VolumeTexture.Points());
+	uint8_t* texdata = (uint8_t*)VolumeTexture.Points();
+	scenetexarray.Load(tasks, std::vector<uint8_t>(texdata, texdata + width*height*depth));
 
 	return scenetexarray;
 }

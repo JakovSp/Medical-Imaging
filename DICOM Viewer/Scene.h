@@ -19,16 +19,12 @@
 #include "Camera.h"
 
 namespace vxe {
-	typedef struct TRANSFERZ {
-		float vertZ;
-		float texZ;
-	}TransferZ;
 
 	enum SceneObjectType {
 		PointCloud, Volumetric, TriMesh, NumberOfObjects
 	};
+
 	class Scene {
-		using IndexType_t = uint16_t;
 	public:
 		Scene();
 		void LoadAssets(std::vector<concurrency::task<void>>&, std::shared_ptr<VanityCore>&);
@@ -45,7 +41,7 @@ namespace vxe {
 	private:
 		std::shared_ptr<SceneObject<DirectX::VertexPosition, uint16_t>> _pointcloud;
 		std::shared_ptr<SceneObject<DirectX::VertexPosition, uint16_t>> _trisurface;
-		std::shared_ptr<SceneObject<DirectX::VertexPositionTexture3, uint16_t>> _volumetricslice;
+		std::shared_ptr<SceneObject<DirectX::VertexPositionTextureInstanced, uint16_t>> _volumetricslice;
 		std::shared_ptr<SceneTexture<Texture2D>> _texArray;
 		Animation _animation{};
 
