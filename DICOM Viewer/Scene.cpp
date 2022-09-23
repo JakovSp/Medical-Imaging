@@ -71,7 +71,6 @@ void Scene::SetTextures(shared_ptr<VanityCore>& vanitycore) {
 		_texArray->Initialize(vanitycore);
 		_texArray->Bind(vanitycore);
 	}
-
 }
 
 void Scene::SetCamera(shared_ptr<VanityCore>& vanitycore)
@@ -88,6 +87,7 @@ void Scene::Update(DX::StepTimer const& timer)
 
 	auto angle = _animation.Angle(static_cast<float>(timer.GetElapsedSeconds()));
 	_volumetricslice->GetWorld()->RotateY(angle);
+
 	//	_PCobject->GetWorld()->RotateY(angle);
 	// _MCobject->GetWorld()->RotateY(angle);
 }
@@ -122,7 +122,15 @@ void Scene::DrawVolumetric(shared_ptr<VanityCore>& vanitycore, bool indexed) {
 	instancecount->Update(context, _volumetricslice->GetMesh()->GetInstanceCount());
 	instancecount->Bind(context, ProgrammableStage::VertexShaderStage, 3);
 
-	 vanitycore->SetBlenderState();
+	XMMATRIX view_to_world = GetInverseMatrix(XMLoadFloat4x4(&_camera.GetView()));
+	XMMATRIX world_to_model = GetInverseMatrix(XMLoadFloat4x4(&_volumetricslice->GetWorld()->GetWorld()));
+	XMMATRIX view_to_model = view_to_world * world_to_model;
+	XMVECTOR v_direction_m = XMVector4Transform(FXMVECTOR{ 0, 0, 1, 0 }, view_to_model);
+	XMFLOAT4 direction;
+	XMStoreFloat4(&direction, v_direction_m);
+	DebugPrint(L"x: " + to_wstring(direction.x) + L", z: " + to_wstring(direction.z) + L" \n");
+
+	vanitycore->SetBlenderState();
 	_volumetricslice->Bind(context);
 	_volumetricslice->DrawInstanced(context);
 

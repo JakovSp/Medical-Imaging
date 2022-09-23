@@ -81,7 +81,8 @@ SceneTexture<Texture3D> DICOMLoader::LoadTexture3D(vector<task<void>>& tasks, sh
 
 SceneTexture<Texture2D> DICOMLoader::LoadTextureArray(vector<task<void>>& tasks, shared_ptr<VanityCore>& vanitycore) {
 	converter.volumes[0].LoadVolume();
-	auto VolumeTexture = converter.volumes[0].GenerateWindowedVolume();
+	auto VolumeTexture = converter.volumes[0].GenerateIsoTexture3D(CorticalBone);
+
 	size_t depth = VolumeTexture.Depth();
 	size_t width = VolumeTexture.Width();
 	size_t height = VolumeTexture.Height();

@@ -23,6 +23,9 @@ namespace vxe {
 		void Initialize(std::shared_ptr<VanityCore>&);
 		void Bind(std::shared_ptr<VanityCore>&);
 		void Release();
+		DirectX::XMFLOAT4X4 GetView() {
+			return _view->GetView();
+		}
 
 	private:
 		DirectX::XMFLOAT3 _eye { 0.0f, 0.0f, 1.8f};

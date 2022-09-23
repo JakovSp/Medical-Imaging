@@ -42,14 +42,15 @@ struct VertexShaderOutput
 VertexShaderOutput main(VertexShaderInput input, uint InstanceID : SV_InstanceID)
 {
 	VertexShaderOutput output;
-	float4 pos = float4(input.pos.xy, (float)InstanceID/NumberOfSlices, 1.0f);
+	float4 pos = float4(input.pos.xy, ((float)InstanceID/NumberOfSlices) - 0.5f, 1.0f);
 
 	pos = mul(pos, World);
 	pos = mul(pos, View);
 	pos = mul(pos, Projection);
 	output.pos = pos;
 
-	output.tex.xy = input.tex.xy;
+	output.tex.x = input.tex.x;
+	output.tex.y = input.tex.y;
 	output.tex.z = InstanceID;
 
 	return output;
