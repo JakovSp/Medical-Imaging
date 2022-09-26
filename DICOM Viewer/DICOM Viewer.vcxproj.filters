@@ -38,11 +38,11 @@
     <Filter Include="Assets\Ankle">
       <UniqueIdentifier>{32e6ebb3-40f0-4790-b9fb-818f15bf6eec}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DICOM">
-      <UniqueIdentifier>{94b62642-11d9-427a-86b8-4faf58e4dce2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shapes">
       <UniqueIdentifier>{c23d37f1-42c3-4314-9796-f872f5b2aa1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DICOM">
+      <UniqueIdentifier>{ee10e7a0-018c-4f13-934e-d7a22b5d491a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -62,11 +62,11 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="DICOMLoader.cpp">
-      <Filter>DICOM</Filter>
-    </ClCompile>
     <ClCompile Include="Texture3D.cpp">
       <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="DICOMLoader.cpp">
+      <Filter>DICOM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -82,9 +82,6 @@
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="DICOMLoader.h">
-      <Filter>DICOM</Filter>
     </ClInclude>
     <ClInclude Include="Wireframe.h">
       <Filter>Shapes</Filter>
@@ -103,6 +100,9 @@
     </ClInclude>
     <ClInclude Include="PointCloud.h">
       <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="DICOMLoader.h">
+      <Filter>DICOM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

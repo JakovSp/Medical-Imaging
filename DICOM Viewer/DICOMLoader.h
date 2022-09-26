@@ -20,18 +20,17 @@ namespace vxe::med {
 		std::vector<U> indices;
 	};
 
-	class DICOMLoader {
+	class DICOMLoader : public DICOMConverter {
 	public:
-		DICOMLoader(std::wstring dirname) : converter(dirname) {
-		}
+		DICOMLoader(std::wstring dirname) : DICOMConverter(DICOMReader(dirname)){ }
 
 		std::vector<char> LoadPointCloud();
 		std::vector<char> LoadWireframeMesh();
 		SceneTexture<Texture3D> LoadTexture3D(	std::vector<concurrency::task<void>>& tasks,
 												std::shared_ptr<VanityCore>& vanitycore);
+		virtual void Convert() {
 
-	private:
-		DICOMConverter converter;
-		std::vector<float> vertices;
+		}
+
 	};
 }

@@ -34,7 +34,7 @@ namespace vxe::utl {
 			uint32_t biClrImportant = 0;
 		};
 
-	struct BitmapImage {
+	struct BitmapHeader {
 		BITMAPFILEHEADER biFH;
 		BITMAPINFOHEADER biIH;
 	};
@@ -47,38 +47,37 @@ namespace vxe::utl {
 		uint16_t elsize;
 	};
 	#pragma pack(pop)
+
+	struct BitmapImage {
+		BitmapHeader header;
+		std::vector<uint8_t> pixeldata;
+	};
 }
 
 namespace vxe::med {
 
 	class DICOMConverter {
 	public:
-		DICOMConverter(std::wstring dirname, FileSet& FS) : _outputdirpath(dirname), _MainFileSet(FS) {
-			if (!std::filesystem::exists(_outputdirpath)) {
-				_outputdirpath = std::filesystem::current_path();
-			}
-			DetectVolumes();
+		DICOMConverter(FileSet& FS) :_MainFileSet(FS) {
+			GatherVolumes();
 		}
-		DICOMConverter(DICOMReader reader) : _MainFileSet(reader.MainFileSet) {
-			DetectVolumes();
-		}
-		DICOMConverter(std::wstring dirname) : _MainFileSet(DICOMReader(dirname).MainFileSet) {
-			DetectVolumes();
-		}
+		DICOMConverter(DICOMReader reader) : DICOMConverter(reader.MainFileSet) {}
+		DICOMConverter(std::wstring dirname) : DICOMConverter(DICOMReader(dirname)) {}
 
-		virtual void Write();
-		void WriteBMP(DICOMInstance& instance, std::filesystem::path filename);
-		void WriteTexture(Cloud3D<uint8_t>& Volume, std::filesystem::path filename);
+		virtual void Convert() = 0;
+		void WriteBMP(DICOMInstance&, std::filesystem::path filename);
+		BitmapImage GetBMP(DICOMInstance& instance);
+		void WriteTexture(Array3D<uint8_t>& Volume, std::filesystem::path filename);
 		template<typename T>
 		void WriteVanityVertex(	const std::vector<T>& vertices, const std::vector<uint16_t>& index,
 								const uint32_t& vcount, const uint32_t& icount, std::filesystem::path filename);
+		void GetVolume(std::string studyuid, std::string foruid) {
+		}
 
 	public:
 		std::vector<DICOMVolume> volumes;
 	private:
-		void DetectVolumes();
-		void AddVolume(DICOMSeries& NewSeries);
-		std::filesystem::path _outputdirpath;
-		FileSet _MainFileSet;
+		void GatherVolumes();
+		FileSet& _MainFileSet;
 	};
 }

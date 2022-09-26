@@ -2,6 +2,9 @@
 
 namespace vxe::utl {
 	uint8_t LinearWindowClip(long double c, long double w, uint16_t x) {
+		if (c == 0 && w == 0)
+			return x / 2;
+
 		uint8_t y = 0;
 		if (x <= c - 0.5 - (w - 1) / 2) {
 			y = 0;

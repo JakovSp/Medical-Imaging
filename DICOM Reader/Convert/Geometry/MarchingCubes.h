@@ -299,6 +299,6 @@ namespace vxe::geo {
 	{0, 3, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
 	{-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}};
 
-	std::vector<tri> MarchingCubes(Cloud3D<uint16_t> Volume, float isovalue);
+	std::vector<tri> MarchingCubes(Array3D<uint16_t> Volume, float isovalue);
 }
 

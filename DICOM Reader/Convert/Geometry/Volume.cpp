@@ -75,12 +75,12 @@ void DICOMVolume::LoadVolume() {
 
 	auto orderedslices = OrderSlices();
 
-	Volume.Allocate(_width, _height, _depth);
+	_sampledvolume.Allocate(_width, _height, _depth);
 	size_t i = 0;
 	for (auto it = orderedslices.begin(); it != orderedslices.end(); it++, i++) {
 		string sliceUID = it._Ptr->_Myval.second;
 		vector<uint16_t> pixeldata = series[_majorseries][sliceUID][PixelData].FetchContainer<uint16_t>();
-		Volume[i].Copy(pixeldata.data());
+		_sampledvolume[i].Copy(pixeldata.data());
 	}
 }
 
@@ -123,20 +123,20 @@ list<pair<long double, string>> DICOMVolume::OrderSlices() {
 
 		return orderedslices;
 	} else {
-		// Copy OB Pixel Data:
+		// TODO: Copy OB Pixel Data
 	}
 }
 
-Cloud3D<uint8_t> DICOMVolume::GenerateIsoTexture3D(int lowerbound, int upperbound) {
+Array3D<uint8_t> DICOMVolume::GenerateIsoSamples(int lowerbound, int upperbound) {
 	long double wc = series[0][0][WindowCenter].FetchValue<long double>();
 	long double ww = series[0][0][WindowWidth].FetchValue<long double>();
-	Cloud3D<uint8_t> IsoTexture(_width, _height, _depth);
+	Array3D<uint8_t> IsoTexture(_width, _height, _depth);
 
 	for (size_t i = 0; i < _depth; i++) {
 		for (size_t j = 0; j < _width; j++) {
 			for (size_t k = 0; k < _height; k++) {
-				if (criterion<uint16_t>(Volume[i][j][k], lowerbound, upperbound)) {
-					IsoTexture[i][j][k] = LinearWindowClip(wc, ww, Volume[i][j][k]);
+				if (criterion<uint16_t>(_sampledvolume[i][j][k], lowerbound, upperbound)) {
+					IsoTexture[i][j][k] = LinearWindowClip(wc, ww, _sampledvolume[i][j][k]);
 				}
 				else {
 					IsoTexture[i][j][k] = 0;
@@ -150,8 +150,8 @@ Cloud3D<uint8_t> DICOMVolume::GenerateIsoTexture3D(int lowerbound, int upperboun
 	return IsoTexture;
 }
 
-Cloud3D<uint8_t> DICOMVolume::GenerateIsoTexture3D(Matter matter) {
-	return GenerateIsoTexture3D(HounsfieldScale[matter].lower, HounsfieldScale[matter].upper);
+Array3D<uint8_t> DICOMVolume::GenerateIsoSamples(Matter matter) {
+	return GenerateIsoSamples(HounsfieldScale[matter].lower, HounsfieldScale[matter].upper);
 }
 
 vector<long double> DICOMVolume::GetPixelSpacing(DataSet DS) {
@@ -173,18 +173,18 @@ vector<long double> DICOMVolume::GetPixelSpacing(DataSet DS) {
 }
 
 vector<vert3> DICOMVolume::GenerateIsoPointCloud(int lowerbound, int upperbound) {
-	size_t depth = Volume.Depth();
-	size_t width = Volume.Width();
-	size_t height = Volume.Height();
+	size_t depth = _sampledvolume.Depth();
+	size_t width = _sampledvolume.Width();
+	size_t height = _sampledvolume.Height();
 	vector<vert3> vertices;
 
-	// TODO: Select the correct series, the one that was used in construction of Cloud3D
+	// TODO: Select the correct series, the one that was used in construction of Array3D
 	vector<long double> spacing = GetPixelSpacing(series[0][0].MainDataSet);
 
 	for (size_t i = 0; i < depth; i++) {
 		for (size_t j = 0; j < width; j++) {
 			for (size_t k = 0; k < height; k++) {
-				if (criterion<uint16_t>(Volume[i][j][k], lowerbound, upperbound)) {
+				if (criterion<uint16_t>(_sampledvolume[i][j][k], lowerbound, upperbound)) {
 					vertices.push_back(vert3{	((float)j / width),
 												((float)k / height),
 												((float)i / depth)});
@@ -199,15 +199,15 @@ vector<vert3> DICOMVolume::GenerateIsoPointCloud(Matter matter) {
 	return GenerateIsoPointCloud(HounsfieldScale[matter].lower, HounsfieldScale[matter].upper);
 }
 
-Cloud3D<uint8_t> DICOMVolume::GenerateWindowedVolume() {
-	Cloud3D<uint8_t> Windowed(_width, _height, _depth);
+Array3D<uint8_t> DICOMVolume::GenerateWindowedSamples() {
+	Array3D<uint8_t> Windowed(_width, _height, _depth);
 	DataElement VOI = series[0][0][WindowCenter];
 	//long double wc = series[0][0][WindowCenter].FetchValue<long double>();
 	//long double ww = series[0][0][WindowWidth].FetchValue<long double>();
 	for (size_t i = 0; i < _depth; i++) {
 		for (size_t j = 0; j < _width; j++) {
 			for (size_t k = 0; k < _height; k++) {
-				Windowed[i][j][k] = (uint8_t)(Volume[i][j][k]/2);
+				Windowed[i][j][k] = (uint8_t)(_sampledvolume[i][j][k]/2);
 			}
 		}
 	}

@@ -13,7 +13,7 @@ namespace vxe::geo {
 	struct GridCell {
 		vert3 p[8];
 		float val[8];
-		GridCell(Cloud3D<uint16_t>& Volume, size_t x, size_t y, size_t z) {
+		GridCell(Array3D<uint16_t>& Volume, size_t x, size_t y, size_t z) {
 			val[0] = Volume[z + 1][y + 1][x + 0];
 			val[1] = Volume[z + 1][y + 1][x + 1];
 			val[2] = Volume[z + 0][y + 1][x + 1];
@@ -24,7 +24,7 @@ namespace vxe::geo {
 			val[7] = Volume[z + 0][y + 0][x + 0];
 		}
 
-		void CalculatePosition(Cloud3D<uint16_t>& Volume, size_t x, size_t y, size_t z) {
+		void CalculatePosition(Array3D<uint16_t>& Volume, size_t x, size_t y, size_t z) {
 			size_t width = Volume.Width();
 			size_t height = Volume.Height();
 			size_t depth = Volume.Depth();

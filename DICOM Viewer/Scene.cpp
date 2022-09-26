@@ -51,19 +51,19 @@ void Scene::LoadAssets(vector<task<void>>& tasks, shared_ptr<VanityCore>& vanity
 	_volumetricslice->SetMesh(quad);
 	_volumetricslice->SetWorld(world);
 
-	shared_ptr<Mesh<VertexPosition, uint16_t>> trimesh;
-	trimesh = make_shared<Wireframe<VertexPosition, uint16_t>>();
-	tasks.push_back(trimesh->CreateAsync(device, DICOMdata.LoadWireframeMesh()));
-	_trisurface = make_shared<SceneObject<VertexPosition, uint16_t>>();
-	_trisurface->SetMesh(trimesh);
-	_trisurface->SetWorld(world);
+	// shared_ptr<Mesh<VertexPosition, uint16_t>> trimesh;
+	// trimesh = make_shared<Wireframe<VertexPosition, uint16_t>>();
+	// tasks.push_back(trimesh->CreateAsync(device, DICOMdata.LoadWireframeMesh()));
+	// _trisurface = make_shared<SceneObject<VertexPosition, uint16_t>>();
+	// _trisurface->SetMesh(trimesh);
+	// _trisurface->SetWorld(world);
 
-	shared_ptr<Mesh<VertexPosition, uint16_t>> pointmesh;
-	pointmesh = make_shared<PointCloud2<VertexPosition, uint16_t>>();
-	tasks.push_back(pointmesh->CreateAsync(device, DICOMdata.LoadPointCloud()));
-	_pointcloud = make_shared<SceneObject<VertexPosition, uint16_t>>();
-	_pointcloud->SetMesh(pointmesh);
-	_pointcloud->SetWorld(world);
+	// shared_ptr<Mesh<VertexPosition, uint16_t>> pointmesh;
+	// pointmesh = make_shared<PointCloud2<VertexPosition, uint16_t>>();
+	// tasks.push_back(pointmesh->CreateAsync(device, DICOMdata.LoadPointCloud()));
+	// _pointcloud = make_shared<SceneObject<VertexPosition, uint16_t>>();
+	// _pointcloud->SetMesh(pointmesh);
+	// _pointcloud->SetWorld(world);
 
 }
 

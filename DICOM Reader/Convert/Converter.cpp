@@ -4,31 +4,26 @@ using namespace vxe::med;
 using namespace vxe::utl;
 using namespace vxe::geo;
 
-void DICOMConverter::WriteBMP(DICOMInstance& instance, std::filesystem::path filename) {
-	// Native DICOM Image 
-	BitmapImage bmpimg;
-	bmpimg.biIH.biWidth = instance.MainDataSet[Columns].FetchValue<uint16_t>();
-	bmpimg.biIH.biHeight = instance.MainDataSet[Rows].FetchValue<uint16_t>();
-	bmpimg.biIH.biPlanes = instance.MainDataSet[NumberOfFrames].FetchValue<uint16_t>();
-	if (!bmpimg.biIH.biPlanes) { bmpimg.biIH.biPlanes = 1; }
+// NOTE: Handles Native Image
+BitmapImage DICOMConverter::GetBMP(DICOMInstance& instance) {
+	BitmapImage image;
+	BitmapHeader& header = image.header;
 
-	bmpimg.biIH.biBitCount = 24;
-	bmpimg.biIH.biCompression = 0;
-	bmpimg.biIH.biSizeImage = bmpimg.biIH.biWidth * bmpimg.biIH.biHeight * bmpimg.biIH.biBitCount >> 3;
-		// instance.MainDataSet[BitsAllocated].FetchValue<uint16_t>()>>3;
-	bmpimg.biFH.bfOffBits = sizeof(BitmapImage);
-	bmpimg.biFH.bfSize = sizeof(BitmapImage) + bmpimg.biIH.biSizeImage;
+	header.biIH.biWidth = instance[Columns].FetchValue<uint16_t>();
+	header.biIH.biHeight = instance[Rows].FetchValue<uint16_t>();
+	header.biIH.biPlanes = instance[NumberOfFrames].FetchValue<uint16_t>();
+	if (!header.biIH.biPlanes) { header.biIH.biPlanes = 1; }
 
-	FILE* imgfp;
-	fopen_s(&imgfp, filename.string().c_str(), "wb+");
-	if (!imgfp) {
-		printf("\nCannot open file for writing a BMP file!");
-		return;
-	}
+	header.biIH.biBitCount = 24;
+	header.biIH.biCompression = 0;
+	header.biIH.biSizeImage = header.biIH.biWidth * header.biIH.biHeight * header.biIH.biBitCount >> 3;
+	header.biFH.bfOffBits = sizeof(BitmapHeader);
+	header.biFH.bfSize = sizeof(BitmapHeader) + header.biIH.biSizeImage;
 
-	DataElement PixelDataDE = instance.MainDataSet[PixelData];
-	long double windowcenter = instance.MainDataSet[WindowCenter].FetchValue<long double>();
-	long double windowwidth = instance.MainDataSet[WindowWidth].FetchValue<long double>();
+	// NOTE: When LUT VOI (Windowing attributes) is not present, they are zero
+	long double windowcenter = instance[WindowCenter].FetchValue<long double>();
+	long double windowwidth = instance[WindowWidth].FetchValue<long double>();
+	DataElement PixelDataDE = instance[PixelData];
 
 	std::vector<uint8_t> realpixeldata;
 	if (PixelDataDE.vr == OW) {
@@ -43,12 +38,25 @@ void DICOMConverter::WriteBMP(DICOMInstance& instance, std::filesystem::path fil
 		}
 	}
 
-	fwrite(&bmpimg, sizeof(BitmapImage), 1, imgfp);
-	fwrite(realpixeldata.data(), bmpimg.biIH.biSizeImage, 1, imgfp);
+	image.pixeldata = realpixeldata;
+	return image;
+}
+
+void DICOMConverter::WriteBMP(DICOMInstance& instance, std::filesystem::path filename) {
+	auto image = GetBMP(instance);
+	FILE* imgfp;
+	fopen_s(&imgfp, filename.string().c_str(), "wb+");
+	if (!imgfp) {
+		printf("\nCannot open file for writing a BMP file!");
+		return;
+	}
+
+	fwrite(&image.header, sizeof(BitmapHeader), 1, imgfp);
+	fwrite(image.pixeldata.data(), image.header.biIH.biSizeImage, 1, imgfp);
 	fclose(imgfp);
 }
 
-void DICOMConverter::WriteTexture(Cloud3D<uint8_t>& Volume, std::filesystem::path filename) {
+void DICOMConverter::WriteTexture(Array3D<uint8_t>& Volume, std::filesystem::path filename) {
 	TextureDescription desc;
 	FILE* imgfp;
 	fopen_s(&imgfp, filename.string().c_str(), "wb+");
@@ -88,39 +96,27 @@ void DICOMConverter::WriteVanityVertex(	const std::vector<T>& vertices,
 	fclose(imgfp);
 }
 
-void DICOMConverter::DetectVolumes() {
-	// Iterate through FileSet
-	for (size_t i = 0; i < _MainFileSet.Root.patients.size(); i++) {
-		DICOMPatient patient = _MainFileSet.Root.patients[i];
-		for (size_t j = 0; j < patient.studies.size(); j++) {
-			// For each DICOM Study read all of the Frame of References for each series
-			// All images in a Series that share the same Frame of Reference shall be spatially related to each other
-			// Multiple Series within a Study may share the same Frame of Reference
-			// The common denominator is DICOM Instance
-			DICOMStudy study = patient.studies[j];
-			for (size_t k = 0; k < study.series.size(); k++) {
-				AddVolume(study.series[k]);
+// NOTE: Multiple Series within a Study may share the same Frame of Reference
+// NOTE: All images in a Series that share the same Frame of Reference shall be
+// spatially related to each other
+void DICOMConverter::GatherVolumes() {
+	// For each DICOM Study read all of the Frame of References for each series
+	for (DICOMPatient& patient : _MainFileSet.Root.patients) {
+		for (DICOMStudy& study : patient.studies) {
+			for (DICOMSeries& series : study.series) {
+				const std::string& FORUID = series[0][FrameOfReferenceUID].FetchValue<std::string>();
+				if (series.IsHomogeneous(FORUID)) {
+					for (size_t id = 0; id < volumes.size(); id++) {
+						if (FORUID == volumes[id].FORUID) {
+							volumes[id].series.push_back(series);
+							return;
+						}
+					}
+					volumes.push_back(FORUID);
+					volumes.back().series.push_back(series);
+				}
 			}
 		}
 	}
 	// TODO: Categorize NewSeries by their orientation
-}
-
-void DICOMConverter::AddVolume(DICOMSeries& NewSeries) {
-	// Group DICOM Instances by Frame of Reference
-	// If the Volume doesn't exist, insert a new one
-	const std::string& FORUID = NewSeries.instances[0].MainDataSet[FrameOfReferenceUID].FetchValue<std::string>();
-	if (NewSeries.IsHomogeneous(FORUID)) {
-		for (size_t id = 0; id < volumes.size(); id++) {
-			if (FORUID == volumes[id].ID) {
-				volumes[id].series.push_back(NewSeries);
-				return;
-			}
-		}
-		volumes.push_back(FORUID);
-		volumes.back().series.push_back(NewSeries);
-	}
-}
-
-void DICOMConverter::Write() {
 }

@@ -62,7 +62,7 @@ void DICOMReader::ConstructFileSet() {
 // 	reader.Read();
 // 
 // 	DICOMConverter converter("output", reader.MainFileSet);
-// 	converter.DetectVolumes();
+// 	converter.GatherVolumes();
 // 	converter.Convert();
 // 
 // 	// choose a fixed value for MRI

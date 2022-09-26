@@ -6,11 +6,11 @@
 namespace vxe::utl{
 
 	template <typename T>
-	class Cloud3D {
+	class Array3D {
 
 	public:
-		Cloud3D(): _points(nullptr), _width(0), _height(0), _depth(0) { }
-		Cloud3D(uint64_t width, uint64_t height, uint64_t depth) :
+		Array3D(): _points(nullptr), _width(0), _height(0), _depth(0) { }
+		Array3D(uint64_t width, uint64_t height, uint64_t depth) :
 			_points(nullptr), _width(width), _height(height), _depth(depth) {
 			Allocate(_width, _height, _depth);
 		}
@@ -24,7 +24,7 @@ namespace vxe::utl{
 
 		class Proxy {
 		public:
-			Proxy(Cloud3D* enclosing, T* position) : 
+			Proxy(Array3D* enclosing, T* position) : 
 				_enclosing{ enclosing },
 				_position{ position }
 			{};
@@ -36,7 +36,7 @@ namespace vxe::utl{
 			}
 
 		private:
-			const Cloud3D* _enclosing;
+			const Array3D* _enclosing;
 			T* _position;
 		};
 
@@ -46,7 +46,7 @@ namespace vxe::utl{
 		//void Load(std::wstring);
 		//void Store(std::wstring);
 
-		void Copy(Cloud3D<T>& Volume) {
+		void Copy(Array3D<T>& Volume) {
 			_width = Volume.Width();
 			_height = Volume.Height();
 			_depth = Volume.Depth();
@@ -59,7 +59,7 @@ namespace vxe::utl{
 		auto Depth() const { return _depth; }
 		auto Points() const { return _points; }
 
-		~Cloud3D(){}
+		~Array3D(){}
 
 	private:
 		T* _points;

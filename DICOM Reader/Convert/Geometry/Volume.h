@@ -1,5 +1,5 @@
 /*
-Volume.h
+_sampledvolume.h
 
 	Volumetric Data with DICOM information
 	One DICOMVolume can span multiple series
@@ -28,28 +28,33 @@ namespace vxe::med {
 
 	class DICOMVolume {
 	public:
-		DICOMVolume(std::string FOR) : ID(FOR), _majorseries(0), _majororient(0),
+		DICOMVolume(std::string FOR) : FORUID(FOR), _majorseries(0), _majororient(0),
 			_width(0), _height(0), _depth(0)
 		{}
 
-		std::list<std::pair<long double, std::string>> OrderSlices();
+		void LoadVolume();
+		Array3D<uint16_t> GetSamples() { return _sampledvolume; }
+		std::vector<long double> GetPixelSpacing(DataSet DS);
+
+		Array3D<uint8_t> GenerateWindowedSamples();
+		Array3D<uint8_t> GenerateIsoSamples(Matter matter);
+		std::vector<vert3> GenerateIsoPointCloud(Matter matter);
+
+	private:
 		void SetMajorAxis();
 		void SetMajorOrient();
-
-		void LoadVolume();
-
-		Cloud3D<uint8_t> GenerateWindowedVolume();
-		Cloud3D<uint8_t> GenerateIsoTexture3D(int lowerbound, int upperbound);
-		Cloud3D<uint8_t> GenerateIsoTexture3D(Matter matter);
-		std::vector<long double> GetPixelSpacing(DataSet DS);
-		std::vector<vert3> GenerateIsoPointCloud(Matter matter);
+		std::list<std::pair<long double, std::string>> OrderSlices();
 		std::vector<vert3> GenerateIsoPointCloud(int lowerbound, int upperbound);
+		Array3D<uint8_t> GenerateIsoSamples(int lowerbound, int upperbound);
 
 	public:
-		std::string ID;
+		// NOTE: Combination of Frame of Reference UID and Study Instance UID is
+		// sufficient to uniquely identify a DICOM Volume
+		std::string FORUID;
+		std::string StudyUID;
 		std::vector<DICOMSeries> series;
-		Cloud3D<uint16_t> Volume;
 	private:
+		Array3D<uint16_t> _sampledvolume;
 		size_t _majorseries;
 		size_t _majororient;
 		size_t _width, _height, _depth;
