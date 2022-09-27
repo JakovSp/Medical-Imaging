@@ -73,7 +73,7 @@ void DICOMVolume::SetMajorOrient() {
 
 void DICOMVolume::LoadVolume() {
 	if (_sampledvolume.Points()) {
-		// Some data is loaded
+		// Some data is already loaded
 		return;
 	}
 

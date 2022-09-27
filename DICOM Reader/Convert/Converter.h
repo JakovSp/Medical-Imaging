@@ -43,14 +43,21 @@ namespace vxe::utl {
 		uint32_t width;
 		uint32_t height;
 		uint32_t depth;
-		uint16_t mipmap;
-		uint16_t elsize;
+		uint8_t mipmap;
+		uint8_t elsize;
 	};
 	#pragma pack(pop)
 
 	struct BitmapImage {
 		BitmapHeader header;
 		std::vector<uint8_t> pixeldata;
+	};
+
+	// TODO: Use file hash to uniquely identify a file?
+	struct CacheEntry {
+		std::wstring UID;
+		std::wstring type;
+		std::wstring Filename;
 	};
 }
 
@@ -61,11 +68,15 @@ namespace vxe::med {
 		DICOMConverter(){}
 		DICOMConverter(FileSet& FS) :
 			_MainFileSet(FS),
-			_cachefile(std::filesystem::current_path().append("DICOMVolumeDB")) {
+			_cachefilepath(std::filesystem::current_path().append("DICOMVolumeDB")) {
 		}
 		DICOMConverter(DICOMReader reader) : DICOMConverter(reader.MainFileSet) {}
 		DICOMConverter(std::wstring dirname) : DICOMConverter(DICOMReader(dirname)) {}
 
+		void OpenCache();
+		void ReadCache();
+		void WriteCache();
+		std::wstring QueryCache(std::wstring UID, std::wstring type);
 		virtual void Convert() = 0;
 		void WriteBMP(DICOMInstance&, std::filesystem::path filename);
 		BitmapImage GetBMP(DICOMInstance& instance);
@@ -73,25 +84,14 @@ namespace vxe::med {
 		template<typename T>
 		void WriteVanityVertex(	const std::vector<T>& vertices, const std::vector<uint16_t>& index,
 								const uint32_t& vcount, const uint32_t& icount, std::filesystem::path filename);
-		void OpenCache() {
-			std::ifstream rfile(_cachefile);
-			if(!rfile){
-				std::ofstream output(_cachefile);
-				output << "Hey\n";
-				output.flush();
-				output.close();
-			}
-			// open the cache file
-			// keep the cache file opened
-			// Load volume set as file is parsed
-			// list all of the 
-		}
 		void GatherVolumes();
 
 	public:
 		std::vector<DICOMVolume> volumeset;
 	protected:
-		std::filesystem::path _cachefile;
+		std::filesystem::path _cachefilepath;
+		std::wfstream _cachefile;
 		FileSet _MainFileSet;
+		std::vector<CacheEntry> _filecache;
 	};
 }

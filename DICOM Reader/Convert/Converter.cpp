@@ -3,6 +3,8 @@
 using namespace vxe::med;
 using namespace vxe::utl;
 using namespace vxe::geo;
+using namespace std;
+namespace fs = std::filesystem;
 
 // NOTE: Handles Native Image
 BitmapImage DICOMConverter::GetBMP(DICOMInstance& instance) {
@@ -25,10 +27,10 @@ BitmapImage DICOMConverter::GetBMP(DICOMInstance& instance) {
 	long double windowwidth = instance[WindowWidth].FetchValue<long double>();
 	DataElement PixelDataDE = instance[PixelData];
 
-	std::vector<uint8_t> realpixeldata;
+	vector<uint8_t> realpixeldata;
 	if (PixelDataDE.vr == OW) {
 		size_t step = 2;
-		const std::vector<uint16_t>& pixeldata = PixelDataDE.FetchContainer<uint16_t>();
+		const vector<uint16_t>& pixeldata = PixelDataDE.FetchContainer<uint16_t>();
 
 		realpixeldata.reserve(pixeldata.size());
 		for (size_t i = 0; i < pixeldata.size(); i++) {
@@ -42,7 +44,7 @@ BitmapImage DICOMConverter::GetBMP(DICOMInstance& instance) {
 	return image;
 }
 
-void DICOMConverter::WriteBMP(DICOMInstance& instance, std::filesystem::path filename) {
+void DICOMConverter::WriteBMP(DICOMInstance& instance, fs::path filename) {
 	auto image = GetBMP(instance);
 	FILE* imgfp;
 	fopen_s(&imgfp, filename.string().c_str(), "wb+");
@@ -56,9 +58,10 @@ void DICOMConverter::WriteBMP(DICOMInstance& instance, std::filesystem::path fil
 	fclose(imgfp);
 }
 
-void DICOMConverter::WriteTexture(Array3D<uint8_t>& Volume, std::filesystem::path filename) {
-	TextureDescription desc;
+void DICOMConverter::WriteTexture(Array3D<uint8_t>& Volume, fs::path filename) {
+	TextureDescription desc{0};
 	FILE* imgfp;
+
 	fopen_s(&imgfp, filename.string().c_str(), "wb+");
 	if (!imgfp) {
 		printf("\nCannot open file for writing a 3D texture!");
@@ -77,11 +80,11 @@ void DICOMConverter::WriteTexture(Array3D<uint8_t>& Volume, std::filesystem::pat
 }
 
 template<typename T>
-void DICOMConverter::WriteVanityVertex(	const std::vector<T>& vertices,
-										const std::vector<uint16_t>& indices,
+void DICOMConverter::WriteVanityVertex(	const vector<T>& vertices,
+										const vector<uint16_t>& indices,
 										const uint32_t& vcount,
 										const uint32_t& icount,
-										std::filesystem::path filename) {
+										fs::path filename) {
 	FILE* imgfp;
 	fopen_s(&imgfp, filename.string().c_str(), "wb+");
 	if (!imgfp) {
@@ -104,7 +107,7 @@ void DICOMConverter::GatherVolumes() {
 	for (DICOMPatient& patient : _MainFileSet.Root.patients) {
 		for (DICOMStudy& study : patient.studies) {
 			for (DICOMSeries& series : study.series) {
-				const std::string& FORUID = series[0][FrameOfReferenceUID].FetchValue<std::string>();
+				const string& FORUID = series[0][FrameOfReferenceUID].FetchValue<string>();
 				if (series.IsHomogeneous(FORUID)) {
 					for (size_t id = 0; id < volumeset.size(); id++) {
 						if (FORUID == volumeset[id].FORUID) {
@@ -119,4 +122,42 @@ void DICOMConverter::GatherVolumes() {
 		}
 	}
 	// TODO: Categorize NewSeries by their orientation
+}
+
+void DICOMConverter::ReadCache() {
+	wstring line;
+	_cachefile.open(_cachefilepath, ios::app|ios::in|ios::out);
+
+	// _cachefile.seekg(ios::beg);
+	while(getline(_cachefile, line, L'\n')) {
+		wstringstream issentry(line);
+
+		wstring UID, type, Filename;
+		getline(issentry, UID, L',');
+		getline(issentry, type, L',');
+		getline(issentry, Filename, L'\n');
+		if (UID.empty() || Filename.empty())
+			continue;
+
+		_filecache.push_back({UID, type, Filename});
+	}
+	// TODO: Check if a file exists and if it doesn't remove from cache
+	_cachefile.close();
+}
+
+void DICOMConverter::WriteCache() {
+	_cachefile.open(_cachefilepath, ios::app|ios::in|ios::out);
+	for (CacheEntry& entry : _filecache)
+		_cachefile << entry.UID << L"," << entry.type << L"," << entry.Filename << '\n';
+
+	_cachefile.close();
+}
+
+wstring DICOMConverter::QueryCache(wstring UID, wstring type) {
+	for (CacheEntry& entry : _filecache) {
+		if (entry.UID == UID && entry.type == type) {
+			return entry.Filename;
+		}
+	}
+	return L"";
 }

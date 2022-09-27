@@ -24,10 +24,10 @@ namespace vxe::med {
 	class DICOMLoader : public DICOMConverter {
 	public:
 		DICOMLoader(std::wstring dirname){ 
-			_cachefile = Windows::Storage::ApplicationData::Current->LocalFolder->Path->Data();
-			_cachefile /= "DICOMVolumeDB";
+			_cachefilepath = Windows::Storage::ApplicationData::Current->LocalFolder->Path->Data();
+			_cachefilepath /= "DICOMVolumeDB";
+			ReadCache();
 			_MainFileSet = DICOMReader(dirname).MainFileSet;
-			OpenCache();
 			GatherVolumes();
 		}
 
@@ -38,6 +38,12 @@ namespace vxe::med {
 		virtual void Convert() {
 
 		}
-
+		~DICOMLoader() {
+			if (_caching) {
+				_cachefile.close();
+			}
+		}
+	private:
+		bool _caching = true;
 	};
 }

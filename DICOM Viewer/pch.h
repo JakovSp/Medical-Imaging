@@ -10,5 +10,6 @@
 //	vJan22 
 //
 
+#define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING 
 #include <Engine/Vanity.h>
 #include <Engine/Core/Common/Vanity Core.h>
