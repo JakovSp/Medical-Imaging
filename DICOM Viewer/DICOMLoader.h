@@ -13,6 +13,7 @@ Convert.h
 #include <Engine\Models\Mesh.h>
 #include <Engine\Third Party\DirectX Tool Kit\VertexTypes.h>
 
+// TODO: Use file picker from Windows API
 namespace vxe::med {
 	template<typename T, typename U>
 	struct Geometry{
@@ -22,7 +23,13 @@ namespace vxe::med {
 
 	class DICOMLoader : public DICOMConverter {
 	public:
-		DICOMLoader(std::wstring dirname) : DICOMConverter(DICOMReader(dirname)){ }
+		DICOMLoader(std::wstring dirname){ 
+			_cachefile = Windows::Storage::ApplicationData::Current->LocalFolder->Path->Data();
+			_cachefile /= "DICOMVolumeDB";
+			_MainFileSet = DICOMReader(dirname).MainFileSet;
+			OpenCache();
+			GatherVolumes();
+		}
 
 		std::vector<char> LoadPointCloud();
 		std::vector<char> LoadWireframeMesh();

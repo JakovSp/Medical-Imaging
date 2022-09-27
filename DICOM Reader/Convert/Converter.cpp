@@ -106,14 +106,14 @@ void DICOMConverter::GatherVolumes() {
 			for (DICOMSeries& series : study.series) {
 				const std::string& FORUID = series[0][FrameOfReferenceUID].FetchValue<std::string>();
 				if (series.IsHomogeneous(FORUID)) {
-					for (size_t id = 0; id < volumes.size(); id++) {
-						if (FORUID == volumes[id].FORUID) {
-							volumes[id].series.push_back(series);
+					for (size_t id = 0; id < volumeset.size(); id++) {
+						if (FORUID == volumeset[id].FORUID) {
+							volumeset[id].series.push_back(series);
 							return;
 						}
 					}
-					volumes.push_back(FORUID);
-					volumes.back().series.push_back(series);
+					volumeset.push_back(FORUID);
+					volumeset.back().series.push_back(series);
 				}
 			}
 		}

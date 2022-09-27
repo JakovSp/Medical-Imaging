@@ -58,8 +58,10 @@ namespace vxe::med {
 
 	class DICOMConverter {
 	public:
-		DICOMConverter(FileSet& FS) :_MainFileSet(FS) {
-			GatherVolumes();
+		DICOMConverter(){}
+		DICOMConverter(FileSet& FS) :
+			_MainFileSet(FS),
+			_cachefile(std::filesystem::current_path().append("DICOMVolumeDB")) {
 		}
 		DICOMConverter(DICOMReader reader) : DICOMConverter(reader.MainFileSet) {}
 		DICOMConverter(std::wstring dirname) : DICOMConverter(DICOMReader(dirname)) {}
@@ -71,13 +73,25 @@ namespace vxe::med {
 		template<typename T>
 		void WriteVanityVertex(	const std::vector<T>& vertices, const std::vector<uint16_t>& index,
 								const uint32_t& vcount, const uint32_t& icount, std::filesystem::path filename);
-		void GetVolume(std::string studyuid, std::string foruid) {
+		void OpenCache() {
+			std::ifstream rfile(_cachefile);
+			if(!rfile){
+				std::ofstream output(_cachefile);
+				output << "Hey\n";
+				output.flush();
+				output.close();
+			}
+			// open the cache file
+			// keep the cache file opened
+			// Load volume set as file is parsed
+			// list all of the 
 		}
+		void GatherVolumes();
 
 	public:
-		std::vector<DICOMVolume> volumes;
-	private:
-		void GatherVolumes();
-		FileSet& _MainFileSet;
+		std::vector<DICOMVolume> volumeset;
+	protected:
+		std::filesystem::path _cachefile;
+		FileSet _MainFileSet;
 	};
 }

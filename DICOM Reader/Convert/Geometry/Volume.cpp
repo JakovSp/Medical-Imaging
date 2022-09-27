@@ -5,7 +5,7 @@ using namespace vxe::med;
 using namespace vxe::utl;
 
 
-void DICOMVolume::SetMajorAxis() {
+void DICOMVolume::SetMajorSeries() {
 	// Criteria: consider the one with the most number of samples w/r to space spanned(density)?
 	// Could be implied by Slice Thickness or Spacing Between Slices attributes.
 	long double minspacing = numeric_limits<long double>::max();
@@ -25,12 +25,13 @@ void DICOMVolume::SetMajorAxis() {
 
 // Approximate the direction in R^3, by just choosing the axis with the biggest cosine component
 // Less precision is necessary when ordering slices in space
+// NOTE: Can be ignored
 void DICOMVolume::SetMajorOrient() {
 	size_t majororient = 0;
 	size_t majororientx = 0;
 	size_t majororienty = 0;
 	vector<long double> orient = series[_majorseries][0][ImageOrientationPatient].FetchContainer<long double>();
-	// find biggest x cosine
+	// find biggest x cosine (indices 0,1,2)
 	if (orient[0] < orient[1]) {
 		if (orient[1] < orient[2]) {
 			majororientx = 2;
@@ -44,9 +45,9 @@ void DICOMVolume::SetMajorOrient() {
 		} else {
 			majororientx = 0;
 		}
-
 	}
-	// find biggest y cosine
+
+	// find biggest y cosine (indices 3,4,5)
 	if (orient[3] < orient[4]) {
 		if (orient[4] < orient[5]) {
 			majororienty = 2;
@@ -60,8 +61,9 @@ void DICOMVolume::SetMajorOrient() {
 		} else {
 			majororienty = 0;
 		}
-
 	}
+
+	// select which of x, y or z components is the most dominant
 	switch (majororientx + majororienty) {
 	case 1: _majororient = 2; break;
 	case 2: _majororient = 1; break;
@@ -70,7 +72,12 @@ void DICOMVolume::SetMajorOrient() {
 }
 
 void DICOMVolume::LoadVolume() {
-	SetMajorAxis();
+	if (_sampledvolume.Points()) {
+		// Some data is loaded
+		return;
+	}
+
+	SetMajorSeries();
 	SetMajorOrient();
 
 	auto orderedslices = OrderSlices();
@@ -145,8 +152,6 @@ Array3D<uint8_t> DICOMVolume::GenerateIsoSamples(int lowerbound, int upperbound)
 		}
 	}
 
-//	uint8_t* texturedata = IsoTexture.Points();
-//	auto texturecontainer = vector<uint8_t>(texturedata, texturedata + depth * width * height);
 	return IsoTexture;
 }
 

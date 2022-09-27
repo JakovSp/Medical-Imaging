@@ -14,24 +14,24 @@ using namespace vxe::med;
 using namespace vxe::geo;
 
 std::vector<char> DICOMLoader::LoadPointCloud() {
-	volumes[0].LoadVolume();
-	std::vector<vert3> points = volumes[0].GenerateIsoPointCloud(CorticalBone);
+	volumeset[0].LoadVolume();
+	std::vector<vert3> points = volumeset[0].GenerateIsoPointCloud(CorticalBone);
 	char* data = (char*)points.data();
 	vector<char> deserialized(data, data + points.size()*sizeof(vert3));
 	return deserialized;
 }
 
 std::vector<char> DICOMLoader::LoadWireframeMesh() {
-	volumes[0].LoadVolume();
-	std::vector<tri> Surface = MarchingCubes(volumes[0].GetSamples(), HounsfieldScale[CorticalBone].lower);
+	volumeset[0].LoadVolume();
+	std::vector<tri> Surface = MarchingCubes(volumeset[0].GetSamples(), HounsfieldScale[CorticalBone].lower);
 	char* data = (char*)Surface.data();
 	vector<char> deserialized(data, data + Surface.size()*sizeof(tri));
 	return deserialized;
 }
 
 SceneTexture<Texture3D> DICOMLoader::LoadTexture3D(vector<task<void>>& tasks, shared_ptr<VanityCore>& vanitycore) {
-	volumes[0].LoadVolume();
-	auto VolumeTexture = volumes[0].GenerateWindowedSamples();
+	volumeset[0].LoadVolume();
+	auto VolumeTexture = volumeset[0].GenerateWindowedSamples();
 	size_t depth = VolumeTexture.Depth();
 	size_t width = VolumeTexture.Width();
 	size_t height = VolumeTexture.Height();

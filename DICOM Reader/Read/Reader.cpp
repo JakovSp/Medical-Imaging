@@ -17,7 +17,7 @@ bool DICOMReader::IsDICOMDIR(DataSet& MetaInfo) {
 
 void DICOMReader::Read(std::filesystem::path dirname) {
 	if (dirname.empty())
-		dirname = std::filesystem::current_path();
+		dirname = std::filesystem::current_path().append(_inputdirpath.c_str());
 	ReadDirectory(dirname);
 	ConstructFileSet();
 }

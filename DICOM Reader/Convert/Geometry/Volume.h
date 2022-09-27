@@ -41,7 +41,7 @@ namespace vxe::med {
 		std::vector<vert3> GenerateIsoPointCloud(Matter matter);
 
 	private:
-		void SetMajorAxis();
+		void SetMajorSeries();
 		void SetMajorOrient();
 		std::list<std::pair<long double, std::string>> OrderSlices();
 		std::vector<vert3> GenerateIsoPointCloud(int lowerbound, int upperbound);
