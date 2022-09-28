@@ -1,6 +1,7 @@
 #include "pch.h"
 
 #include "DICOMLoader.h"
+#include <ctime>
 
 #include <DICOM Reader/Convert/Geometry/Geometry.h>
 #include <DICOM Reader/Convert/Geometry/Volume.h>
@@ -10,6 +11,7 @@
 #include <locale>
 #include <codecvt>
 #include <string>
+
 
 using namespace std;
 using namespace vxe;
@@ -79,8 +81,15 @@ SceneTexture<Texture3D> DICOMLoader::LoadTexture3D(vector<task<void>>& tasks, sh
 	auto VolumeTexture = volumeset[0].GenerateIsoSamples(CorticalBone);
 
 	if (_caching) {
+		time_t t = time(0);
+		struct tm now;
+		localtime_s(&now, &t);
+		wstring timestr; timestr.resize(80);
+		wcsftime(timestr.data(), 80, L"_%d%m%y_%S%M%H", &now);
+
 		std::wstring filepath(Windows::Storage::ApplicationData::Current->LocalFolder->Path->Data());
-		filepath.append(L"\\NewVolumeTexture");
+		filepath.append(L"\\CorticalTexture3D");
+		filepath.append(timestr);
 		WriteTexture3D(VolumeTexture, filepath);
 		_filecache.push_back({ FORUID, type, filepath.c_str()});
 		WriteCache();
