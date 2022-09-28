@@ -16,11 +16,6 @@ void DICOMVolume::SetMajorSeries() {
 			minspacing = spacing;
 		}
 	}
-
-	_width = series[_majorseries][0][Columns].FetchValue<uint16_t>();
-	_height = series[_majorseries][0][Rows].FetchValue<uint16_t>();
-	_depth = series[_majorseries].instances.size();
-	
 }
 
 // Approximate the direction in R^3, by just choosing the axis with the biggest cosine component
@@ -71,14 +66,21 @@ void DICOMVolume::SetMajorOrient() {
 	}
 }
 
-void DICOMVolume::LoadVolume() {
+void DICOMVolume::InitializeVolume() {
 	if (_sampledvolume.Points()) {
-		// Some data is already loaded
 		return;
 	}
 
 	SetMajorSeries();
 	SetMajorOrient();
+
+	_width = series[_majorseries][0][Columns].FetchValue<uint16_t>();
+	_height = series[_majorseries][0][Rows].FetchValue<uint16_t>();
+	_depth = series[_majorseries].instances.size();
+}
+
+void DICOMVolume::LoadVolume() {
+	if (_loaded) { return; }
 
 	auto orderedslices = OrderSlices();
 

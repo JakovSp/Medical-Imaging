@@ -63,6 +63,7 @@ namespace vxe::utl {
 
 namespace vxe::med {
 
+	// Used for gathering volumes and interpolating slices
 	class DICOMConverter {
 	public:
 		DICOMConverter(){}
@@ -80,11 +81,14 @@ namespace vxe::med {
 		virtual void Convert() = 0;
 		void WriteBMP(DICOMInstance&, std::filesystem::path filename);
 		BitmapImage GetBMP(DICOMInstance& instance);
-		void WriteTexture(Array3D<uint8_t>& Volume, std::filesystem::path filename);
+		void WriteTexture3D(Array3D<uint8_t>& Volume, fs::path filename);
+		void WriteTexture3DWithHeader(Array3D<uint8_t>& Volume, std::filesystem::path filename);
 		template<typename T>
 		void WriteVanityVertex(	const std::vector<T>& vertices, const std::vector<uint16_t>& index,
 								const uint32_t& vcount, const uint32_t& icount, std::filesystem::path filename);
 		void GatherVolumes();
+		void InitializeVolumes();
+		void LoadVolumes();
 
 	public:
 		std::vector<DICOMVolume> volumeset;

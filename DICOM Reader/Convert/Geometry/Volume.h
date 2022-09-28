@@ -29,9 +29,10 @@ namespace vxe::med {
 	class DICOMVolume {
 	public:
 		DICOMVolume(std::string FOR) : FORUID(FOR), _majorseries(0), _majororient(0),
-			_width(0), _height(0), _depth(0)
+			_width(0), _height(0), _depth(0), _loaded(false)
 		{}
 
+		void InitializeVolume();
 		void LoadVolume();
 		Array3D<uint16_t> GetSamples() { return _sampledvolume; }
 		std::vector<long double> GetPixelSpacing(DataSet DS);
@@ -58,6 +59,7 @@ namespace vxe::med {
 		size_t _majorseries;
 		size_t _majororient;
 		size_t _width, _height, _depth;
+		bool _loaded;
 	};
 
 }

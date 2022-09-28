@@ -10,7 +10,7 @@
 //
 
 #include "pch.h"
-
+#include <filesystem>
 #include <Engine\Third Party\DirectX Tool Kit\VertexTypes.h>
 
 #include <Engine\Pipeline Stages\Shaders\Vertex Shader.h>
@@ -26,6 +26,7 @@ namespace vxe {
 		}
 		Pipeline(std::wstring vsfilename, std::wstring psfilename) :
 			_vsfilename(vsfilename), _psfilename(psfilename) {
+			_installfolderpath = Windows::ApplicationModel::Package::Current->InstalledLocation->Path->Data();
 			DebugPrint(std::string("\t Pipeline::Ctor... \n"));
 		}
 
@@ -35,10 +36,10 @@ namespace vxe {
 			auto device = vanitycore->GetD3DDevice();
 			
 			_vertexshader = make_shared<VertexShader<VertexType_t>>();
-			tasks.push_back(_vertexshader->CreateAsync(device, _vsfilename));
+			tasks.push_back(_vertexshader->CreateAsync(device, _installfolderpath/_vsfilename));
 
 			_pixelshader = make_shared<PixelShader>();
-			tasks.push_back(_pixelshader->CreateAsync(device, _psfilename));
+			tasks.push_back(_pixelshader->CreateAsync(device, _installfolderpath/_psfilename));
 		}
 
 		void BindShaders(std::shared_ptr<VanityCore>& vanitycore) {
@@ -60,6 +61,7 @@ namespace vxe {
 		std::shared_ptr<PixelShader> _pixelshader;
 		std::wstring _vsfilename;
 		std::wstring _psfilename;
+		std::filesystem::path _installfolderpath;
 	};
 
 }

@@ -23,14 +23,7 @@ namespace vxe::med {
 
 	class DICOMLoader : public DICOMConverter {
 	public:
-		DICOMLoader(std::wstring dirname){ 
-			_cachefilepath = Windows::Storage::ApplicationData::Current->LocalFolder->Path->Data();
-			_cachefilepath /= "DICOMVolumeDB";
-			ReadCache();
-			_MainFileSet = DICOMReader(dirname).MainFileSet;
-			GatherVolumes();
-		}
-
+		DICOMLoader(std::wstring dirname);
 		std::vector<char> LoadPointCloud();
 		std::vector<char> LoadWireframeMesh();
 		SceneTexture<Texture3D> LoadTexture3D(	std::vector<concurrency::task<void>>& tasks,
@@ -45,5 +38,7 @@ namespace vxe::med {
 		}
 	private:
 		bool _caching = true;
+		std::filesystem::path _localfolderpath;
+		std::filesystem::path _installfolderpath;
 	};
 }

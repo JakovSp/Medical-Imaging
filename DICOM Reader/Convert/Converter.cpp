@@ -58,7 +58,20 @@ void DICOMConverter::WriteBMP(DICOMInstance& instance, fs::path filename) {
 	fclose(imgfp);
 }
 
-void DICOMConverter::WriteTexture(Array3D<uint8_t>& Volume, fs::path filename) {
+void DICOMConverter::WriteTexture3D(Array3D<uint8_t>& Volume, fs::path filename) {
+	FILE* imgfp;
+
+	fopen_s(&imgfp, filename.string().c_str(), "wb+");
+	if (!imgfp) {
+		printf("\nCannot open file for writing a 3D texture!");
+		return;
+	}
+
+	fwrite(Volume.Points(), sizeof(uint8_t), Volume.Height() * Volume.Width() * Volume.Depth(), imgfp);
+	fclose(imgfp);
+}
+
+void DICOMConverter::WriteTexture3DWithHeader(Array3D<uint8_t>& Volume, fs::path filename) {
 	TextureDescription desc{0};
 	FILE* imgfp;
 
@@ -122,6 +135,18 @@ void DICOMConverter::GatherVolumes() {
 		}
 	}
 	// TODO: Categorize NewSeries by their orientation
+}
+
+void DICOMConverter::InitializeVolumes() {
+	for (DICOMVolume& volume : volumeset) {
+		volume.InitializeVolume();
+	}
+}
+
+void DICOMConverter::LoadVolumes() {
+	for (DICOMVolume& volume : volumeset) {
+		volume.LoadVolume();
+	}
 }
 
 void DICOMConverter::ReadCache() {
