@@ -46,7 +46,7 @@ std::vector<char> DICOMLoader::LoadWireframeMesh() {
 	return deserialized;
 }
 
-SceneTexture<Texture3D> DICOMLoader::LoadTexture3D(vector<task<void>>& tasks, shared_ptr<VanityCore>& vanitycore) {
+SceneTexture<Texture3D> DICOMLoader::LoadTexture3D(Matter matter, vector<task<void>>& tasks, shared_ptr<VanityCore>& vanitycore) {
 
 	auto device = vanitycore->GetD3DDevice();
 
@@ -68,7 +68,7 @@ SceneTexture<Texture3D> DICOMLoader::LoadTexture3D(vector<task<void>>& tasks, sh
 
 	std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
 	std::wstring FORUID = converter.from_bytes(volumeset[0].FORUID);
-	std::wstring type = converter.from_bytes("CorticalBoneTexture");
+	std::wstring type = MatterName[matter].name;
 
 	if (_caching) {
 		std::filesystem::path textureFilename(QueryCache(FORUID, type));
@@ -85,11 +85,10 @@ SceneTexture<Texture3D> DICOMLoader::LoadTexture3D(vector<task<void>>& tasks, sh
 		struct tm now;
 		localtime_s(&now, &t);
 		wstring timestr; timestr.resize(80);
-		wcsftime(timestr.data(), 80, L"_%d%m%y_%S%M%H", &now);
+		wcsftime(timestr.data(), 80, L"_%d%m%y_%H%M%S", &now);
 
 		std::wstring filepath(Windows::Storage::ApplicationData::Current->LocalFolder->Path->Data());
-		filepath.append(L"\\CorticalTexture3D");
-		filepath.append(timestr);
+		filepath.append(L"\\" + type + L"Texture3D" + timestr);
 		WriteTexture3D(VolumeTexture, filepath);
 		_filecache.push_back({ FORUID, type, filepath.c_str()});
 		WriteCache();

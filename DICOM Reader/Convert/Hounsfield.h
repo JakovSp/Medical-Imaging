@@ -1,4 +1,5 @@
 #pragma once
+#include <map>
 const enum Matter {
 	Air, Fat, SoftTissue, CancellousBone, CorticalBone, SubduralHematoma1, SubduralHematoma2, SubduralHematoma3,
 	UnclottedBlood, ClottedBlood, Water, Urine, Bile, Abscess, Mucus, Lung, Kidney, Liver, LymphNodes, Muscle, Thymus,
@@ -38,4 +39,37 @@ const HounsfieldEntry HounsfieldScale[NumberOfMatter] = {
 	{GrayMatter, {1037, 1045}},
 	{CholesterolStone, {1030, 1100}},
 	{BilirubinStone, {1090, 1120}}
+};
+
+struct MatterNamePair {
+	Matter matter;
+	std::wstring name;
+};
+
+const MatterNamePair MatterName[NumberOfMatter] = {
+	{Air, L"Air"},
+	{Fat, L"Fat"},
+	{SoftTissue, L"SoftTissue"},
+	{CancellousBone, L"CancellousBone"},
+	{CorticalBone, L"CorticalBone"},
+	{SubduralHematoma1, L"SubduralHematoma1"},
+	{SubduralHematoma2, L"SubduralHematoma2"},
+	{SubduralHematoma3, L"SubduralHematoma3"},
+	{UnclottedBlood, L"UnclottedBlood"},
+	{ClottedBlood, L"ClottedBlood"},
+	{Water, L"Water"},
+	{Urine, L"Urine"},
+	{Bile, L"Bile"},
+	{Abscess, L"Abscess"},
+	{Mucus, L"Mucus"},
+	{Lung, L"Lung"},
+	{Kidney, L"Kidney"},
+	{Liver, L"Liver"},
+	{LymphNodes, L"LymphNodes"},
+	{Muscle, L"Muscle"},
+	{Thymus, L"Thymus"},
+	{WhiteMatter, L"WhiteMatter"},
+	{GrayMatter, L"GrayMatter"},
+	{CholesterolStone, L"CholesterolStone"},
+	{BilirubinStone, L"BilirubinStone"}
 };

@@ -26,7 +26,7 @@ namespace vxe::med {
 		DICOMLoader(std::wstring dirname);
 		std::vector<char> LoadPointCloud();
 		std::vector<char> LoadWireframeMesh();
-		SceneTexture<Texture3D> LoadTexture3D(	std::vector<concurrency::task<void>>& tasks,
+		SceneTexture<Texture3D> LoadTexture3D( Matter matter, std::vector<concurrency::task<void>>& tasks,
 												std::shared_ptr<VanityCore>& vanitycore);
 		virtual void Convert() {
 

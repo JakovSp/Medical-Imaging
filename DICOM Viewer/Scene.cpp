@@ -43,7 +43,7 @@ void Scene::LoadAssets(vector<task<void>>& tasks, shared_ptr<VanityCore>& vanity
 	auto device = vanitycore->GetD3DDevice();
 	auto world = make_shared<WorldTransforms>(device);
 
-	_texture3D = make_shared<SceneTexture<Texture3D>>(DICOMdata.LoadTexture3D(tasks, vanitycore));
+	_texture3D = make_shared<SceneTexture<Texture3D>>(DICOMdata.LoadTexture3D(CorticalBone, tasks, vanitycore));
 	shared_ptr<Mesh<VertexPositionTexture3, uint16_t>> quad;
 	quad = make_shared<Quad<VertexPositionTexture3, uint16_t>>();
 	tasks.push_back(quad->CreateAsync(device));
