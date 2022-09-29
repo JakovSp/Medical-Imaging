@@ -32,11 +32,12 @@ namespace vxe::med {
 		std::wstring DICOMLoader::GenerateDefaultFilename(std::wstring filetype);
 
 		std::shared_ptr<Mesh<DirectX::VertexPosition, uint16_t>>
+		LoadWireframeMesh(Matter matter, std::vector<concurrency::task<void>>& tasks, std::shared_ptr<VanityCore>& vanitycore);
+		std::shared_ptr<Mesh<DirectX::VertexPosition, uint16_t>>
 		LoadPointCloud(	Matter matter, std::vector<concurrency::task<void>>& tasks, std::shared_ptr<VanityCore>& vanitycore);
 		SceneTexture<Texture3D>
 		LoadTexture3D( Matter matter, std::vector<concurrency::task<void>>& tasks, std::shared_ptr<VanityCore>& vanitycore);
 
-		std::vector<char> LoadWireframeMesh();
 		virtual void Convert() {
 
 		}

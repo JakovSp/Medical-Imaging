@@ -49,7 +49,7 @@ void Renderer::CreateDeviceResources()
 		_scene->SetTextures(_vanitycore);
 	});
 
-	_objectbound = PointCloud;
+	_objectbound = TriMesh;
 }
 
 void Renderer::CreateWindowResources()

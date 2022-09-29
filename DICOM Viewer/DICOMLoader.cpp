@@ -2,6 +2,7 @@
 
 #include "DICOMLoader.h"
 #include "PointCloud.h"
+#include "Wireframe.h"
 #include <ctime>
 
 #include <DICOM Reader/Convert/Geometry/Geometry.h>
@@ -61,7 +62,7 @@ DICOMLoader::LoadPointCloud(Matter matter, vector<task<void>>& tasks, shared_ptr
 			data.resize(size);
 			meshfile.read(data.data(), size);
 
-			pointmesh->CreateAsync(device, data);
+			tasks.push_back(pointmesh->LoadAsync(device, data));
 			return pointmesh;
 		}
 	}
@@ -69,7 +70,7 @@ DICOMLoader::LoadPointCloud(Matter matter, vector<task<void>>& tasks, shared_ptr
 	std::vector<vert3> points = volumeset[0].GenerateIsoPointCloud(CorticalBone);
 	char* data = (char*)points.data();
 	vector<char> deserialized(data, data + points.size()*sizeof(vert3));
-	pointmesh->CreateAsync(device, deserialized);
+	tasks.push_back(pointmesh->CreateAsync(device, deserialized));
 
 	if (_caching) {
 		auto filepath = GenerateDefaultFilename(type);
@@ -80,11 +81,36 @@ DICOMLoader::LoadPointCloud(Matter matter, vector<task<void>>& tasks, shared_ptr
 	return pointmesh;
 }
 
-std::vector<char> DICOMLoader::LoadWireframeMesh() {
+shared_ptr<Mesh<VertexPosition, uint16_t>>
+DICOMLoader::LoadWireframeMesh(Matter matter, vector<task<void>>& tasks, shared_ptr<VanityCore>& vanitycore) {
+	auto device = vanitycore->GetD3DDevice();
+
+	shared_ptr<Mesh<VertexPosition, uint16_t>> trimesh;
+	trimesh = make_shared<Wireframe<VertexPosition, uint16_t>>();
+
+	wstring FORUID = _utfconverter.from_bytes(volumeset[0].FORUID);
+	wstring type = MatterName[matter].name + L"WireframeMesh";
+
+	if (_caching) {
+		fs::path meshFilename(_cache.Query(FORUID, type));
+		if (fs::exists(meshFilename)) {
+			tasks.push_back(trimesh->LoadAsync(device, meshFilename));
+			return trimesh;
+		}
+	}
+
 	std::vector<tri> Surface = MarchingCubes(volumeset[0].GetSamples(), HounsfieldScale[CorticalBone].lower);
 	char* data = (char*)Surface.data();
 	vector<char> deserialized(data, data + Surface.size()*sizeof(tri));
-	return deserialized;
+	tasks.push_back(trimesh->CreateAsync(device, deserialized));
+
+	if (_caching) {
+		auto filepath = GenerateDefaultFilename(type);
+		WriteVanityVertex<VertexPosition>((VertexPosition*)Surface.data(), nullptr, Surface.size()*3, 0, filepath);
+		_cache.AddNewEntry({ FORUID, type, filepath.c_str()});
+	}
+
+	return trimesh;
 }
 
 SceneTexture<Texture3D> DICOMLoader::LoadTexture3D(Matter matter, vector<task<void>>& tasks, shared_ptr<VanityCore>& vanitycore) {
