@@ -92,25 +92,6 @@ void DICOMConverter::WriteTexture3DWithHeader(Array3D<uint8_t>& Volume, fs::path
 	fclose(imgfp);
 }
 
-template<typename T>
-void DICOMConverter::WriteVanityVertex(	const vector<T>& vertices,
-										const vector<uint16_t>& indices,
-										const uint32_t& vcount,
-										const uint32_t& icount,
-										fs::path filename) {
-	FILE* imgfp;
-	fopen_s(&imgfp, filename.string().c_str(), "wb+");
-	if (!imgfp) {
-		printf("\nCannot open file for writing a Vanity Vertex file!");
-		return;
-	}
-
-	fwrite(&vcount, sizeof(uint32_t), 1, imgfp);
-	fwrite(&icount, sizeof(uint32_t), 1, imgfp);
-	fwrite(vertices.data(), sizeof(float), vcount*3, imgfp);
-	fwrite(indices.data(), sizeof(uint16_t), icount, imgfp);
-	fclose(imgfp);
-}
 
 // NOTE: Multiple Series within a Study may share the same Frame of Reference
 // NOTE: All images in a Series that share the same Frame of Reference shall be
@@ -149,7 +130,7 @@ void DICOMConverter::LoadVolumes() {
 	}
 }
 
-void DICOMConverter::ReadCache() {
+void FileCache::ReadCache() {
 	wstring line;
 	_cachefile.open(_cachefilepath, ios::app|ios::in|ios::out);
 
@@ -170,15 +151,15 @@ void DICOMConverter::ReadCache() {
 	_cachefile.close();
 }
 
-void DICOMConverter::WriteCache() {
+void FileCache::AddNewEntry(const CacheEntry& entry) {
+	_filecache.push_back(entry);
 	_cachefile.open(_cachefilepath, ios::app|ios::in|ios::out);
-	for (CacheEntry& entry : _filecache)
-		_cachefile << entry.UID << L"," << entry.type << L"," << entry.Filename << '\n';
+	_cachefile << entry.UID << L"," << entry.type << L"," << entry.Filename << '\n';
 
 	_cachefile.close();
 }
 
-wstring DICOMConverter::QueryCache(wstring UID, wstring type) {
+wstring FileCache::Query(wstring UID, wstring type) {
 	for (CacheEntry& entry : _filecache) {
 		if (entry.UID == UID && entry.type == type) {
 			return entry.Filename;

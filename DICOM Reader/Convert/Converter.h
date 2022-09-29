@@ -59,6 +59,25 @@ namespace vxe::utl {
 		std::wstring type;
 		std::wstring Filename;
 	};
+
+	class FileCache {
+	public:
+		FileCache() : _cachefilepath(std::filesystem::current_path().append("DICOMVolumeDB")){}
+		FileCache(std::filesystem::path cachepath) : _cachefilepath(cachepath){}
+		void ReadCache();
+		void AddNewEntry(const CacheEntry& entry);
+		std::wstring Query(std::wstring UID, std::wstring type);
+		std::filesystem::path GetCachePath() { return _cachefilepath; }
+
+		~FileCache() {
+			_cachefile.close();
+		}
+
+	protected:
+		std::filesystem::path _cachefilepath;
+		std::wfstream _cachefile;
+		std::vector<CacheEntry> _filecache;
+	};
 }
 
 namespace vxe::med {
@@ -67,24 +86,17 @@ namespace vxe::med {
 	class DICOMConverter {
 	public:
 		DICOMConverter(){}
-		DICOMConverter(FileSet& FS) :
-			_MainFileSet(FS),
-			_cachefilepath(std::filesystem::current_path().append("DICOMVolumeDB")) {
-		}
+		DICOMConverter(FileSet& FS) : _MainFileSet(FS) { }
 		DICOMConverter(DICOMReader reader) : DICOMConverter(reader.MainFileSet) {}
 		DICOMConverter(std::wstring dirname) : DICOMConverter(DICOMReader(dirname)) {}
 
-		void OpenCache();
-		void ReadCache();
-		void WriteCache();
-		std::wstring QueryCache(std::wstring UID, std::wstring type);
 		virtual void Convert() = 0;
 		void WriteBMP(DICOMInstance&, std::filesystem::path filename);
 		BitmapImage GetBMP(DICOMInstance& instance);
 		void WriteTexture3D(Array3D<uint8_t>& Volume, fs::path filename);
 		void WriteTexture3DWithHeader(Array3D<uint8_t>& Volume, std::filesystem::path filename);
 		template<typename T>
-		void WriteVanityVertex(	const std::vector<T>& vertices, const std::vector<uint16_t>& index,
+		void WriteVanityVertex(	const T* vertices, const uint16_t* index,
 								const uint32_t& vcount, const uint32_t& icount, std::filesystem::path filename);
 		void GatherVolumes();
 		void InitializeVolumes();
@@ -93,9 +105,27 @@ namespace vxe::med {
 	public:
 		std::vector<DICOMVolume> volumeset;
 	protected:
-		std::filesystem::path _cachefilepath;
-		std::wfstream _cachefile;
 		FileSet _MainFileSet;
-		std::vector<CacheEntry> _filecache;
 	};
+
+	template<typename T>
+	void DICOMConverter::WriteVanityVertex(	const T* vertices,
+											const uint16_t* indices,
+											const uint32_t& vcount,
+											const uint32_t& icount,
+											std::filesystem::path filename) {
+		FILE* imgfp;
+		fopen_s(&imgfp, filename.string().c_str(), "wb+");
+		if (!imgfp) {
+			printf("\nCannot open file for writing a Vanity Vertex file!");
+			return;
+		}
+
+		fwrite(&vcount, sizeof(uint32_t), 1, imgfp);
+		fwrite(&icount, sizeof(uint32_t), 1, imgfp);
+		fwrite(vertices, sizeof(T), vcount, imgfp);
+		fwrite(indices, sizeof(uint16_t), icount, imgfp);
+		fclose(imgfp);
+	}
+
 }

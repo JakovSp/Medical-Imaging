@@ -49,7 +49,7 @@ void Renderer::CreateDeviceResources()
 		_scene->SetTextures(_vanitycore);
 	});
 
-	_objectbound = Volumetric;
+	_objectbound = PointCloud;
 }
 
 void Renderer::CreateWindowResources()

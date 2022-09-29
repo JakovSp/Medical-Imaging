@@ -1,19 +1,15 @@
 #include "pch.h"
 
 #include "DICOMLoader.h"
+#include "PointCloud.h"
 #include <ctime>
 
 #include <DICOM Reader/Convert/Geometry/Geometry.h>
 #include <DICOM Reader/Convert/Geometry/Volume.h>
 #include <DICOM Reader/Convert/Geometry/MarchingCubes.h>
 
-// TODO: figure out what to do with encoding
-#include <locale>
-#include <codecvt>
-#include <string>
-
-
 using namespace std;
+namespace fs = std::filesystem;
 using namespace vxe;
 using namespace DirectX;
 
@@ -21,22 +17,67 @@ using namespace concurrency;
 using namespace vxe::med;
 using namespace vxe::geo;
 
-DICOMLoader::DICOMLoader(wstring dirname){ 
-	_installfolderpath = Windows::ApplicationModel::Package::Current->InstalledLocation->Path->Data();
-	_localfolderpath = Windows::Storage::ApplicationData::Current->LocalFolder->Path->Data();
-	_cachefilepath = _localfolderpath / "DICOMVolumeDB";
-	ReadCache();
+DICOMLoader::DICOMLoader(wstring dirname) :
+	_installfolderpath(Windows::ApplicationModel::Package::Current->InstalledLocation->Path->Data()),
+	_localfolderpath(Windows::Storage::ApplicationData::Current->LocalFolder->Path->Data()),
+	_cache(_localfolderpath / "DICOMVolumeDB")
+{ 
+	_cache.ReadCache();
 	_MainFileSet = DICOMReader(_installfolderpath / dirname).MainFileSet;
 	GatherVolumes();
 	InitializeVolumes();
 	LoadVolumes();
 }
 
-std::vector<char> DICOMLoader::LoadPointCloud() {
+wstring DICOMLoader::GenerateDefaultFilename(wstring filetype) {
+	time_t t = time(0);
+	struct tm now;
+	localtime_s(&now, &t);
+	wstring timestr; timestr.resize(80);
+	wcsftime(timestr.data(), 80, L"_%d%m%y_%H%M%S", &now);
+
+	std::filesystem::path filepath(_cache.GetCachePath().parent_path());
+	filepath /= filetype + timestr;
+	return filepath;
+}
+
+shared_ptr<Mesh<VertexPosition, uint16_t>>
+DICOMLoader::LoadPointCloud(Matter matter, vector<task<void>>& tasks, shared_ptr<VanityCore>& vanitycore) {
+	auto device = vanitycore->GetD3DDevice();
+
+	shared_ptr<Mesh<VertexPosition, uint16_t>> pointmesh;
+	pointmesh = make_shared<PointCloud2<VertexPosition, uint16_t>>();
+
+	wstring FORUID = _utfconverter.from_bytes(volumeset[0].FORUID);
+	wstring type = MatterName[matter].name + L"PointCloud";
+
+	if (_caching) {
+		fs::path meshFilename(_cache.Query(FORUID, type));
+		if (fs::exists(meshFilename)) {
+			ifstream meshfile(meshFilename,  std::ios::binary | std::ios::ate);
+			streamsize size = meshfile.tellg();
+			meshfile.seekg(0, std::ios::beg);
+			std::vector<char> data;
+			data.resize(size);
+			meshfile.read(data.data(), size);
+
+			pointmesh->CreateAsync(device, data);
+			return pointmesh;
+		}
+	}
+
 	std::vector<vert3> points = volumeset[0].GenerateIsoPointCloud(CorticalBone);
 	char* data = (char*)points.data();
 	vector<char> deserialized(data, data + points.size()*sizeof(vert3));
-	return deserialized;
+	pointmesh->CreateAsync(device, deserialized);
+
+	if (_caching) {
+		auto filepath = GenerateDefaultFilename(type);
+		WriteVanityVertex<VertexPosition>((VertexPosition*)points.data(), nullptr, points.size(), 0, filepath);
+		_cache.AddNewEntry({ FORUID, type, filepath.c_str()});
+	}
+
+	return pointmesh;
 }
 
 std::vector<char> DICOMLoader::LoadWireframeMesh() {
@@ -47,32 +88,22 @@ std::vector<char> DICOMLoader::LoadWireframeMesh() {
 }
 
 SceneTexture<Texture3D> DICOMLoader::LoadTexture3D(Matter matter, vector<task<void>>& tasks, shared_ptr<VanityCore>& vanitycore) {
-
 	auto device = vanitycore->GetD3DDevice();
 
 	size_t depth = volumeset[0].GetSamples().Depth();
 	size_t width = volumeset[0].GetSamples().Width();
 	size_t height = volumeset[0].GetSamples().Height();
-
-	DXGI_FORMAT format;
-	switch(sizeof(uint8_t)){
-	case 1: format = DXGI_FORMAT_R8_UNORM; break;
-	case 2: format = DXGI_FORMAT_R16_UNORM; break;
-	default: format = DXGI_FORMAT_R8_UNORM;
-	}
-
-	auto texture3D = make_shared<Texture3D>(device, format, width, height, depth, 1,
+	auto texture3D = make_shared<Texture3D>(device, DXGI_FORMAT_R8_UNORM, width, height, depth, 1,
 											D3D11_BIND_SHADER_RESOURCE, D3D11_USAGE_IMMUTABLE);
 
 	SceneTexture<Texture3D> scenetexture3D(texture3D);
 
-	std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-	std::wstring FORUID = converter.from_bytes(volumeset[0].FORUID);
-	std::wstring type = MatterName[matter].name;
+	wstring FORUID = _utfconverter.from_bytes(volumeset[0].FORUID);
+	wstring type = MatterName[matter].name + L"Texture3D";
 
 	if (_caching) {
-		std::filesystem::path textureFilename(QueryCache(FORUID, type));
-		if (std::filesystem::exists(textureFilename)) {
+		fs::path textureFilename(_cache.Query(FORUID, type));
+		if (fs::exists(textureFilename)) {
 			scenetexture3D.Load(tasks, textureFilename);
 			return scenetexture3D;
 		}
@@ -81,17 +112,9 @@ SceneTexture<Texture3D> DICOMLoader::LoadTexture3D(Matter matter, vector<task<vo
 	auto VolumeTexture = volumeset[0].GenerateIsoSamples(CorticalBone);
 
 	if (_caching) {
-		time_t t = time(0);
-		struct tm now;
-		localtime_s(&now, &t);
-		wstring timestr; timestr.resize(80);
-		wcsftime(timestr.data(), 80, L"_%d%m%y_%H%M%S", &now);
-
-		std::wstring filepath(Windows::Storage::ApplicationData::Current->LocalFolder->Path->Data());
-		filepath.append(L"\\" + type + L"Texture3D" + timestr);
+		auto filepath = GenerateDefaultFilename(type);
 		WriteTexture3D(VolumeTexture, filepath);
-		_filecache.push_back({ FORUID, type, filepath.c_str()});
-		WriteCache();
+		_cache.AddNewEntry({ FORUID, type, filepath.c_str()});
 	}
 
 	uint8_t* texturedata = VolumeTexture.Points();
