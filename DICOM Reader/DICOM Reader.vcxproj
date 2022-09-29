@@ -23,6 +23,9 @@
     <ClCompile Include="Convert\Filter.cpp" />
     <ClCompile Include="Convert\Geometry\MarchingCubes.cpp" />
     <ClCompile Include="Convert\Geometry\Volume.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Read\DataElement.cpp" />
     <ClCompile Include="Read\DataSet.cpp" />
     <ClCompile Include="Read\FileSet.cpp" />
@@ -38,6 +41,7 @@
     <ClInclude Include="Convert\Geometry\MarchingCubes.h" />
     <ClInclude Include="Convert\Geometry\Volume.h" />
     <ClInclude Include="Convert\Hounsfield.h" />
+    <ClInclude Include="pch.h" />
     <ClInclude Include="Read\DataElement.h" />
     <ClInclude Include="Read\DataSet.h" />
     <ClInclude Include="Read\FileSet.h" />
@@ -144,6 +148,8 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

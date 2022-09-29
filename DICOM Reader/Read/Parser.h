@@ -5,6 +5,8 @@
 #include <variant>
 #include <string>
 
+#include "pch.h"
+
 #include "Registry/UIDRegistry.h"
 #include "Registry/DataDictionary.h"
 #include "ValueRepresentation.h"

@@ -5,12 +5,9 @@ DataDictionary.h
 	Provide access to the registry
 */
 #pragma once
-#include <limits.h>
-#include <map>
-#include <string>
-#include <vector>
+#include "pch.h"
 #include <filesystem>
-
+ 
 #include "DataElementTags.h"
 
 namespace vxe::med {

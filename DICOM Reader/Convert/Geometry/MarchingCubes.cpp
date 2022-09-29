@@ -1,21 +1,7 @@
+#include "pch.h"
 #include "MarchingCubes.h"
 
 namespace vxe::geo {
-	// uint8_t ConfigurationIndex(Array3D<uint16_t>& _sampledvolume, const size_t& z, const size_t& x, const size_t& y, const size_t& cutoff) {
-	// 	uint8_t cellvalue = 0;
-	// 	// Clamp vertex values from 0 to 1, push to byte by shifting left
-	// 	// For each vertex:
-	// 	if (criterion( _sampledvolume[z + 1][y + 1][x + 0], 40)) { cellvalue |= 1 << 0; }
-	// 	if (criterion( _sampledvolume[z + 1][y + 1][x + 1], 40)) { cellvalue |= 1 << 1; }
-	// 	if (criterion( _sampledvolume[z + 0][y + 1][x + 1], 40)) { cellvalue |= 1 << 2; }
-	// 	if (criterion( _sampledvolume[z + 0][y + 1][x + 0], 40)) { cellvalue |= 1 << 3; }
-	// 	if (criterion( _sampledvolume[z + 1][y + 0][x + 0], 40)) { cellvalue |= 1 << 4; }
-	// 	if (criterion( _sampledvolume[z + 1][y + 0][x + 1], 40)) { cellvalue |= 1 << 5; }
-	// 	if (criterion( _sampledvolume[z + 0][y + 0][x + 1], 40)) { cellvalue |= 1 << 6; }
-	// 	if (criterion( _sampledvolume[z + 0][y + 0][x + 0], 40)) { cellvalue |= 1 << 7; }
-	// 	return cellvalue;
-	// }
-
 	uint8_t ConfigurationIndex(GridCell cell, const float& cutoff) {
 		uint8_t cellvalue = 0;
 		// Clamp vertex values from 0 to 1, push to byte by shifting left
@@ -61,7 +47,6 @@ namespace vxe::geo {
 	}
 
 	void PolygoniseGridCell(const GridCell& cell, uint8_t lookupindex, std::vector<tri>& Triangles, float isovalue) {
-		size_t trianglecount;
 		tri newtri;
 		vert3 vertexlist[12];
 		if (edgeTable[lookupindex] & 1)

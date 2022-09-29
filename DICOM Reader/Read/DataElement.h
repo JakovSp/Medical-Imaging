@@ -1,10 +1,6 @@
 #pragma once
-#include <vector>
-#include <variant>
-#include <string>
-#include <typeindex>
-#include <map>
 
+#include "..\pch.h"
 #include "Registry/DataElementTags.h"
 #include "ValueField.h"
 

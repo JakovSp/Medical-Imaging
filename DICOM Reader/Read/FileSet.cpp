@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "FileSet.h"
 
 using namespace vxe::med;

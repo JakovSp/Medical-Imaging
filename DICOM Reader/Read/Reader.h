@@ -4,12 +4,7 @@ Reader.h
 	Handles input and initializes a Parser
 */
 #pragma once
-#include <filesystem>
-#include <iostream>
-#include <fstream>
-#include <variant>
-#include <string>
-#include <filesystem>
+#include "pch.h"
 
 #include "Registry/DataDictionary.h"
 #include "ValueRepresentation.h"

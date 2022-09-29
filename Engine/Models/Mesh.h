@@ -32,7 +32,9 @@ namespace vxe {
 		Mesh() : 
 			_vertexbuffer{ nullptr }, 
 			_indexbuffer{ nullptr }, 
-			_indexed{ false } { }
+			_indexed{ false },
+			_topology{D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST}
+		{ }
 
 		concurrency::task<void> CreateAsync(_In_ ID3D11Device2* device,
 			std::vector<T>& vertices,
@@ -84,8 +86,6 @@ namespace vxe {
 		{
 			DebugPrint(std::string("\t MeshBase<") + typeid(T).name() + 
 				std::string(",") + typeid(U).name() + std::string(">::CreateAsync()...\n"));
-
-			_topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 
 			DebugPrint(std::string("\t\t Primitive Topology: ") + std::to_string(_topology) + std::string("\n"));
 

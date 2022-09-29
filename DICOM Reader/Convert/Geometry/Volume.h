@@ -5,13 +5,13 @@ _sampledvolume.h
 	One DICOMVolume can span multiple series
 */
 #pragma once
-#include <string>
+#include "pch.h"
 #include <Read/FileSet.h>
 #include "../Hounsfield.h"
 
 #include "Geometry.h"
 #include "Cloud3D.h"
-#include "../Filter.h"
+#include "..\Filter.h"
 
 using namespace vxe::utl;
 using namespace vxe::geo;
@@ -45,8 +45,8 @@ namespace vxe::med {
 		void SetMajorSeries();
 		void SetMajorOrient();
 		std::list<std::pair<long double, std::string>> OrderSlices();
-		std::vector<vert3> GenerateIsoPointCloud(int lowerbound, int upperbound);
-		Array3D<uint8_t> GenerateIsoSamples(int lowerbound, int upperbound);
+		std::vector<vert3> GenerateIsoPointCloud(float lowerbound, float upperbound);
+		Array3D<uint8_t> GenerateIsoSamples(float lowerbound, float upperbound);
 
 	public:
 		// NOTE: Combination of Frame of Reference UID and Study Instance UID is

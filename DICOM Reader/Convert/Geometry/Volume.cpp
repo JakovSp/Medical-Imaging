@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "Volume.h"
 
 using namespace std;
@@ -100,10 +101,10 @@ list<pair<long double, string>> DICOMVolume::OrderSlices() {
 	// If they are: Choice of sampling axis (which series is major)?
 
 	DataElement SeriesPixelDataDE = series[_majorseries][0][PixelData];
+	list<pair<long double, string>> orderedslices;
 	if (SeriesPixelDataDE.vr == OW) {
 		// Copy OW Pixel Data:
 
-		list<pair<long double, string>> orderedslices;
 		// Slice Location attribute is the universal way to order slices in space, instead of instance number
 		// It is a Type 3 attribute (optional), so it is necessary to use Image Position(Patient) and
 		// Image Orientation(Patient) to calculate the slice location explicitly
@@ -129,14 +130,14 @@ list<pair<long double, string>> DICOMVolume::OrderSlices() {
 				orderedslices.push_back(make_pair(slicelocation, series[_majorseries][i][SOPInstanceUID].FetchValue<string>()));
 			}
 		}
-
-		return orderedslices;
 	} else {
 		// TODO: Copy OB Pixel Data
 	}
+
+	return orderedslices;
 }
 
-Array3D<uint8_t> DICOMVolume::GenerateIsoSamples(int lowerbound, int upperbound) {
+Array3D<uint8_t> DICOMVolume::GenerateIsoSamples(float lowerbound, float upperbound) {
 	long double wc = series[0][0][WindowCenter].FetchValue<long double>();
 	long double ww = series[0][0][WindowWidth].FetchValue<long double>();
 	Array3D<uint8_t> IsoTexture(_width, _height, _depth);
@@ -179,7 +180,7 @@ vector<long double> DICOMVolume::GetPixelSpacing(DataSet DS) {
 	return spacing;
 }
 
-vector<vert3> DICOMVolume::GenerateIsoPointCloud(int lowerbound, int upperbound) {
+vector<vert3> DICOMVolume::GenerateIsoPointCloud(float lowerbound, float upperbound) {
 	size_t depth = _sampledvolume.Depth();
 	size_t width = _sampledvolume.Width();
 	size_t height = _sampledvolume.Height();

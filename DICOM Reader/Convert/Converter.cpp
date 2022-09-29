@@ -1,3 +1,4 @@
+#include <pch.h>
 #include "Converter.h"
 
 using namespace vxe::med;

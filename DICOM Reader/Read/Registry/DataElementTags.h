@@ -4,7 +4,7 @@ DataElementTags.h
 
 	Compile-time constants for Data Element registry
 */
-#include<cstdint>
+#include "pch.h"
 
 using tag_t = uint32_t;
 

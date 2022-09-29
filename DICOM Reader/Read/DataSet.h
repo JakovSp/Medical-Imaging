@@ -4,10 +4,7 @@ DataSet.h
 	Defines the format and runtime structure of DICOM data set
 */
 #pragma once
-#include <cstddef>
-#include <string>
-#include <vector>
-#include <variant>
+#include "pch.h"
 
 // #include "DataElement.h"
 #include "Registry/DataDictionary.h"

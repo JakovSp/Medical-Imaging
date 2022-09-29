@@ -55,14 +55,7 @@ DICOMLoader::LoadPointCloud(Matter matter, vector<task<void>>& tasks, shared_ptr
 	if (_caching) {
 		fs::path meshFilename(_cache.Query(FORUID, type));
 		if (fs::exists(meshFilename)) {
-			ifstream meshfile(meshFilename,  std::ios::binary | std::ios::ate);
-			streamsize size = meshfile.tellg();
-			meshfile.seekg(0, std::ios::beg);
-			std::vector<char> data;
-			data.resize(size);
-			meshfile.read(data.data(), size);
-
-			tasks.push_back(pointmesh->LoadAsync(device, data));
+			tasks.push_back(pointmesh->LoadAsync(device, meshFilename));
 			return pointmesh;
 		}
 	}
@@ -116,10 +109,10 @@ DICOMLoader::LoadWireframeMesh(Matter matter, vector<task<void>>& tasks, shared_
 SceneTexture<Texture3D> DICOMLoader::LoadTexture3D(Matter matter, vector<task<void>>& tasks, shared_ptr<VanityCore>& vanitycore) {
 	auto device = vanitycore->GetD3DDevice();
 
-	size_t depth = volumeset[0].GetSamples().Depth();
-	size_t width = volumeset[0].GetSamples().Width();
-	size_t height = volumeset[0].GetSamples().Height();
-	auto texture3D = make_shared<Texture3D>(device, DXGI_FORMAT_R8_UNORM, width, height, depth, 1,
+	uint32_t depth = static_cast<uint32_t>(volumeset[0].GetSamples().Depth());
+	uint32_t width = static_cast<uint32_t>(volumeset[0].GetSamples().Width());
+	uint32_t height = static_cast<uint32_t>(volumeset[0].GetSamples().Height());
+	shared_ptr<Texture3D> texture3D = make_shared<Texture3D>(device, DXGI_FORMAT_R8_UNORM, width, height, depth, 1,
 											D3D11_BIND_SHADER_RESOURCE, D3D11_USAGE_IMMUTABLE);
 
 	SceneTexture<Texture3D> scenetexture3D(texture3D);

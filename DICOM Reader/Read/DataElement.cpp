@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "DataElement.h"
 
 using namespace vxe::med;

@@ -1,7 +1,5 @@
 #pragma once
-#include <cstdint>
-#include <string>
-#include <cstring>
+#include "pch.h"
 
 namespace vxe::utl{
 
@@ -29,8 +27,8 @@ namespace vxe::utl{
 				_position{ position }
 			{};
 
-			T* operator[](int j) { return _position + j * _enclosing->_width; }
-			const T* operator[](int j) const { return _position + j * _enclosing->_width; }
+			T* operator[](size_t j) { return _position + j * _enclosing->_width; }
+			const T* operator[](size_t j) const { return _position + j * _enclosing->_width; }
 			void Copy(T* from){
 				std::memcpy(_position, from, _enclosing->_width*_enclosing->_height*sizeof(T));
 			}
@@ -40,8 +38,8 @@ namespace vxe::utl{
 			T* _position;
 		};
 
-		Proxy operator[](int i) { return Proxy{ this, _points + i * _width * _height }; }
-		const Proxy operator[](int i) const { return Proxy{ this, _points + i * _width * _height }; }
+		Proxy operator[](size_t i) { return Proxy{ this, _points + i * _width * _height }; }
+		const Proxy operator[](size_t i) const { return Proxy{ this, _points + i * _width * _height }; }
 
 		void Copy(Array3D<T>& Volume) {
 			_width = Volume.Width();

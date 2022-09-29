@@ -1,7 +1,4 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <sstream>
+#include "pch.h"
 #include "DataDictionary.h"
 
 using namespace vxe::med;

@@ -43,13 +43,13 @@ void Scene::LoadAssets(vector<task<void>>& tasks, shared_ptr<VanityCore>& vanity
 	auto device = vanitycore->GetD3DDevice();
 	auto world = make_shared<WorldTransforms>(device);
 
-	// _texture3D = make_shared<SceneTexture<Texture3D>>(DICOMdata.LoadTexture3D(CorticalBone, tasks, vanitycore));
-	// shared_ptr<Mesh<VertexPositionTexture3, uint16_t>> quad;
-	// quad = make_shared<Quad<VertexPositionTexture3, uint16_t>>();
-	// tasks.push_back(quad->CreateAsync(device));
-	// _volumetricslice = make_shared<SceneObject<VertexPositionTexture3, uint16_t>>();
-	// _volumetricslice->SetMesh(quad);
-	// _volumetricslice->SetWorld(world);
+	_texture3D = make_shared<SceneTexture<Texture3D>>(DICOMdata.LoadTexture3D(CorticalBone, tasks, vanitycore));
+	shared_ptr<Mesh<VertexPositionTexture3, uint16_t>> quad;
+	quad = make_shared<Quad<VertexPositionTexture3, uint16_t>>();
+	tasks.push_back(quad->CreateAsync(device));
+	_volumetricslice = make_shared<SceneObject<VertexPositionTexture3, uint16_t>>();
+	_volumetricslice->SetMesh(quad);
+	_volumetricslice->SetWorld(world);
 
 	shared_ptr<Mesh<VertexPosition, uint16_t>> trimesh;
 	trimesh = DICOMdata.LoadWireframeMesh(CorticalBone, tasks, vanitycore);
@@ -57,11 +57,11 @@ void Scene::LoadAssets(vector<task<void>>& tasks, shared_ptr<VanityCore>& vanity
 	_trisurface->SetMesh(trimesh);
 	_trisurface->SetWorld(world);
 
-	// shared_ptr<Mesh<VertexPosition, uint16_t>> pointmesh;
-	// pointmesh = DICOMdata.LoadPointCloud(CorticalBone, tasks, vanitycore);
-	// _pointcloud = make_shared<SceneObject<VertexPosition, uint16_t>>();
-	// _pointcloud->SetMesh(pointmesh);
-	// _pointcloud->SetWorld(world);
+	shared_ptr<Mesh<VertexPosition, uint16_t>> pointmesh;
+	pointmesh = DICOMdata.LoadPointCloud(CorticalBone, tasks, vanitycore);
+	_pointcloud = make_shared<SceneObject<VertexPosition, uint16_t>>();
+	_pointcloud->SetMesh(pointmesh);
+	_pointcloud->SetWorld(world);
 
 }
 

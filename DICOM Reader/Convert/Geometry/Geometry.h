@@ -1,4 +1,5 @@
 #pragma once
+#include "pch.h"
 #include "Cloud3D.h"
 
 using namespace vxe::utl;
@@ -28,14 +29,14 @@ namespace vxe::geo {
 			size_t width = Volume.Width();
 			size_t height = Volume.Height();
 			size_t depth = Volume.Depth();
-			p[0] = vert3((double)(x + 0) / width, (double)(y + 1) / height, (double)(z + 1) / depth);
-			p[1] = vert3((double)(x + 1) / width, (double)(y + 1) / height, (double)(z + 1) / depth);
-			p[2] = vert3((double)(x + 1) / width, (double)(y + 1) / height, (double)(z + 0) / depth);
-			p[3] = vert3((double)(x + 0) / width, (double)(y + 1) / height, (double)(z + 0) / depth);
-			p[4] = vert3((double)(x + 0) / width, (double)(y + 0) / height, (double)(z + 1) / depth);
-			p[5] = vert3((double)(x + 1) / width, (double)(y + 0) / height, (double)(z + 1) / depth);
-			p[6] = vert3((double)(x + 1) / width, (double)(y + 0) / height, (double)(z + 0) / depth);
-			p[7] = vert3((double)(x + 0) / width, (double)(y + 0) / height, (double)(z + 0) / depth);
+			p[0] = vert3((float)(x + 0) / width, (float)(y + 1) / height, (float)(z + 1) / depth);
+			p[1] = vert3((float)(x + 1) / width, (float)(y + 1) / height, (float)(z + 1) / depth);
+			p[2] = vert3((float)(x + 1) / width, (float)(y + 1) / height, (float)(z + 0) / depth);
+			p[3] = vert3((float)(x + 0) / width, (float)(y + 1) / height, (float)(z + 0) / depth);
+			p[4] = vert3((float)(x + 0) / width, (float)(y + 0) / height, (float)(z + 1) / depth);
+			p[5] = vert3((float)(x + 1) / width, (float)(y + 0) / height, (float)(z + 1) / depth);
+			p[6] = vert3((float)(x + 1) / width, (float)(y + 0) / height, (float)(z + 0) / depth);
+			p[7] = vert3((float)(x + 0) / width, (float)(y + 0) / height, (float)(z + 0) / depth);
 		}
 	};
 

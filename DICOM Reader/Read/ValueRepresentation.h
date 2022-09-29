@@ -5,7 +5,8 @@ ValueRepresentation.h
 	corresponding to their name in ASCII
 */
 #pragma once
-#include <cstdint>
+
+#include "pch.h"
 
 constexpr uint16_t AE = (uint16_t)0x4541; // Application Entity
 constexpr uint16_t AS = (uint16_t)0x5341; // Age String

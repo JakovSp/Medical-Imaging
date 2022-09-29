@@ -26,7 +26,7 @@ namespace vxe {
 
 	virtual concurrency::task<void> LoadAsync(_In_ ID3D11Device2* device, const std::wstring& filename) 
 	{
-        // _topology = D3D11_PRIMITIVE_TOPOLOGY_POINTLIST
+		_topology = D3D11_PRIMITIVE_TOPOLOGY_POINTLIST;
         return Mesh::LoadAsync(device, filename);
 	}
 

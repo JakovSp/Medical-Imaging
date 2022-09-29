@@ -60,6 +60,9 @@
     <ClCompile Include="Convert\Geometry\Volume.cpp">
       <Filter>Source Files\Convert\Geometry</Filter>
     </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Convert\Converter.h">
@@ -112,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="Convert\Geometry\Volume.h">
       <Filter>Source Files\Convert\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

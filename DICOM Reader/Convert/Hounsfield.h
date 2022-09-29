@@ -1,5 +1,5 @@
 #pragma once
-#include <map>
+#include "pch.h"
 const enum Matter {
 	Air, Fat, SoftTissue, CancellousBone, CorticalBone, SubduralHematoma1, SubduralHematoma2, SubduralHematoma3,
 	UnclottedBlood, ClottedBlood, Water, Urine, Bile, Abscess, Mucus, Lung, Kidney, Liver, LymphNodes, Muscle, Thymus,
@@ -9,7 +9,7 @@ const enum Matter {
 struct HounsfieldEntry{
 	Matter id;
 	struct {
-		int lower, upper;
+		float lower, upper;
 	};
 };
 

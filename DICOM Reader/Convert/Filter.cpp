@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "Filter.h"
 
 namespace vxe::utl {

@@ -1,8 +1,5 @@
 #pragma once
-#include <string>
-#include <filesystem>
-#include<iostream>
-#include<fstream>
+#include <pch.h>
 
 #include <Read/Reader.h>
 #include <Read/FileSet.h>
@@ -22,12 +19,12 @@ namespace vxe::utl {
 
 		struct BITMAPINFOHEADER {
 			uint32_t biSize = sizeof(struct BITMAPINFOHEADER);
-			uint32_t biWidth;
-			uint32_t biHeight;
-			uint16_t biPlanes;
-			uint16_t biBitCount;
-			uint32_t biCompression;
-			uint32_t biSizeImage;
+			uint32_t biWidth = 0;
+			uint32_t biHeight = 0;
+			uint16_t biPlanes = 0;
+			uint16_t biBitCount = 0;
+			uint32_t biCompression = 0;
+			uint32_t biSizeImage = 0;
 			uint32_t biXPelsPerMeter = 0;
 			uint32_t biYPelsPerMeter = 0;
 			uint32_t biClrUsed = 0;
@@ -40,9 +37,10 @@ namespace vxe::utl {
 	};
 
 	struct TextureDescription {
-		uint32_t width;
-		uint32_t height;
-		uint32_t depth;
+
+		uint64_t width;
+		uint64_t height;
+		uint64_t depth;
 		uint8_t mipmap;
 		uint8_t elsize;
 	};
@@ -97,7 +95,7 @@ namespace vxe::med {
 		void WriteTexture3DWithHeader(Array3D<uint8_t>& Volume, std::filesystem::path filename);
 		template<typename T>
 		void WriteVanityVertex(	const T* vertices, const uint16_t* index,
-								const uint32_t& vcount, const uint32_t& icount, std::filesystem::path filename);
+								const size_t& vcount, const size_t& icount, std::filesystem::path filename);
 		void GatherVolumes();
 		void InitializeVolumes();
 		void LoadVolumes();
@@ -111,8 +109,8 @@ namespace vxe::med {
 	template<typename T>
 	void DICOMConverter::WriteVanityVertex(	const T* vertices,
 											const uint16_t* indices,
-											const uint32_t& vcount,
-											const uint32_t& icount,
+											const size_t& vertexcount,
+											const size_t& indexcount,
 											std::filesystem::path filename) {
 		FILE* imgfp;
 		fopen_s(&imgfp, filename.string().c_str(), "wb+");
@@ -120,6 +118,11 @@ namespace vxe::med {
 			printf("\nCannot open file for writing a Vanity Vertex file!");
 			return;
 		}
+
+		// Vanity Vertex count is uint32_t
+
+		uint32_t vcount = static_cast<uint32_t>(vertexcount);
+		uint32_t icount = static_cast<uint32_t>(indexcount);
 
 		fwrite(&vcount, sizeof(uint32_t), 1, imgfp);
 		fwrite(&icount, sizeof(uint32_t), 1, imgfp);
