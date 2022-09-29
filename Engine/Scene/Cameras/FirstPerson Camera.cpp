@@ -1,6 +1,6 @@
 
 //
-//	FirstPerson Camera.cpp
+//	FirstPerson OrbitalCamera.cpp
 //	Encapsulates basic camera movements and rotations
 //
 //  © VanityXS - DirectX 11.2 Student Engine. Zoraja Consulting d.o.o. All rights reserved.

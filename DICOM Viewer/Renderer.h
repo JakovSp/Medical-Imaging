@@ -12,6 +12,7 @@
 #include "pch.h"
 
 #include <Engine\Core\Content\RendererBase3D.h>
+#include <Engine\Scene\Input\Input Controller.h>
 
 #include "Scene.h"
 #include "Pipeline.h"

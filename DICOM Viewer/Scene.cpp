@@ -29,6 +29,7 @@ using namespace vxe::med;
 
 using namespace concurrency;
 using namespace DirectX;
+using namespace Windows::System;
 
 Scene::Scene()
 {
@@ -51,19 +52,19 @@ void Scene::LoadAssets(vector<task<void>>& tasks, shared_ptr<VanityCore>& vanity
 	_volumetricslice->SetMesh(quad);
 	_volumetricslice->SetWorld(world);
 
-	shared_ptr<Mesh<VertexPosition, uint16_t>> trimesh;
-	trimesh = make_shared<Wireframe<VertexPosition, uint16_t>>();
-	tasks.push_back(trimesh->CreateAsync(device, DICOMdata.LoadWireframeMesh()));
-	_trisurface = make_shared<SceneObject<VertexPosition, uint16_t>>();
-	_trisurface->SetMesh(trimesh);
-	_trisurface->SetWorld(world);
+	// shared_ptr<Mesh<VertexPosition, uint16_t>> trimesh;
+	// trimesh = make_shared<Wireframe<VertexPosition, uint16_t>>();
+	// tasks.push_back(trimesh->CreateAsync(device, DICOMdata.LoadWireframeMesh()));
+	// _trisurface = make_shared<SceneObject<VertexPosition, uint16_t>>();
+	// _trisurface->SetMesh(trimesh);
+	// _trisurface->SetWorld(world);
 
-	shared_ptr<Mesh<VertexPosition, uint16_t>> pointmesh;
-	pointmesh = make_shared<PointCloud2<VertexPosition, uint16_t>>();
-	tasks.push_back(pointmesh->CreateAsync(device, DICOMdata.LoadPointCloud()));
-	_pointcloud = make_shared<SceneObject<VertexPosition, uint16_t>>();
-	_pointcloud->SetMesh(pointmesh);
-	_pointcloud->SetWorld(world);
+	// shared_ptr<Mesh<VertexPosition, uint16_t>> pointmesh;
+	// pointmesh = make_shared<PointCloud2<VertexPosition, uint16_t>>();
+	// tasks.push_back(pointmesh->CreateAsync(device, DICOMdata.LoadPointCloud()));
+	// _pointcloud = make_shared<SceneObject<VertexPosition, uint16_t>>();
+	// _pointcloud->SetMesh(pointmesh);
+	// _pointcloud->SetWorld(world);
 
 }
 
@@ -82,14 +83,28 @@ void Scene::SetCamera(shared_ptr<VanityCore>& vanitycore)
 	_camera.Bind(vanitycore);
 }
 
-void Scene::Update(DX::StepTimer const& timer)
+void Scene::Update(DX::StepTimer const& timer, shared_ptr<VanityCore>& vanitycore, InputController^ ic)
 {
 	__Once(DebugPrint(string("Scene::Update() ...\n")));
 
-	auto angle = _animation.Angle(static_cast<float>(timer.GetElapsedSeconds()));
-	// _volumetricslice->GetWorld()->RotateY(angle);
-	//	_PCobject->GetWorld()->RotateY(angle);
-	// _MCobject->GetWorld()->RotateY(angle);
+	float _rps = DirectX::XM_PI / 6.0f ;
+
+	XMFLOAT2 prevpointer;
+	bool update = false;
+	if (ic->IsLeftButtonPressed()) {
+		prevpointer = _pointer;
+		_pointer = ic->GetPointerPosition();
+		update = true;
+	}
+
+	_pointer = ic->GetPointerPosition();
+
+	if(update){
+		_camera.move.x += (prevpointer.x - _pointer.x)*0.005;
+		_camera.move.y += (prevpointer.y - _pointer.y)*0.005;
+		_camera.Update(vanitycore);
+	}
+
 }
 
 void Scene::DrawTriMesh(std::shared_ptr<VanityCore>& vanitycore, bool indexed) {
@@ -122,10 +137,10 @@ void Scene::DrawVolumetric(shared_ptr<VanityCore>& vanitycore, bool indexed) {
 	instancebuffer = make_shared<ConstantBuffer<TransferZ>>(device);
 
 	vanitycore->SetBlenderState();
- 	for (float z = -1.0f; z < 0.0f; z += 1.0f / _texture3D->GetTexture()->GetTexDepth()) {
+ 	for (float z = -0.5f; z < 0.5f; z += 1.0f / _texture3D->GetTexture()->GetTexDepth()) {
  		TransferZ sliceindex;
  		sliceindex.vertZ = z;
- 		sliceindex.texZ = (z + 1.0f) / 1.0f;
+ 		sliceindex.texZ = (z + 0.5f) / 1.0f;
  		instancebuffer->Update(context, sliceindex);
  		instancebuffer->Bind(context, ProgrammableStage::VertexShaderStage, 3);
  

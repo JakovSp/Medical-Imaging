@@ -261,7 +261,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
-    <ClInclude Include="Camera.h" />
+    <ClInclude Include="OrbitalCamera.h" />
     <ClInclude Include="DICOMLoader.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Pipeline.h" />
@@ -274,7 +274,7 @@
     <ClInclude Include="Wireframe.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="OrbitalCamera.cpp" />
     <ClCompile Include="DICOMLoader.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

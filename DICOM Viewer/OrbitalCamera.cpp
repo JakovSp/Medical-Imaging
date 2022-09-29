@@ -1,6 +1,6 @@
 
 //
-//	Camera.cpp: 
+//	OrbitalCamera.cpp: 
 //	Manages the scene fixed camera 
 //	
 //  © VanityXS - DirectX 11.2 Student Engine. Zoraja Consulting d.o.o. All rights reserved.
@@ -9,19 +9,19 @@
 
 #include "pch.h"
 
-#include "Camera.h"
+#include "OrbitalCamera.h"
 
 using namespace std;
 using namespace vxe;
 
 using namespace DirectX;
 
-Camera::Camera()
+OrbitalCamera::OrbitalCamera()
 {
 	DebugPrint(string("\t Camera::Ctor... \n"));
 }
 
-void Camera::Initialize(shared_ptr<VanityCore>& vanitycore)
+void OrbitalCamera::Initialize(shared_ptr<VanityCore>& vanitycore)
 {
 	auto device = vanitycore->GetD3DDevice();
 
@@ -44,7 +44,7 @@ void Camera::Initialize(shared_ptr<VanityCore>& vanitycore)
 	_projection->SetProjection(orientationMatrix, fov, r, n, f);
 }
 
-void Camera::Bind(shared_ptr<VanityCore>& vanitycore)
+void OrbitalCamera::Bind(shared_ptr<VanityCore>& vanitycore)
 {
 	auto context = vanitycore->GetD3DDeviceContext();
 
@@ -56,7 +56,17 @@ void Camera::Bind(shared_ptr<VanityCore>& vanitycore)
 	_projection->GetConstantBuffer()->Bind(context, ProgrammableStage::VertexShaderStage, _projectionregister);
 }
 
-void Camera::Release()
+void OrbitalCamera::Update(shared_ptr<VanityCore>& vc) {
+	_eye.x = cos(move.x) * distance * cos(move.y) + _lookat.x;
+	_eye.z = sin(move.x) * distance * cos(move.y) + _lookat.z;
+	_eye.y = sin(move.y) * distance + _lookat.y;
+
+	_view->SetView(XMLoadFloat3(&_eye), XMLoadFloat3(&_lookat), XMLoadFloat3(&_up));
+	auto context = vc->GetD3DDeviceContext();
+	_view->Update(context);
+}
+
+void OrbitalCamera::Release()
 {
 	DebugPrint(string("\t Camera::Release()... \n"));
 

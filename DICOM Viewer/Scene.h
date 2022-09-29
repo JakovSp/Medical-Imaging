@@ -13,10 +13,11 @@
 
 #include <Engine\Third Party\DirectX Tool Kit\VertexTypes.h>
 #include <Engine\Scene\Scene Object.h>
+#include <Engine\Scene\Input\Input Controller.h>
 
 #include "Textures.h"
 #include "Animation.h"
-#include "Camera.h"
+#include "OrbitalCamera.h"
 
 namespace vxe {
 	typedef struct TRANSFERZ {
@@ -34,7 +35,7 @@ namespace vxe {
 		void LoadAssets(std::vector<concurrency::task<void>>&, std::shared_ptr<VanityCore>&);
 		void SetCamera(std::shared_ptr<VanityCore>&);
 		void SetTextures(std::shared_ptr<VanityCore>&);
-		void Update(DX::StepTimer const&);
+		void Update(DX::StepTimer const&, std::shared_ptr<VanityCore>& vanitycore, InputController^ ic);
 		void Render(std::shared_ptr<VanityCore>&);
 		void Release();
 
@@ -48,8 +49,8 @@ namespace vxe {
 		std::shared_ptr<SceneObject<DirectX::VertexPositionTexture3, uint16_t>> _volumetricslice;
 		std::shared_ptr<SceneTexture<Texture3D>> _texture3D;
 		Animation _animation{};
+		OrbitalCamera _camera{};
 
-		Camera _camera{};
+		DirectX::XMFLOAT2 _pointer{0.0f, 0.0f};
 	};
-
 }

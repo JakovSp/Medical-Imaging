@@ -1,6 +1,6 @@
 
 //
-//	Camera Base.cpp
+//	OrbitalCamera Base.cpp
 //	Encapsulates basic camera elements: position, view and projection
 //
 //  © VanityXS - DirectX 11.2 Student Engine. Zoraja Consulting d.o.o. All rights reserved.
