@@ -89,20 +89,32 @@ void Scene::Update(DX::StepTimer const& timer, shared_ptr<VanityCore>& vanitycor
 
 	float _rps = DirectX::XM_PI / 6.0f ;
 
-	XMFLOAT2 prevpointer;
+	XMFLOAT2 prevpointer{0.0f, 0.0f};
+	float dx = 0, dy = 0, dz = 0;
+
 	bool update = false;
 	if (ic->IsLeftButtonPressed()) {
 		prevpointer = _pointer;
 		_pointer = ic->GetPointerPosition();
+		dx = (prevpointer.x - _pointer.x)*0.005;
+		dy = (prevpointer.y - _pointer.y)*0.005;
 		update = true;
 	}
 
 	_pointer = ic->GetPointerPosition();
 
+	if (ic->IsKeyDown(VirtualKey::W)) {
+		dz = -0.05;
+		update = true;
+	}
+
+	if (ic->IsKeyDown(VirtualKey::S)) {
+		dz = 0.05;
+		update = true;
+	}
+
 	if(update){
-		_camera.move.x += (prevpointer.x - _pointer.x)*0.005;
-		_camera.move.y += (prevpointer.y - _pointer.y)*0.005;
-		_camera.Update(vanitycore);
+		_camera.Update(vanitycore, dz, dx, dy);
 	}
 
 }

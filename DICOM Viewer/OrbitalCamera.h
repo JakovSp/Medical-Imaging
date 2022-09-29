@@ -20,15 +20,18 @@ namespace vxe {
 
 	public:
 		OrbitalCamera();
+		OrbitalCamera(float distance);
 
 		void Initialize(std::shared_ptr<VanityCore>&);
 		void Bind(std::shared_ptr<VanityCore>&);
 		void Release();
-		void Update(std::shared_ptr<VanityCore>& vc);
-		DirectX::XMFLOAT2 move{0.0f, 0.0f};
+		void Update(std::shared_ptr<VanityCore>& vc, const float&, const float&, const float&);
+
 	private:
-		float distance = 1.8f;
-		DirectX::XMFLOAT3 _eye { 0.0f, 0.0f, distance};
+		float _distance{ 1.8f };
+		float _alpha{ 0.0f };
+		float _beta{ 0.0f };
+		DirectX::XMFLOAT3 _eye{ _distance, 0.0f, 0.0f};
 		DirectX::XMFLOAT3 _lookat{ 0.0f, 0.0f, 0.0f };
 		DirectX::XMFLOAT3 _up{ 0.0f, 1.0f, 0.0f };
 

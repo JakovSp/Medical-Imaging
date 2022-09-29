@@ -21,6 +21,12 @@ OrbitalCamera::OrbitalCamera()
 	DebugPrint(string("\t Camera::Ctor... \n"));
 }
 
+OrbitalCamera::OrbitalCamera(float distance) :
+	_distance(distance), _eye{0.0f, 0.0f, distance}
+{
+	DebugPrint(string("\t Camera::Ctor... \n"));
+}
+
 void OrbitalCamera::Initialize(shared_ptr<VanityCore>& vanitycore)
 {
 	auto device = vanitycore->GetD3DDevice();
@@ -56,10 +62,11 @@ void OrbitalCamera::Bind(shared_ptr<VanityCore>& vanitycore)
 	_projection->GetConstantBuffer()->Bind(context, ProgrammableStage::VertexShaderStage, _projectionregister);
 }
 
-void OrbitalCamera::Update(shared_ptr<VanityCore>& vc) {
-	_eye.x = cos(move.x) * distance * cos(move.y) + _lookat.x;
-	_eye.z = sin(move.x) * distance * cos(move.y) + _lookat.z;
-	_eye.y = sin(move.y) * distance + _lookat.y;
+void OrbitalCamera::Update(shared_ptr<VanityCore>& vc, const float& dz, const float& dx, const float& dy) {
+	_distance += dz; _alpha += dx; _beta += dy;
+	_eye.x = cos(_alpha) * _distance * cos(_beta) + _lookat.x;
+	_eye.z = sin(_alpha) * _distance * cos(_beta) + _lookat.z;
+	_eye.y = sin(_beta) * _distance + _lookat.y;
 
 	_view->SetView(XMLoadFloat3(&_eye), XMLoadFloat3(&_lookat), XMLoadFloat3(&_up));
 	auto context = vc->GetD3DDeviceContext();
