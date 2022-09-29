@@ -87,7 +87,7 @@ void Renderer::Update(const DX::StepTimer& timer)
 		_objectbound = (SceneObjectType)((_objectbound + 1 ) % NumberOfObjects);
 		_inputcontroller->ResetSates();
 	}
-	_scene->Update(timer);
+	_scene->Update(timer, _vanitycore, _inputcontroller);
 }
 
 

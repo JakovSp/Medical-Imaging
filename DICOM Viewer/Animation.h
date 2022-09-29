@@ -17,13 +17,13 @@ namespace vxe {
 
 	public:
 		auto Angle(float time) { 
-			_angle += time * _rps;
-			return _angle;
+			move += time * _rps;
+			return move;
 		}
 
 	private:
 		float _rps = DirectX::XM_PI / 6.0f ;
-		float _angle = 0.0f;
+		float move = 0.0f;
 	};
 
 }

@@ -59,7 +59,7 @@
     <ClCompile Include="Pipeline.cpp">
       <Filter>Pipeline</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
+    <ClCompile Include="OrbitalCamera.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="Texture3D.cpp">
@@ -80,7 +80,7 @@
     <ClInclude Include="Pipeline.h">
       <Filter>Pipeline</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
+    <ClInclude Include="OrbitalCamera.h">
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="Wireframe.h">

@@ -2,7 +2,7 @@
 #pragma once
 
 //
-//	Camera Base.h
+//	OrbitalCamera Base.h
 //	Encapsulates basic camera elements: position, view and projection
 //
 //  © VanityXS - DirectX 11.2 Student Engine. Zoraja Consulting d.o.o. All rights reserved.
