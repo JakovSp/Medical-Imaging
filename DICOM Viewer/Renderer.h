@@ -33,7 +33,7 @@ namespace vxe
 
 	private:
 		std::shared_ptr<Scene> _scene;
-		std::shared_ptr<Pipeline<DirectX::VertexPositionTexture3>> _volumetricpipeline;
+		std::shared_ptr<Pipeline<DirectX::VertexPositionTextureInstanced>> _volumetricpipeline;
 		std::shared_ptr<Pipeline<DirectX::VertexPosition>> _wireframepipeline;
 		SceneObjectType _objectbound;
 	};

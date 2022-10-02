@@ -86,13 +86,10 @@
     <ClInclude Include="Wireframe.h">
       <Filter>Shapes</Filter>
     </ClInclude>
-    <ClInclude Include="Texture3D.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Textures.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Quad.h">
+    <ClInclude Include="ObjectAlignedSlices.h">
       <Filter>Shapes</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h">
@@ -103,6 +100,9 @@
     </ClInclude>
     <ClInclude Include="DICOMLoader.h">
       <Filter>DICOM</Filter>
+    </ClInclude>
+    <ClInclude Include="Volumteric.h">
+      <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -115,12 +115,6 @@
       <Filter>Pipeline</Filter>
     </FxCompile>
     <FxCompile Include="VolumetricVS.hlsl">
-      <Filter>Pipeline</Filter>
-    </FxCompile>
-    <FxCompile Include="WireframeVS.hlsl">
-      <Filter>Pipeline</Filter>
-    </FxCompile>
-    <FxCompile Include="WireframePS.hlsl">
       <Filter>Pipeline</Filter>
     </FxCompile>
   </ItemGroup>

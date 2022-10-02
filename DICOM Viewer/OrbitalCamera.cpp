@@ -43,8 +43,8 @@ void OrbitalCamera::Initialize(shared_ptr<VanityCore>& vanitycore)
 
 	if (r < 1.0f) fov *= 2.0f;
 
-	auto orientation = vanitycore->GetOrientationTransform3D();
-	auto orientationMatrix = XMLoadFloat4x4(&orientation);
+	auto _orientation = vanitycore->GetOrientationTransform3D();
+	auto orientationMatrix = XMLoadFloat4x4(&_orientation);
 
 	_projection = make_shared<ProjectionTransform>(device);
 	_projection->SetProjection(orientationMatrix, fov, r, n, f);

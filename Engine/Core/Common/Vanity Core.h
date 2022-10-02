@@ -106,7 +106,7 @@ namespace vxe
 		Windows::Graphics::Display::DisplayOrientations	m_currentOrientation;
 		float m_dpi;
 
-		// Transforms used for display orientation.
+		// Transforms used for display _orientation.
 		D2D1::Matrix3x2F m_orientationTransform2D;
 		DirectX::XMFLOAT4X4	m_orientationTransform3D;
 

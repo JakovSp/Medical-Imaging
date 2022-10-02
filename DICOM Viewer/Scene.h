@@ -12,24 +12,22 @@
 #include "pch.h"
 
 #include <Engine\Third Party\DirectX Tool Kit\VertexTypes.h>
-#include <Engine\Scene\Scene Object.h>
+// #include <Engine\Scene\Scene Object.h>
 #include <Engine\Scene\Input\Input Controller.h>
 
 #include "Textures.h"
 #include "Animation.h"
 #include "OrbitalCamera.h"
 
+#include "Volumteric.h"
+
 namespace vxe {
-	typedef struct TRANSFERZ {
-		float vertZ;
-		float texZ;
-	}TransferZ;
 
 	enum SceneObjectType {
-		PointCloud, Volumetric, TriMesh, NumberOfObjects
+		PointCloud, VolumetricMesh, TriMesh, NumberOfObjects
 	};
+
 	class Scene {
-		using IndexType_t = uint16_t;
 	public:
 		Scene();
 		void LoadAssets(std::vector<concurrency::task<void>>&, std::shared_ptr<VanityCore>&);
@@ -44,10 +42,10 @@ namespace vxe {
 		void DrawPointCloud(std::shared_ptr<VanityCore>&, bool=false);
 
 	private:
-		std::shared_ptr<SceneObject<DirectX::VertexPosition, uint16_t>> _pointcloud;
-		std::shared_ptr<SceneObject<DirectX::VertexPosition, uint16_t>> _trisurface;
-		std::shared_ptr<SceneObject<DirectX::VertexPositionTexture3, uint16_t>> _volumetricslice;
-		std::shared_ptr<SceneTexture<Texture3D>> _texture3D;
+		//std::shared_ptr<SceneObject<DirectX::VertexPosition, uint16_t>> _pointcloud;
+		//std::shared_ptr<SceneObject<DirectX::VertexPosition, uint16_t>> _trisurface;
+		std::shared_ptr<Volumetric> _volumetricslice;
+		std::shared_ptr<SceneTexture<Texture2D>> _texArray;
 		Animation _animation{};
 		OrbitalCamera _camera{};
 

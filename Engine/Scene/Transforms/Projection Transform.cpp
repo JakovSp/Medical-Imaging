@@ -26,7 +26,7 @@ ProjectionTransform::ProjectionTransform(_In_ ID3D11Device2* device, Handedness 
 	DebugPrint(string("\t\t Projection: ") + ToString(_projectiontype) + string("\n"));
 }
 
-void ProjectionTransform::SetProjection(DirectX::CXMMATRIX orientation, float a, float b, float zn, float zf)
+void ProjectionTransform::SetProjection(DirectX::CXMMATRIX _orientation, float a, float b, float zn, float zf)
 {
 	DebugPrint(string("\t ProjectionTransform::SetProjection() ... \n"));
 
@@ -52,5 +52,5 @@ void ProjectionTransform::SetProjection(DirectX::CXMMATRIX orientation, float a,
 	DebugPrint(string("\t\t Projection: " + ToString(&P) + "\n"));
 #endif
 
-	XMStoreFloat4x4(&_transfer, XMMatrixTranspose(projection * orientation));
+	XMStoreFloat4x4(&_transfer, XMMatrixTranspose(projection * _orientation));
 }

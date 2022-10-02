@@ -53,7 +53,7 @@ MainLoop::~MainLoop()
 	_vanitycore->RegisterDeviceNotify(nullptr);
 }
 
-// Updates application state when the window size changes (e.g. device orientation change)
+// Updates application state when the window size changes (e.g. device _orientation change)
 void MainLoop::CreateWindowSizeDependentResources()
 {
 	DebugPrint(string("\t MainLoop::CreateWindowSizeDependentResources() ...\n"));

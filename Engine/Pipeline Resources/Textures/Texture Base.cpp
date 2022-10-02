@@ -54,7 +54,7 @@ void TextureBase::BindSamplerState(_In_ ID3D11DeviceContext2* context, uint32_t 
 {
 	DebugPrint(string("\t TextureBase::BindSamplerState() ...\n"));
 
-	if (_uav == nullptr) {
+	if (_samplerstate == nullptr) {
 		DebugPrint(string("\t\t _samplerstate is nullptr. \n"));
 
 		return;

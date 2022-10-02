@@ -10,8 +10,9 @@
 
 #include "pch.h"
 
-#include <Engine\Pipeline Resources\Textures\Texture Base.h>
-#include <Engine\Pipeline Resources\Buffers\Constant Buffer.h>
+#include "Texture Base.h"
+
+#include "..\..\Third Party\DirectX Tool Kit\DDS\DDSTextureLoader.h"
 
 namespace vxe {
 	class Texture3D : public TextureBase {
@@ -41,7 +42,7 @@ namespace vxe {
 		}
 
 		concurrency::task<void> CreateAsync(const std::wstring&);
-		concurrency::task<void> CreateAsync(const std::vector<uint8_t>& data);
+		concurrency::task<void> Texture3D::CreateAsyncFromMemory(const uint8_t* data);
 
 		virtual bool CreateShaderResourceView() override
 		{

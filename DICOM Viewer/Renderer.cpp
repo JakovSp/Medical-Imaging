@@ -26,10 +26,10 @@ Renderer::Renderer() :
 
 	_inputcontroller = ref new InputController();
 	_scene = make_shared<Scene>();
-	_volumetricpipeline = make_shared<Pipeline<VertexPositionTexture3>>(
+	_volumetricpipeline = make_shared<Pipeline<VertexPositionTextureInstanced>>(
 		L"VolumetricVS.cso", L"VolumetricPS.cso");
-	_wireframepipeline = make_shared<Pipeline<VertexPosition>>(
-		L"WireframeVS.cso", L"WireframePS.cso");
+	// _wireframepipeline = make_shared<Pipeline<VertexPosition>>(
+	// 	L"WireframeVS.cso", L"WireframePS.cso");
 }
 
 void Renderer::CreateDeviceResources()
@@ -40,7 +40,7 @@ void Renderer::CreateDeviceResources()
 
 	_scene->LoadAssets(tasks, _vanitycore);
 	_volumetricpipeline->LoadShaders(tasks, _vanitycore);
-	_wireframepipeline->LoadShaders(tasks, _vanitycore);
+	// _wireframepipeline->LoadShaders(tasks, _vanitycore);
 	
 	when_all(tasks.begin(), tasks.end()).then([this]() {
 		_loadingcomplete = true;
@@ -49,7 +49,7 @@ void Renderer::CreateDeviceResources()
 		_scene->SetTextures(_vanitycore);
 	});
 
-	_objectbound = TriMesh;
+	_objectbound = VolumetricMesh;
 }
 
 void Renderer::CreateWindowResources()
@@ -73,7 +73,7 @@ void Renderer::Render()
 		_wireframepipeline->BindShaders(_vanitycore);
 		_scene->DrawPointCloud(_vanitycore);
 		break;
-	case Volumetric:
+	case VolumetricMesh:
 		_volumetricpipeline->BindShaders(_vanitycore);
 		_scene->DrawVolumetric(_vanitycore);
 		break;
@@ -102,7 +102,7 @@ void Renderer::ReleaseDeviceResources()
 	case PointCloud: TriMesh:
 		_volumetricpipeline->Release();
 		break;
-	case Volumetric:
+	case VolumetricMesh:
 		_wireframepipeline->Release();
 		break;
 	}

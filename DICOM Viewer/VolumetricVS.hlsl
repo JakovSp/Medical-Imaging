@@ -23,38 +23,41 @@ cbuffer ProjectionTransforms : register(b2)
 	matrix Projection;
 };
 
-cbuffer TextureBuffer : register(b3)
+cbuffer SamplingMatrix : register(b3)
 {
-	float vertZ;
-	float texZ;
+	matrix samplingmatrix;
 };
 
-// Per-vertex data used as input to the vertex shader.
 struct VertexShaderInput
 {
-	float3 pos : SV_POSITION;
-	float3 tex : TEXCOORD0;
+	float4 pos : SV_POSITION;
+	float4 tex : TEXCOORD;
 };
 
-// Per-pixel color data passed through the pixel shader.
 struct VertexShaderOutput
 {
 	float4 pos : SV_POSITION;
 	float3 tex : TEXCOORD0;
 };
 
-VertexShaderOutput main(VertexShaderInput input)
+VertexShaderOutput main(VertexShaderInput input, uint InstanceID : SV_InstanceID)
 {
 	VertexShaderOutput output;
-	float4 pos = float4(input.pos.xy, vertZ, 1.0f);
+	float4 pos = float4(input.pos.xyz, input.pos.w*InstanceID);
+	pos = mul(pos, samplingmatrix);
+	pos.w = 1.0f;
 
 	pos = mul(pos, World);
 	pos = mul(pos, View);
 	pos = mul(pos, Projection);
 	output.pos = pos;
 
-	output.tex = input.tex;
-	output.tex.z = texZ;
+	float4 tex = float4(input.tex.xyz, input.tex.w * InstanceID);
+	tex = mul(tex, samplingmatrix);
+	output.tex = tex.xyz;
+	// output.tex.x = 1.0f/150 * InstanceID; // input.tex.x* InstanceID;
+	// output.tex.y = input.tex.y;
+	// output.tex.z = input.tex.z;
 
 	return output;
 }

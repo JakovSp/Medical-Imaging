@@ -7,7 +7,7 @@
 //	vJan22
 //
 
-Texture3D Texture : register(t0);
+Texture2DArray TextureArray : register(t0);
 SamplerState Sampler : register(s0);
 
 struct PixelShaderInput
@@ -16,9 +16,10 @@ struct PixelShaderInput
 	float3 tex : TEXCOORD0;
 };
 
-float4 main(PixelShaderInput input) : SV_TARGET
+float4 main(PixelShaderInput input, uint InstanceID : SV_InstanceID) : SV_TARGET
 {
-	float4 color = Texture.Sample(Sampler, input.tex);
+
+	float4 color = TextureArray.Sample(Sampler, input.tex);
 	color = float4(color.x, color.x, color.x, 1.0f - color.x);
 
 	return color;

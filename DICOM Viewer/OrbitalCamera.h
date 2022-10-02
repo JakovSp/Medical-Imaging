@@ -25,6 +25,9 @@ namespace vxe {
 		void Initialize(std::shared_ptr<VanityCore>&);
 		void Bind(std::shared_ptr<VanityCore>&);
 		void Release();
+		DirectX::XMFLOAT4X4 GetView() {
+			return _view->GetView();
+		}
 		void Update(std::shared_ptr<VanityCore>& vc, const float&, const float&, const float&);
 
 	private:

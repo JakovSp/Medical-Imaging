@@ -24,24 +24,53 @@ using namespace Windows::System;
 using namespace DirectX;
 using namespace DX;
 
+task<void> Texture2D::CreateAsyncFromMemory(const uint8_t* data, uint32_t pitch, uint32_t slicepitch)
+{
+	DebugPrint(wstring(L"\t Texture2D::CreateAsyncFromMemory() of ...\n" + to_wstring(\
+		_description.Width * _description.Height * _description.ArraySize) + L" bytes in size ...\n"));
+
+	return create_task([this, data, pitch, slicepitch]() {
+
+		DebugPrint(string("\t -- A lambda: Creating a Texture2D \n"));
+		uint32_t slicepitch = _description.Width * _description.Height;
+		D3D11_SUBRESOURCE_DATA* srd = new D3D11_SUBRESOURCE_DATA[_description.ArraySize];
+		for (size_t i = 0; i < _description.ArraySize; i++) {
+			srd[i].pSysMem = data + i * slicepitch;
+			srd[i].SysMemPitch = _description.Width;
+			srd[i].SysMemSlicePitch = slicepitch;
+		}
+
+		ThrowIfFailed(_device->CreateTexture2D(
+			&_description,
+			srd,
+			&_texture), __FILEW__, __LINE__);
+
+		delete[] srd;
+		DebugPrint(std::string("\t -- A lambda: A Texture2D created. \n"));
+	});
+}
+
 task<void> Texture2D::CreateAsync(const wstring& filename, uint32_t pitch, uint32_t slicepitch)
 {
 	DebugPrint(wstring(L"\t Texture2D::CreateAsync()  ...\n" + filename + L"...\n"));
 
-	return create_task(ReadDataAsync(filename)).then([this, pitch, slicepitch](const vector<uint8_t> data) {
+	return create_task(ReadDataAsync(filename)).then([this, pitch, slicepitch](const vector<uint8_t>& data) {
 
 		DebugPrint(string("\t -- A lambda: Creating a Texture2D \n"));
-
-		D3D11_SUBRESOURCE_DATA srd = { 0 };
-		srd.pSysMem = &data[0];
-		srd.SysMemPitch = pitch;
-		srd.SysMemSlicePitch = slicepitch;
+		uint32_t slicepitch = _description.Width * _description.Height;
+		D3D11_SUBRESOURCE_DATA* srd = new D3D11_SUBRESOURCE_DATA[_description.ArraySize];
+		for (size_t i = 0; i < _description.ArraySize; i++) {
+			srd[i].pSysMem = data.data() + i * slicepitch;
+			srd[i].SysMemPitch = _description.Width;
+			srd[i].SysMemSlicePitch = slicepitch;
+		}
 
 		ThrowIfFailed(_device->CreateTexture2D(
 			&_description,
-			&srd,
+			srd,
 			&_texture), __FILEW__, __LINE__);
 
+		delete[] srd;
 		DebugPrint(std::string("\t -- A lambda: A Texture2D created. \n"));
 	});
 }

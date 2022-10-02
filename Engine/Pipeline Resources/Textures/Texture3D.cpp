@@ -9,7 +9,7 @@
 #include "pch.h"
 
 #include "Texture3D.h"
-#include <Engine\Core\Common\DirectXHelper.h>
+#include "..\..\Core\Common\DirectXHelper.h"
 
 using namespace std;
 using namespace vxe;
@@ -45,9 +45,10 @@ task<void> Texture3D::CreateAsync(const wstring& filename)
 	});
 }
 
-task<void> Texture3D::CreateAsync(const vector<uint8_t>& data)
+task<void> Texture3D::CreateAsyncFromMemory(const uint8_t* data)
 {
-	DebugPrint(wstring(L"\t Texture3D::CreateAsync()  ...\n" + to_wstring(data.size()) + L" bytes ...\n"));
+	DebugPrint(wstring(L"\t Texture3D::CreateAsyncFromMemory() of ...\n" + to_wstring(\
+		_description.Width * _description.Height * _description.Depth) + L" bytes in size ...\n"));
 
 	return create_task([this, data]() {
 

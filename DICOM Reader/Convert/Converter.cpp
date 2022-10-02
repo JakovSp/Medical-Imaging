@@ -116,7 +116,7 @@ void DICOMConverter::GatherVolumes() {
 			}
 		}
 	}
-	// TODO: Categorize NewSeries by their orientation
+	// TODO: Categorize NewSeries by their _orientation
 }
 
 void DICOMConverter::InitializeVolumes() {

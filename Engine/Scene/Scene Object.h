@@ -25,7 +25,7 @@ namespace vxe {
 		std::shared_ptr<Mesh<T, U>> GetMesh() { return _mesh; }
 
 		void SetWorld(std::shared_ptr<WorldTransforms>& world) { _world = world; }
-		std::shared_ptr<WorldTransforms> GetWorld() { return _world; }
+		virtual std::shared_ptr<WorldTransforms> GetWorld() { return _world; }
 
 		void Bind(_In_ ID3D11DeviceContext2* context) {
 
@@ -39,12 +39,17 @@ namespace vxe {
 			buffer->Bind(context, ProgrammableStage::VertexShaderStage, _worldregister);
 		}
 
-		void Draw(_In_ ID3D11DeviceContext2* context, bool indexed=true) {
+		virtual void Draw(_In_ ID3D11DeviceContext2* context, bool indexed=true) {
 
 			if (!_active) return;
 
 			if(indexed) _mesh->DrawIndexed(context);
 			else _mesh->Draw(context);
+		}
+
+		void DrawInstanced(_In_ ID3D11DeviceContext2* context, bool indexed=true) {
+			if (indexed) _mesh->DrawIndexedInstanced(context);
+			else _mesh->DrawInstanced(context);
 		}
 
 		void Acivate() { _active = true; }
@@ -55,7 +60,7 @@ namespace vxe {
 			_world->Reset();
 		}
 
-	private:
+	protected:
 		std::shared_ptr<Mesh<T, U>> _mesh;
 
 		std::shared_ptr<WorldTransforms> _world;

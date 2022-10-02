@@ -312,7 +312,7 @@ void VanityCore::CreateWindowSizeDependentResources()
 
 	// The width and height of the swap chain must be based on the window's
 	// natively-oriented width and height. If the window is not in the native
-	// orientation, the dimensions must be reversed.
+	// _orientation, the dimensions must be reversed.
 	DXGI_MODE_ROTATION displayRotation = ComputeDisplayRotation();
 
 	bool swapDimensions = displayRotation == DXGI_MODE_ROTATION_ROTATE90 || displayRotation == DXGI_MODE_ROTATION_ROTATE270;
@@ -368,7 +368,7 @@ void VanityCore::CreateWindowSizeDependentResources()
 		ThrowIfFailed(dxgiDevice->SetMaximumFrameLatency(1), __FILEW__, __LINE__);
 	}
 
-	// Set the proper orientation for the swap chain, and generate 2D and
+	// Set the proper _orientation for the swap chain, and generate 2D and
 	// 3D matrix transformations for rendering to the rotated swap chain.
 	// Note the rotation angle for the 2D and 3D transforms are different.
 	// This is due to the difference in coordinate spaces.  Additionally,
@@ -604,7 +604,7 @@ void VanityCore::Present()
 }
 
 // This method determines the rotation between the display device's native Orientation and the
-// current display orientation.
+// current display _orientation.
 DXGI_MODE_ROTATION VanityCore::ComputeDisplayRotation()
 {
 	DXGI_MODE_ROTATION rotation = DXGI_MODE_ROTATION_UNSPECIFIED;

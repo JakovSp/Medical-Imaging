@@ -144,6 +144,9 @@
     <ClCompile Include="Pipeline Stages\Shaders\Geometry Shader.cpp">
       <Filter>Pipeline Stages\Shaders</Filter>
     </ClCompile>
+    <ClCompile Include="Pipeline Resources\Textures\Texture3D.cpp">
+      <Filter>Pipeline Resources\Textures</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -285,6 +288,9 @@
     <ClInclude Include="Vanity.h" />
     <ClInclude Include="Pipeline Stages\Shaders\Geometry Shader.h">
       <Filter>Pipeline Stages\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Pipeline Resources\Textures\Texture3D.h">
+      <Filter>Pipeline Resources\Textures</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

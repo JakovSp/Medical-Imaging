@@ -27,9 +27,9 @@ namespace vxe {
 		auto GetLookAt() { return DirectX::XMLoadFloat3(&_lookat); }
 		auto GetUp() { return DirectX::XMLoadFloat3(&_up); }
 
-		void SetProjection(DirectX::CXMMATRIX orientation, float a, float b, float zn, float zf)
+		void SetProjection(DirectX::CXMMATRIX _orientation, float a, float b, float zn, float zf)
 		{
-			_projection.SetProjection(orientation, a, b, zn, zf);
+			_projection.SetProjection(_orientation, a, b, zn, zf);
 		}
 
 		void UpdateEye(_In_ ID3D11DeviceContext2* context) { _eye.Update(context); }

@@ -37,11 +37,12 @@ namespace vxe::med {
 		LoadPointCloud(	Matter matter, std::vector<concurrency::task<void>>& tasks, std::shared_ptr<VanityCore>& vanitycore);
 		SceneTexture<Texture3D>
 		LoadTexture3D( Matter matter, std::vector<concurrency::task<void>>& tasks, std::shared_ptr<VanityCore>& vanitycore);
+		SceneTexture<Texture2D> LoadTextureArray(	Matter matter, std::vector<concurrency::task<void>>& tasks,
+													std::shared_ptr<VanityCore>& vanitycore);
 
 		virtual void Convert() {
 
 		}
-
 
 
 	private:

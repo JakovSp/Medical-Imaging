@@ -141,3 +141,42 @@ SceneTexture<Texture3D> DICOMLoader::LoadTexture3D(Matter matter, vector<task<vo
 
 	return scenetexture3D;
 }
+
+SceneTexture<Texture2D> DICOMLoader::LoadTextureArray(Matter matter, vector<task<void>>& tasks,
+	shared_ptr<VanityCore>& vanitycore) {
+	auto device = vanitycore->GetD3DDevice();
+
+	uint32_t depth = static_cast<uint32_t>(volumeset[0].GetSamples().Depth());
+	uint32_t width = static_cast<uint32_t>(volumeset[0].GetSamples().Width());
+	uint32_t height = static_cast<uint32_t>(volumeset[0].GetSamples().Height());
+	shared_ptr<Texture2D> texturearray = make_shared<Texture2D>(device, DXGI_FORMAT_R8_UNORM, width, height, depth, 1,
+											D3D11_BIND_SHADER_RESOURCE, D3D11_USAGE_IMMUTABLE);
+
+	SceneTexture<Texture2D> scenetexarray(texturearray);
+
+	wstring FORUID = _utfconverter.from_bytes(volumeset[0].FORUID);
+	wstring type = MatterName[matter].name + L"Texture3D";
+
+	if (_caching) {
+		fs::path textureFilename(_cache.Query(FORUID, type));
+		if (fs::exists(textureFilename)) {
+			scenetexarray.Load(tasks, textureFilename);
+			return scenetexarray;
+		}
+	}
+
+	auto VolumeTexture = volumeset[0].GenerateIsoSamples(CorticalBone);
+
+	if (_caching) {
+		auto filepath = GenerateDefaultFilename(type);
+		WriteTexture3D(VolumeTexture, filepath);
+		_cache.AddNewEntry({ FORUID, type, filepath.c_str()});
+	}
+
+	uint8_t* texturedata = VolumeTexture.Points();
+	scenetexarray.Load(tasks, vector<uint8_t>(texturedata, texturedata + depth * width * height));
+
+	return scenetexarray;
+
+}
+
