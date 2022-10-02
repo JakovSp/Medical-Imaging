@@ -86,7 +86,7 @@ void DICOMVolume::LoadVolume() {
 
 list<pair<long double, string>> DICOMVolume::OrderSlices() {
 	// If multiple series are involved:
-	// Determine if the orientation of two series are
+	// Determine if the _orientation of two series are
 	// significantly different from each other to warrant an interpolation
 	// If they are: Choice of sampling axis (which series is major)?
 

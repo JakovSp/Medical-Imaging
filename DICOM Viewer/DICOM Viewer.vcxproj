@@ -270,6 +270,7 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Textures.h" />
+    <ClInclude Include="Volumteric.h" />
     <ClInclude Include="Wireframe.h" />
   </ItemGroup>
   <ItemGroup>

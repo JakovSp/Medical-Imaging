@@ -12,16 +12,17 @@
 #include "pch.h"
 
 #include <Engine\Third Party\DirectX Tool Kit\VertexTypes.h>
-#include <Engine\Scene\Scene Object.h>
 
 #include "Textures.h"
 #include "Animation.h"
 #include "Camera.h"
 
+#include "Volumteric.h"
+
 namespace vxe {
 
 	enum SceneObjectType {
-		PointCloud, Volumetric, TriMesh, NumberOfObjects
+		PointCloud, VolumetricMesh, TriMesh, NumberOfObjects
 	};
 
 	class Scene {
@@ -39,9 +40,9 @@ namespace vxe {
 		void DrawPointCloud(std::shared_ptr<VanityCore>&, bool=false);
 
 	private:
-		std::shared_ptr<SceneObject<DirectX::VertexPosition, uint16_t>> _pointcloud;
-		std::shared_ptr<SceneObject<DirectX::VertexPosition, uint16_t>> _trisurface;
-		std::shared_ptr<SceneObject<DirectX::VertexPositionTextureInstanced, uint16_t>> _volumetricslice;
+		//std::shared_ptr<SceneObject<DirectX::VertexPosition, uint16_t>> _pointcloud;
+		//std::shared_ptr<SceneObject<DirectX::VertexPosition, uint16_t>> _trisurface;
+		std::shared_ptr<Volumetric> _volumetricslice;
 		std::shared_ptr<SceneTexture<Texture2D>> _texArray;
 		Animation _animation{};
 

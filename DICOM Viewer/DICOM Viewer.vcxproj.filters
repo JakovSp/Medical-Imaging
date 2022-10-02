@@ -95,6 +95,9 @@
     <ClInclude Include="PointCloud.h">
       <Filter>Shapes</Filter>
     </ClInclude>
+    <ClInclude Include="Volumteric.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">

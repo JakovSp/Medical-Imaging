@@ -1,7 +1,7 @@
 /*
 Volume.h
 
-	Volumetric Data with DICOM information
+	VolumetricMesh Data with DICOM information
 	One DICOMVolume can span multiple series
 */
 #pragma once

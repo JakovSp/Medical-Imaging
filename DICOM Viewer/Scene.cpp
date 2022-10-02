@@ -42,12 +42,13 @@ void Scene::LoadAssets(vector<task<void>>& tasks, shared_ptr<VanityCore>& vanity
 	auto device = vanitycore->GetD3DDevice();
 	auto world = make_shared<WorldTransforms>(device);
 
+
 	_texArray = make_shared<SceneTexture<Texture2D>>(DICOMdata.LoadTextureArray(tasks, vanitycore));
-	shared_ptr<Mesh<VertexPositionTextureInstanced, uint16_t>> slice;
-	slice = make_shared<ObjectAlignedSlices<VertexPositionTextureInstanced, uint16_t>>(_texArray->GetTexture()->GetDepth());
-	tasks.push_back(slice->CreateAsync(device));
-	_volumetricslice = make_shared<SceneObject<VertexPositionTextureInstanced, uint16_t>>();
-	_volumetricslice->SetMesh(slice);
+	auto meshslices = make_shared<ObjectAlignedSlices>(512, 512, 150, 1.0f, 1.0f, 1.0f);
+	tasks.push_back(meshslices->CreateAsync(device));
+	_volumetricslice = make_shared<Volumetric>();
+	_volumetricslice->SetMesh(meshslices);
+	_volumetricslice->SetTexture(_texArray);
 	_volumetricslice->SetWorld(world);
 
 	// shared_ptr<Mesh<VertexPosition, uint16_t>> trimesh;
@@ -86,9 +87,9 @@ void Scene::Update(DX::StepTimer const& timer)
 	__Once(DebugPrint(string("Scene::Update() ...\n")));
 
 	auto angle = _animation.Angle(static_cast<float>(timer.GetElapsedSeconds()));
-	_volumetricslice->GetWorld()->RotateY(angle);
+	_volumetricslice->GetWorld()->RotateX(angle);
 
-	//	_PCobject->GetWorld()->RotateY(angle);
+	//_PCobject->GetWorld()->RotateY(angle);
 	// _MCobject->GetWorld()->RotateY(angle);
 }
 
@@ -98,8 +99,8 @@ void Scene::DrawTriMesh(std::shared_ptr<VanityCore>& vanitycore, bool indexed) {
 	auto device = vanitycore->GetD3DDevice();
 	auto context = vanitycore->GetD3DDeviceContext();
 
-	_trisurface->Bind(context);
-	_trisurface->Draw(context, false);
+	// _trisurface->Bind(context);
+	// _trisurface->Draw(context, false);
 }
 
 void Scene::DrawPointCloud(std::shared_ptr<VanityCore>& vanitycore, bool indexed) {
@@ -108,8 +109,8 @@ void Scene::DrawPointCloud(std::shared_ptr<VanityCore>& vanitycore, bool indexed
 	auto device = vanitycore->GetD3DDevice();
 	auto context = vanitycore->GetD3DDeviceContext();
 
-	_pointcloud->Bind(context);
-	_pointcloud->Draw(context, false);
+	// _pointcloud->Bind(context);
+	// _pointcloud->Draw(context, false);
 }
 
 void Scene::DrawVolumetric(shared_ptr<VanityCore>& vanitycore, bool indexed) {
@@ -117,22 +118,10 @@ void Scene::DrawVolumetric(shared_ptr<VanityCore>& vanitycore, bool indexed) {
 
 	auto device = vanitycore->GetD3DDevice();
 	auto context = vanitycore->GetD3DDeviceContext();
-	shared_ptr<ConstantBuffer<uint32_t>> instancecount;
-	instancecount = make_shared<ConstantBuffer<uint32_t>>(device);
-	instancecount->Update(context, _volumetricslice->GetMesh()->GetInstanceCount());
-	instancecount->Bind(context, ProgrammableStage::VertexShaderStage, 3);
-
-	XMMATRIX view_to_world = GetInverseMatrix(XMLoadFloat4x4(&_camera.GetView()));
-	XMMATRIX world_to_model = GetInverseMatrix(XMLoadFloat4x4(&_volumetricslice->GetWorld()->GetWorld()));
-	XMMATRIX view_to_model = view_to_world * world_to_model;
-	XMVECTOR v_direction_m = XMVector4Transform(FXMVECTOR{ 0, 0, 1, 0 }, view_to_model);
-	XMFLOAT4 direction;
-	XMStoreFloat4(&direction, v_direction_m);
-	DebugPrint(L"x: " + to_wstring(direction.x) + L", z: " + to_wstring(direction.z) + L" \n");
 
 	vanitycore->SetBlenderState();
-	_volumetricslice->Bind(context);
-	_volumetricslice->DrawInstanced(context);
+	_volumetricslice->SwitchSamplingDirection(device, &_camera.GetView());
+	_volumetricslice->Draw(context);
 
 }
 
@@ -147,7 +136,7 @@ void Scene::Release()
 
 	// _PCobject->Release();
 	// _MCobject->Release();
-	_pointcloud->Release();
-	_volumetricslice->Release();
+	// _pointcloud->Release();
+	// _volumetricslice->Release();
 	_camera.Release();
 }

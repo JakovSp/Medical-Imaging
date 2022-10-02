@@ -49,7 +49,7 @@ void Renderer::CreateDeviceResources()
 		_scene->SetTextures(_vanitycore);
 	});
 
-	_objectbound = Volumetric;
+	_objectbound = VolumetricMesh;
 }
 
 void Renderer::CreateWindowResources()
@@ -73,7 +73,7 @@ void Renderer::Render()
 		_wireframepipeline->BindShaders(_vanitycore);
 		_scene->DrawPointCloud(_vanitycore);
 		break;
-	case Volumetric:
+	case VolumetricMesh:
 		_volumetricpipeline->BindShaders(_vanitycore);
 		_scene->DrawVolumetric(_vanitycore);
 		break;
@@ -102,7 +102,7 @@ void Renderer::ReleaseDeviceResources()
 	case PointCloud: TriMesh:
 		_volumetricpipeline->Release();
 		break;
-	case Volumetric:
+	case VolumetricMesh:
 		_wireframepipeline->Release();
 		break;
 	}
