@@ -21,7 +21,7 @@ ConstantBuffer<T>::ConstantBuffer(_In_ ID3D11Device2* device, T* data, D3D11_USA
 
 	//	assert(_buffer != 0);
 
-	// For constant buffers the byte width must be multiple of 16 bytes
+	// For constant buffers the byte samples_x must be multiple of 16 bytes
 	// The maximum constant buffer size that is supported by shaders is 4096 128-bit constants
 	CD3D11_BUFFER_DESC desc(_size, D3D11_BIND_CONSTANT_BUFFER, usage, access, flags, stride);
 

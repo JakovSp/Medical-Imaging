@@ -87,7 +87,7 @@ void Scene::Update(DX::StepTimer const& timer)
 	__Once(DebugPrint(string("Scene::Update() ...\n")));
 
 	auto angle = _animation.Angle(static_cast<float>(timer.GetElapsedSeconds()));
-	_volumetricslice->GetWorld()->RotateX(angle);
+	_volumetricslice->GetWorld()->RotateY(angle);
 
 	//_PCobject->GetWorld()->RotateY(angle);
 	// _MCobject->GetWorld()->RotateY(angle);

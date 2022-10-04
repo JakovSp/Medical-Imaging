@@ -90,7 +90,7 @@ void DICOMParser::ReadStream(DataElement& DE) {
 	if (DE.length == UNDEFINED) {
 		// TODO:
 		// IF the stream is Native Pixel Data or Overlay data, use exisiting attributes about
-		// number of frames and height/width to obtain the length
+		// number of frames and height/samples_x to obtain the length
 		// ELSE IF the stream is Encapsulated Pixel Data use different use different parsing procedure
 		return;
 	}

@@ -146,7 +146,7 @@ Cloud3D<uint8_t> DICOMVolume::GenerateIsoTexture3D(int lowerbound, int upperboun
 	}
 
 //	uint8_t* texturedata = IsoTexture.Points();
-//	auto texturecontainer = vector<uint8_t>(texturedata, texturedata + depth * width * height);
+//	auto texturecontainer = vector<uint8_t>(texturedata, texturedata + depth * samples_x * height);
 	return IsoTexture;
 }
 

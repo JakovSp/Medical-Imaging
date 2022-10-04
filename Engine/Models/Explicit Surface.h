@@ -91,7 +91,7 @@ namespace vxe {
 			_width *= 0.5f;
 			_depth *= 0.5f;
 
-			//	Generating vertices (z, i, m, depth) (x, j, m, width)
+			//	Generating vertices (z, i, m, depth) (x, j, m, samples_x)
 			for (uint32_t i = 0; i < _m; ++i) {
 				float z = _depth - i * dz;
 

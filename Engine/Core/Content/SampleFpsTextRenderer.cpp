@@ -55,7 +55,7 @@ void SampleFpsTextRenderer::Update(DX::StepTimer const& timer)
 		m_text.c_str(),
 		(uint32) m_text.length(),
 		m_textFormat.Get(),
-		240.0f, // Max width of the input text.
+		240.0f, // Max samples_x of the input text.
 		50.0f, // Max height of the input text.
 		&m_textLayout), __FILEW__, __LINE__);
 

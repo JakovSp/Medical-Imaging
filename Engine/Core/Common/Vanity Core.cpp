@@ -310,8 +310,8 @@ void VanityCore::CreateWindowSizeDependentResources()
 	m_outputSize.Width = max(m_outputSize.Width, 1.0f);
 	m_outputSize.Height = max(m_outputSize.Height, 1.0f);
 
-	// The width and height of the swap chain must be based on the window's
-	// natively-oriented width and height. If the window is not in the native
+	// The samples_x and height of the swap chain must be based on the window's
+	// natively-oriented samples_x and height. If the window is not in the native
 	// _orientation, the dimensions must be reversed.
 	DXGI_MODE_ROTATION displayRotation = ComputeDisplayRotation();
 
@@ -416,7 +416,7 @@ void VanityCore::CreateWindowSizeDependentResources()
 		lround(m_d3dRenderTargetSize.Height),
 		1, 1, D3D11_BIND_DEPTH_STENCIL);
 
-	// ResourceFactory::Instance().CreateDepthStencilView(m_d3dDevice.Get(), &t2desc, &m_d3dDepthStencilView);
+	ResourceFactory::Instance().CreateDepthStencilView(m_d3dDevice.Get(), &t2desc, &m_d3dDepthStencilView);
 
 	// Set the 3D rendering viewport to target the entire window.
 	m_screenViewport = CD3D11_VIEWPORT{ 0.0f, 0.0f, m_d3dRenderTargetSize.Width, m_d3dRenderTargetSize.Height };

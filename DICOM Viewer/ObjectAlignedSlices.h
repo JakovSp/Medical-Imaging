@@ -7,30 +7,31 @@
 namespace vxe {
 
 	enum CubeFace {
-		Front = 0, Right = 1, Top = 2
+        Front, Back, Left, Right, Top, Bottom
 	};
 
 
   class ObjectAlignedSlices : public Mesh<DirectX::VertexPositionTextureInstanced, uint16_t>{
+      uint32_t samples_x, samples_y, samples_z;
       float norm_x, norm_y, norm_z;
-      float norm_dx, norm_dy, norm_dz;
+      float samplingrate;
   public:
-      ObjectAlignedSlices(uint32_t width, uint32_t height, uint32_t depth, float dx, float dy, float dz) { 
-          _instanced = true;
-          _instancecount = depth;
-        float length_x = dx * width;
-        float length_y = dy * height;
-        float length_z = dz * depth;
+      ObjectAlignedSlices(uint32_t samples_x, uint32_t samples_y, uint32_t samples_z, float dx, float dy, float dz) : 
+          samples_x(samples_x), samples_y(samples_y), samples_z(samples_z)
+      { 
+        _instanced = true;
+        float width = dx * samples_x;
+        float height = dy * samples_y;
+        float depth = dz * samples_z;
 
 		// normalize
-        float& largest = length_x > length_y ? (length_x > length_z ? length_x : length_z) : (length_y > length_z? length_y : length_z);
+        float& largest = width > height ? (width > depth ? width : depth) : (height > depth? height : depth);
 
-        norm_x = length_x / largest;
-        norm_y = length_y / largest;
-        norm_z = length_z / largest;
-        norm_dx = dx / width;
-        norm_dy = dy / height;
-        norm_dz = dz / depth;
+        samplingrate = 1.0f/largest;
+        norm_x = width * samplingrate;
+        norm_y = height * samplingrate;
+        norm_z = depth * samplingrate;
+
       }
 
     virtual concurrency::task<void> CreateAsync(_In_ ID3D11Device2* device) 
@@ -39,22 +40,40 @@ namespace vxe {
 
       std::vector<DirectX::VertexPositionTextureInstanced> vertices = {
         // front
-        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4(-norm_x/2, -norm_y/2, -norm_z/2, norm_dx),  DirectX::XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f)),
-        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4(-norm_x/2,  norm_y/2, -norm_z/2, norm_dx),  DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f)),
-        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4( norm_x/2,  norm_y/2, -norm_z/2, norm_dx),  DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f)),
-        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4( norm_x/2, -norm_y/2, -norm_z/2, norm_dx),  DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f)),
+        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4(-norm_x/2, -norm_y/2, -norm_z/2, samplingrate),  DirectX::XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f)),
+        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4(-norm_x/2,  norm_y/2, -norm_z/2, samplingrate),  DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f)),
+        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4( norm_x/2,  norm_y/2, -norm_z/2, samplingrate),  DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f)),
+        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4( norm_x/2, -norm_y/2, -norm_z/2, samplingrate),  DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f)),
+
+        // back
+        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4(-norm_x/2, -norm_y/2, norm_z/2, -samplingrate),  DirectX::XMFLOAT4(0.0f, 0.0f, 150.0f, -1.0f)),
+        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4(-norm_x/2,  norm_y/2, norm_z/2, -samplingrate),  DirectX::XMFLOAT4(0.0f, 1.0f, 150.0f, -1.0f)),
+        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4( norm_x/2,  norm_y/2, norm_z/2, -samplingrate),  DirectX::XMFLOAT4(1.0f, 1.0f, 150.0f, -1.0f)),
+        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4( norm_x/2, -norm_y/2, norm_z/2, -samplingrate),  DirectX::XMFLOAT4(1.0f, 0.0f, 150.0f, -1.0f)),
+
+        // left
+        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4(-norm_x/2, -norm_y/2, -norm_z/2, samplingrate),  DirectX::XMFLOAT4(0, 0.0f, 0.0f,  samplingrate )),
+        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4(-norm_x/2,  norm_y/2, -norm_z/2, samplingrate),  DirectX::XMFLOAT4(0, 1.0f, 0.0f,  samplingrate )),
+        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4(-norm_x/2,  norm_y/2,  norm_z/2, samplingrate),  DirectX::XMFLOAT4(0, 1.0f, samples_z, samplingrate )),
+        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4(-norm_x/2, -norm_y/2,  norm_z/2, samplingrate),  DirectX::XMFLOAT4(0, 0.0f, samples_z, samplingrate )),
 
         // right
-        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4( norm_x/2, -norm_y/2, -norm_z/2, -norm_dz),  DirectX::XMFLOAT4(_instancecount, 0.0f, 0.0f,   -norm_dz )),
-        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4( norm_x/2,  norm_y/2, -norm_z/2, -norm_dz),  DirectX::XMFLOAT4(_instancecount, 1.0f, 0.0f,   -norm_dz )),
-        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4( norm_x/2,  norm_y/2,  norm_z/2, -norm_dz),  DirectX::XMFLOAT4(_instancecount, 1.0f, _instancecount, -norm_dz )),
-        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4( norm_x/2, -norm_y/2,  norm_z/2, -norm_dz),  DirectX::XMFLOAT4(_instancecount, 0.0f, _instancecount, -norm_dz )),
+        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4( norm_x/2, -norm_y/2, -norm_z/2, -samplingrate),  DirectX::XMFLOAT4(samples_x, 0.0f, 0.0f,  -samplingrate )),
+        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4( norm_x/2,  norm_y/2, -norm_z/2, -samplingrate),  DirectX::XMFLOAT4(samples_x, 1.0f, 0.0f,  -samplingrate )),
+        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4( norm_x/2,  norm_y/2,  norm_z/2, -samplingrate),  DirectX::XMFLOAT4(samples_x, 1.0f, samples_z, -samplingrate )),
+        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4( norm_x/2, -norm_y/2,  norm_z/2, -samplingrate),  DirectX::XMFLOAT4(samples_x, 0.0f, samples_z, -samplingrate )),
 
         // top
-        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4(-norm_x/2,  norm_y/2, -norm_z/2, -norm_dz),  DirectX::XMFLOAT4(0.0f, _instancecount, 0.0f, -norm_dz)),
-        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4(-norm_x/2,  norm_y/2,  norm_z/2, -norm_dz),  DirectX::XMFLOAT4(0.0f, _instancecount, _instancecount, -norm_dz)),
-        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4( norm_x/2,  norm_y/2,  norm_z/2, -norm_dz),  DirectX::XMFLOAT4(1.0f, _instancecount, _instancecount, -norm_dz)),
-        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4( norm_x/2,  norm_y/2, -norm_z/2, -norm_dz),  DirectX::XMFLOAT4(1.0f, _instancecount, 0.0f, -norm_dz))
+        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4(-norm_x/2,  norm_y/2, -norm_z/2, -samplingrate),  DirectX::XMFLOAT4(0.0f, samples_y, 0.0f, -samplingrate)),
+        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4(-norm_x/2,  norm_y/2,  norm_z/2, -samplingrate),  DirectX::XMFLOAT4(0.0f, samples_y, samples_z, -samplingrate)),
+        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4( norm_x/2,  norm_y/2,  norm_z/2, -samplingrate),  DirectX::XMFLOAT4(1.0f, samples_y, samples_z, -samplingrate)),
+        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4( norm_x/2,  norm_y/2, -norm_z/2, -samplingrate),  DirectX::XMFLOAT4(1.0f, samples_y, 0.0f, -samplingrate)),
+
+        // bottom
+        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4(-norm_x/2, -norm_y/2, -norm_z/2, samplingrate),  DirectX::XMFLOAT4(0.0f, 0.0f, 0.0f, samplingrate)),
+        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4(-norm_x/2, -norm_y/2,  norm_z/2, samplingrate),  DirectX::XMFLOAT4(0.0f, 0.0f, samples_z, samplingrate)),
+        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4( norm_x/2, -norm_y/2,  norm_z/2, samplingrate),  DirectX::XMFLOAT4(1.0f, 0.0f, samples_z, samplingrate)),
+        DirectX::VertexPositionTextureInstanced(DirectX::XMFLOAT4( norm_x/2, -norm_y/2, -norm_z/2, samplingrate),  DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, samplingrate))
       };
 
       std::vector<uint16_t> indices = {
@@ -68,7 +87,26 @@ namespace vxe {
     }
 
 	virtual void Draw(_In_ ID3D11DeviceContext2* context, CubeFace _orientation) {
-		context->DrawIndexedInstanced(12, _instancecount, 0, 4*_orientation, 0);
+        switch (_orientation) {
+        case Front:
+			context->DrawIndexedInstanced(6, samples_z, 6, 4*_orientation, 0);
+            break;
+        case Back:
+			context->DrawIndexedInstanced(6, samples_z, 0, 4*_orientation, 0);
+            break;
+        case Right:
+			context->DrawIndexedInstanced(6, samples_x, 6, 4*_orientation, 0);
+            break;
+        case Left:
+			context->DrawIndexedInstanced(6, samples_x, 0, 4*_orientation, 0);
+            break;
+        case Top:
+			context->DrawIndexedInstanced(6, samples_y, 6, 4*_orientation, 0);
+            break;
+        case Bottom:
+			context->DrawIndexedInstanced(6, samples_y, 0, 4*_orientation, 0);
+            break;
+        }
 	}
 
     virtual concurrency::task<void> LoadAsync(_In_ ID3D11Device2* device, const std::wstring&) 

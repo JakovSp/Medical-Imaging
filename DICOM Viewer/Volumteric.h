@@ -32,39 +32,44 @@ namespace vxe {
 		
 			if (abs(direction.z) > abs(direction.x)) {
 				if (abs(direction.z) > abs(direction.y)) {
-					_orientation = Front;
 					_samplingmatrix = {
 						1.0f, 0.0f, 0.0f, 0.0f,
 						0.0f, 1.0f, 0.0f, 0.0f,
 						0.0f, 0.0f, 1.0f, 1.0f,
 						0.0f, 0.0f, 0.0f, 0.0f
 					};
+					if (direction.z < 0) _orientation = Front;
+					else _orientation = Back;
+					
 				 } else {
-					_orientation = Top;
 					_samplingmatrix = {
 						1.0f, 0.0f, 0.0f, 0.0f,
 						0.0f, 1.0f, 0.0f, 1.0f,
 						0.0f, 0.0f, 1.0f, 0.0f,
 						0.0f, 0.0f, 0.0f, 0.0f
 					};
+					if (direction.y < 0) _orientation = Top;
+					else _orientation = Bottom;
 				}
 			 } else {
 				if (abs(direction.x) > abs(direction.y)) {
-					_orientation = Right;
 					_samplingmatrix = {
 						1.0f, 0.0f, 0.0f, 1.0f,
 						0.0f, 1.0f, 0.0f, 0.0f,
 						0.0f, 0.0f, 1.0f, 0.0f,
 						0.0f, 0.0f, 0.0f, 0.0f
 					};
+					if (direction.x < 0) _orientation = Right;
+					else _orientation = Left;
 				 } else {
-					_orientation = Top;
 					_samplingmatrix = {
 						1.0f, 0.0f, 0.0f, 0.0f,
 						0.0f, 1.0f, 0.0f, 1.0f,
 						0.0f, 0.0f, 1.0f, 0.0f,
 						0.0f, 0.0f, 0.0f, 0.0f
 					};
+					if (direction.y < 0) _orientation = Top;
+					else _orientation = Bottom;
 				}
 			}
 
