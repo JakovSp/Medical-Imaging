@@ -270,7 +270,7 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Textures.h" />
-    <ClInclude Include="Volumteric.h" />
+    <ClInclude Include="Volumetric.h" />
     <ClInclude Include="Wireframe.h" />
   </ItemGroup>
   <ItemGroup>
@@ -289,6 +289,7 @@
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Volumetric.cpp" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

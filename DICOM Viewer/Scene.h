@@ -12,14 +12,14 @@
 #include "pch.h"
 
 #include <Engine\Third Party\DirectX Tool Kit\VertexTypes.h>
-// #include <Engine\Scene\Scene Object.h>
+#include <Engine\Scene\Scene Object.h>
 #include <Engine\Scene\Input\Input Controller.h>
 
 #include "Textures.h"
 #include "Animation.h"
 #include "OrbitalCamera.h"
 
-#include "Volumteric.h"
+#include "Volumetric.h"
 
 namespace vxe {
 

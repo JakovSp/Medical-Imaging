@@ -56,17 +56,14 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Pipeline.cpp">
-      <Filter>Pipeline</Filter>
-    </ClCompile>
     <ClCompile Include="OrbitalCamera.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture3D.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="DICOMLoader.cpp">
       <Filter>DICOM</Filter>
+    </ClCompile>
+    <ClCompile Include="Volumetric.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -101,7 +98,7 @@
     <ClInclude Include="DICOMLoader.h">
       <Filter>DICOM</Filter>
     </ClInclude>
-    <ClInclude Include="Volumteric.h">
+    <ClInclude Include="Volumetric.h">
       <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>

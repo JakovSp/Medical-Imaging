@@ -18,9 +18,8 @@ struct PixelShaderInput
 
 float4 main(PixelShaderInput input, uint InstanceID : SV_InstanceID) : SV_TARGET
 {
-
 	float4 color = TextureArray.Sample(Sampler, input.tex);
-	color = float4(color.x, color.x, color.x, 1.0f - color.x);
+	color = float4(color.x, color.x, color.x, color.x);
 
 	return color;
 }

@@ -24,7 +24,7 @@ namespace vxe {
 		void SetMesh(std::shared_ptr<Mesh<T, U>>& mesh) { _mesh = mesh; }
 		std::shared_ptr<Mesh<T, U>> GetMesh() { return _mesh; }
 
-		void SetWorld(std::shared_ptr<WorldTransforms>& world) { _world = world; }
+		virtual void SetWorld(std::shared_ptr<WorldTransforms>& world) { _world = world; }
 		virtual std::shared_ptr<WorldTransforms> GetWorld() { return _world; }
 
 		void Bind(_In_ ID3D11DeviceContext2* context) {
