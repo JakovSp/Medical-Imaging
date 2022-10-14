@@ -45,39 +45,10 @@ VertexShaderOutput main(VertexShaderInput input, uint InstanceID : SV_InstanceID
 	float4 Position;
 	float4 pos;
 
-	uint nvSequence[64] = {
-		0, 1, 2, 3, 4, 5, 6, 7,
-		1, 4, 5, 0, 3, 7, 2, 6,
-		2, 6, 0, 5, 7, 3, 1, 4,
-		3, 0, 6, 4, 1, 2, 7, 5,
-		4, 3, 7, 1, 0, 6, 5, 2,
-		5, 2, 1, 7, 6, 0, 4, 3, 
-		6, 7, 3, 2, 5, 4, 0, 1,
-		7, 5, 4, 6, 2, 1, 3, 0
-	};
-
-	uint nv1[24] = {
-		0, 1, 4, 1,
-		1, 0, 1, 4,
-		0, 2, 5, 2,
-		2, 0, 2, 5,
-		0, 3, 6, 3,
-		3, 0, 3, 6,
-	};
-
-	uint nv2[24] = {
-		1, 4, 7, 5,
-		5, 1, 4, 7,
-		2, 5, 7, 6,
-		6, 2, 5, 7,
-		3, 6, 7, 4,
-		4, 3, 6, 7,
-	};
-
 	float dPlane = 0.0f - InstanceID*samplingrate;
 	for (int e = 0; e < 4; e++) {
-		int vidx1 = nvSequence[int(frontIndex * 8 + nv1[input.id.x * 4 + e])];
-		int vidx2 = nvSequence[int(frontIndex * 8 + nv2[input.id.x * 4 + e])];
+		int vidx1 = nSequence[int(frontIndex * 8 + v1[input.id.x * 4 + e])];
+		int vidx2 = nSequence[int(frontIndex * 8 + v2[input.id.x * 4 + e])];
 		float4 vecV1 = vecVertices[vidx1];
 		float4 vecV2 = vecVertices[vidx2];
 		float4 vecStart = vecV1;

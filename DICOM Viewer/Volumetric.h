@@ -30,19 +30,22 @@ namespace vxe {
 		std::shared_ptr<SceneTexture<Texture2D>> _textureslices;
 	};
 
+	struct paddeduint {
+		paddeduint(uint32_t value) : _value(value) {}
+		uint32_t _value;
+		uint32_t pad[3] = {0};
+	};
+
 	// TODO: check if data needs to be serialized with pragma pack
-#pragma pack(push, 4)
 	struct VASPerFrameData {
 		DirectX::XMFLOAT4 vecVertices[8];
 		DirectX::XMFLOAT4 vecView;
 		float samplingrate;
 		uint32_t frontIndex;
 	};
-#pragma pack(pop)
 
-#pragma pack(push, 1)
 	struct VASConstantData {
-		uint32_t nSequence[64] = {
+		paddeduint nSequence[64] = {
 			0, 1, 2, 3, 4, 5, 6, 7,
 			1, 4, 5, 0, 3, 7, 2, 6,
 			2, 6, 0, 5, 7, 3, 1, 4,
@@ -53,7 +56,7 @@ namespace vxe {
 			7, 5, 4, 6, 2, 1, 3, 0
 		};
 
-		uint32_t v1[24] = {
+		paddeduint v1[24] = {
 			0, 1, 4, 1,
 			1, 0, 1, 4,
 			0, 2, 5, 2,
@@ -62,7 +65,7 @@ namespace vxe {
 			3, 0, 3, 6,
 		};
 
-		uint32_t v2[24] = {
+		paddeduint v2[24] = {
 			1, 4, 7, 5,
 			5, 1, 4, 7,
 			2, 5, 7, 6,
@@ -71,7 +74,6 @@ namespace vxe {
 			4, 3, 6, 7,
 		};
 	};
-#pragma pack(pop)
 
 	class VASBVolume : public SceneObject<DirectX::VertexIndex, uint16_t> {
 	public:
