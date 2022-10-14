@@ -147,6 +147,9 @@
     <ClCompile Include="Pipeline Resources\Textures\Texture3D.cpp">
       <Filter>Pipeline Resources\Textures</Filter>
     </ClCompile>
+    <ClCompile Include="Pipeline Stages\Shaders\Hull Shader.cpp">
+      <Filter>Pipeline Stages\Shaders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -291,6 +294,9 @@
     </ClInclude>
     <ClInclude Include="Pipeline Resources\Textures\Texture3D.h">
       <Filter>Pipeline Resources\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="Pipeline Stages\Shaders\Hull Shader.h">
+      <Filter>Pipeline Stages\Shaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

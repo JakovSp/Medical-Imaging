@@ -432,4 +432,24 @@ namespace DirectX
 		static const int InputElementCount = 2;
 		static const D3D11_INPUT_ELEMENT_DESC InputElements[InputElementCount];
 	};
+
+	struct VertexIndex
+	{
+		VertexIndex()
+		{ }
+
+		VertexIndex(float intersectionindex, float ydispl){
+			_indices.x = intersectionindex;
+			_indices.y = ydispl;
+		}
+
+		VertexIndex(FXMVECTOR indices){
+			DirectX::XMStoreFloat2(&_indices, indices);
+		}
+
+		XMFLOAT2 _indices;
+
+		static const int InputElementCount = 1;
+		static const D3D11_INPUT_ELEMENT_DESC InputElements[InputElementCount];
+	};
 }

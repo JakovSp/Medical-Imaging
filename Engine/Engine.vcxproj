@@ -224,6 +224,7 @@
     <ClInclude Include="Core\Content\SampleFpsTextRenderer.h" />
     <ClInclude Include="Core\Main Loop.h" />
     <ClInclude Include="Helpers.h" />
+    <ClInclude Include="Pipeline Stages\Shaders\Hull Shader.h" />
     <ClInclude Include="Lighting\Directional Light.h" />
     <ClInclude Include="Lighting\Light Base.h" />
     <ClInclude Include="Lighting\Material.h" />
@@ -271,6 +272,7 @@
     <ClCompile Include="Core\Content\RendererBase3D.cpp" />
     <ClCompile Include="Core\Content\SampleFpsTextRenderer.cpp" />
     <ClCompile Include="Core\Main Loop.cpp" />
+    <ClCompile Include="Pipeline Stages\Shaders\Hull Shader.cpp" />
     <ClCompile Include="Models\Basic Shapes\CubePC.cpp" />
     <ClCompile Include="Models\Basic Shapes\CubePN.cpp" />
     <ClCompile Include="Models\Basic Shapes\CubePNT.cpp" />

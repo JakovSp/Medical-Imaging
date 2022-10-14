@@ -43,14 +43,28 @@ void Scene::LoadAssets(vector<task<void>>& tasks, shared_ptr<VanityCore>& vanity
 	auto device = vanitycore->GetD3DDevice();
 	auto world = make_shared<WorldTransforms>(device);
 
+	// _texArray = make_shared<SceneTexture<Texture2D>>(DICOMdata.LoadTextureArray(CorticalBone, tasks, vanitycore));
+	_tex3D = make_shared<SceneTexture<Texture3D>>(DICOMdata.LoadTexture3D(CorticalBone, tasks, vanitycore));
+	_VAvolumetric = make_shared<VASBVolume>(device, 512, 512, 150, 1.0f, 1.0f, 1.0f);
+	auto slicepolygon = make_shared<BoxSlice>(1);
+	tasks.push_back(slicepolygon->CreateAsync(device));
+	_VAvolumetric->SetMesh(slicepolygon);
+	_VAvolumetric->SetTexture(_tex3D);
+	_VAvolumetric->SetWorld(world);
 
-	_texArray = make_shared<SceneTexture<Texture2D>>(DICOMdata.LoadTextureArray(CorticalBone, tasks, vanitycore));
-	auto meshslices = make_shared<ObjectAlignedSlices>(512, 512, 150, 1.0f, 1.0f, 1.0f);
-	tasks.push_back(meshslices->CreateAsync(device));
-	_volumetricslice = make_shared<Volumetric>();
-	_volumetricslice->SetMesh(meshslices);
-	_volumetricslice->SetTexture(_texArray);
-	_volumetricslice->SetWorld(world);
+	shared_ptr<Mesh<VertexPosition, uint16_t>> boxmesh;
+	boxmesh = make_shared<Box>(512, 512, 150, 1.0f, 1.0f, 1.0f);
+	tasks.push_back(boxmesh->CreateAsync(device));
+	_box = make_shared<SceneObject<VertexPosition, uint16_t>>();
+	_box->SetMesh(boxmesh);
+	_box->SetWorld(world);
+
+	// auto meshslices = make_shared<ObjectAlignedSlices>(512, 512, 150, 1.0f, 1.0f, 1.0f);
+	// tasks.push_back(meshslices->CreateAsync(device));
+	// _volumetric = make_shared<OASBVolume>();
+	// _volumetric->SetMesh(meshslices);
+	// _volumetric->SetTexture(_texArray);
+	// _volumetric->SetWorld(world);
 
 	// shared_ptr<Mesh<VertexPosition, uint16_t>> trimesh;
 	// trimesh = DICOMdata.LoadWireframeMesh(CorticalBone, tasks, vanitycore);
@@ -70,6 +84,11 @@ void Scene::SetTextures(shared_ptr<VanityCore>& vanitycore) {
 	if (_texArray) {
 		_texArray->Initialize(vanitycore);
 		_texArray->Bind(vanitycore);
+	}
+
+	if (_tex3D) {
+		_tex3D->Initialize(vanitycore);
+		_tex3D->Bind(vanitycore);
 	}
 }
 
@@ -114,7 +133,6 @@ void Scene::Update(DX::StepTimer const& timer, shared_ptr<VanityCore>& vanitycor
 	if(update){
 		_camera.Update(vanitycore, dz, dx, dy);
 	}
-
 }
 
 void Scene::DrawTriMesh(std::shared_ptr<VanityCore>& vanitycore, bool indexed) {
@@ -123,8 +141,8 @@ void Scene::DrawTriMesh(std::shared_ptr<VanityCore>& vanitycore, bool indexed) {
 	auto device = vanitycore->GetD3DDevice();
 	auto context = vanitycore->GetD3DDeviceContext();
 
-	// _trisurface->Bind(context);
-	// _trisurface->Draw(context, false);
+	_box->Bind(context);
+	_box->Draw(context);
 }
 
 void Scene::DrawPointCloud(std::shared_ptr<VanityCore>& vanitycore, bool indexed) {
@@ -137,22 +155,33 @@ void Scene::DrawPointCloud(std::shared_ptr<VanityCore>& vanitycore, bool indexed
 	// _pointcloud->Draw(context, false);
 }
 
-void Scene::DrawVolumetric(shared_ptr<VanityCore>& vanitycore, bool indexed) {
+void Scene::DrawVAVolumetric(shared_ptr<VanityCore>& vanitycore, bool indexed) {
 	__Once(DebugPrint(string("Scene::Draw() ...\n")));
 
 	auto device = vanitycore->GetD3DDevice();
 	auto context = vanitycore->GetD3DDeviceContext();
 
-	vanitycore->SetBlenderState();
-	_volumetricslice->SwitchSamplingDirection(device, &_camera.GetView());
-	_volumetricslice->Draw(context);
+	// vanitycore->SetBlenderState();
+	_VAvolumetric->SwitchSamplingDirection(device, &_camera.GetView());
+	_VAvolumetric->Draw(context);
+}
+
+void Scene::DrawOAVolumetric(shared_ptr<VanityCore>& vanitycore, bool indexed) {
+	__Once(DebugPrint(string("Scene::Draw() ...\n")));
+
+	auto device = vanitycore->GetD3DDevice();
+	auto context = vanitycore->GetD3DDeviceContext();
+
+	// vanitycore->SetBlenderState();
+	_volumetric->SwitchSamplingDirection(device, &_camera.GetView());
+	_volumetric->Draw(context);
 
 }
 
-void Scene::Render(shared_ptr<VanityCore>& vanitycore) {
-	__Once(DebugPrint(string("Scene::Render() ...\n")));
-	DrawVolumetric(vanitycore, true);
-}
+// void Scene::Render(shared_ptr<VanityCore>& vanitycore) {
+// 	__Once(DebugPrint(string("Scene::Render() ...\n")));
+// 	DrawVolumetric(vanitycore, true);
+// }
 
 void Scene::Release()
 {

@@ -1,12 +1,3 @@
-
-//
-//	Vertex Shader.hlsl
-//  Defining a sample vertex shader
-//
-//  © VanityXS - DirectX 11.2 Student Engine. Zoraja Consulting d.o.o. All rights reserved.
-//	vJan22
-//
-
 cbuffer WorldTransforms : register(b0)
 {
 	matrix World;

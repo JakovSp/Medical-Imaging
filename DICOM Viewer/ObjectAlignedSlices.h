@@ -10,7 +10,6 @@ namespace vxe {
         Front, Back, Left, Right, Top, Bottom
 	};
 
-
   class ObjectAlignedSlices : public Mesh<DirectX::VertexPositionTextureInstanced, uint16_t>{
       uint32_t samples_x, samples_y, samples_z;
       float norm_x, norm_y, norm_z;

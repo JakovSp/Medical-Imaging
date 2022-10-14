@@ -101,6 +101,12 @@
     <ClInclude Include="Volumetric.h">
       <Filter>Scene</Filter>
     </ClInclude>
+    <ClInclude Include="BoxSlice.h">
+      <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>Shapes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">
@@ -112,6 +118,18 @@
       <Filter>Pipeline</Filter>
     </FxCompile>
     <FxCompile Include="VolumetricVS.hlsl">
+      <Filter>Pipeline</Filter>
+    </FxCompile>
+    <FxCompile Include="ViewportAlignedVS.hlsl">
+      <Filter>Pipeline</Filter>
+    </FxCompile>
+    <FxCompile Include="ViewportAlignedPS.hlsl">
+      <Filter>Pipeline</Filter>
+    </FxCompile>
+    <FxCompile Include="WireframePS.hlsl">
+      <Filter>Pipeline</Filter>
+    </FxCompile>
+    <FxCompile Include="WireframeVS.hlsl">
       <Filter>Pipeline</Filter>
     </FxCompile>
   </ItemGroup>
