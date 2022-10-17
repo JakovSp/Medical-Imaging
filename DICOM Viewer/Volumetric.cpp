@@ -113,6 +113,7 @@ VASBVolume::VASBVolume(_In_ ID3D11Device2* device, int32_t samples_x, uint32_t s
 
 	XMVECTOR diaglength = XMVector3Length(diagonal);
 	_perframedata.samplingrate = diaglength.m128_f32[0]/largest;
+	_perframedata.dBack = diaglength.m128_f32[0] / 2;
 
 	_constantbuffer = make_shared<ConstantBuffer<VASConstantData>>(device, &_constantdata);
 }
@@ -127,7 +128,7 @@ void VASBVolume::SwitchSamplingDirection(_In_ ID3D11Device2* device, DirectX::XM
 	// XMMATRIX view_to_model = view_to_world * world_to_model;
 
 	XMMATRIX view_to_model = GetInverseMatrix( model_to_view );
-	XMVECTOR viewdir_m = XMVector4Transform(FXMVECTOR{ 0, 0, 1, 1 }, XMMatrixTranspose(view_to_model));
+	XMVECTOR viewdir_m = XMVector4Transform(FXMVECTOR{ 0, 0, 0.1, 1 }, XMMatrixTranspose(view_to_model));
 	viewdir_m = XMVector3Normalize(viewdir_m);
  	XMStoreFloat4(&_perframedata.vecView, viewdir_m);
 
@@ -142,11 +143,6 @@ void VASBVolume::SwitchSamplingDirection(_In_ ID3D11Device2* device, DirectX::XM
 		}
 	}
 
-	auto back_m = XMLoadFloat4(&_perframedata.vecVertices[endOf[_perframedata.frontIndex]]);
-	back_m.m128_f32[3] = 1.0f;
-	auto back_v = XMVector4Transform(back_m, XMMatrixTranspose(model_to_view));
-	auto length = XMVector3Length(back_m);
-	_perframedata.dBack = length.m128_f32[0];
 	_perframebuffer = make_shared<ConstantBuffer<VASPerFrameData>>(device, &_perframedata);
 }
 
