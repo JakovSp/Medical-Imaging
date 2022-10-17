@@ -42,6 +42,7 @@ namespace vxe {
 		DirectX::XMFLOAT4 vecView;
 		float samplingrate;
 		uint32_t frontIndex;
+		float dBack;
 	};
 
 	struct VASConstantData {
@@ -84,6 +85,7 @@ namespace vxe {
 		void BindTexture(std::shared_ptr<VanityCore>& vanitycore);
 		virtual void Draw(_In_ ID3D11DeviceContext2* context, bool indexed = true);
 	private:
+		const uint16_t endOf[8] = {7, 6, 4, 5, 2, 3, 1, 0};
 		VASConstantData _constantdata;
 		VASPerFrameData _perframedata;
 		std::shared_ptr<ConstantBuffer<VASPerFrameData>> _perframebuffer;

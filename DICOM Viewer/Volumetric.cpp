@@ -93,11 +93,10 @@ VASBVolume::VASBVolume(_In_ ID3D11Device2* device, int32_t samples_x, uint32_t s
 	// normalize
 	float& largest = width > height ? (width > depth ? width : depth) : (height > depth? height : depth);
 
-	float samplingrate = 1.0f/largest;
-	float norm_x = width * samplingrate;
-	float norm_y = height * samplingrate;
-	float norm_z = depth * samplingrate;
-	
+	float norm_x = width/largest;
+	float norm_y = height/largest;
+	float norm_z = depth/largest;
+
 	_perframedata.vecVertices[0] = XMFLOAT4(-norm_x / 2.0f, norm_y / 2.0f, -norm_z / 2.0f, 0.0f);
 	_perframedata.vecVertices[1] = XMFLOAT4(norm_x / 2.0f, norm_y / 2.0f, -norm_z / 2.0f, 0.0f);
 	_perframedata.vecVertices[2] = XMFLOAT4(-norm_x / 2.0f, -norm_y / 2.0f, -norm_z / 2.0f, 0.0f);
@@ -108,28 +107,46 @@ VASBVolume::VASBVolume(_In_ ID3D11Device2* device, int32_t samples_x, uint32_t s
 	_perframedata.vecVertices[7] = XMFLOAT4(norm_x / 2.0f, -norm_y / 2.0f, norm_z / 2.0f, 0.0f);
  	_perframedata.frontIndex = 0;
 
-	_perframedata.samplingrate = 1.0f / 150;
+	auto diagonal = XMVectorSubtract(
+		XMLoadFloat4(&_perframedata.vecVertices[7]),
+		XMLoadFloat4(&_perframedata.vecVertices[0]) );
+
+	XMVECTOR diaglength = XMVector3Length(diagonal);
+	_perframedata.samplingrate = diaglength.m128_f32[0]/largest;
+
 	_constantbuffer = make_shared<ConstantBuffer<VASConstantData>>(device, &_constantdata);
 }
 
 void VASBVolume::SwitchSamplingDirection(_In_ ID3D11Device2* device, DirectX::XMFLOAT4X4* view){
-	XMMATRIX view_to_world = GetInverseMatrix(  XMLoadFloat4x4(view));
-	XMMATRIX world_to_model = GetInverseMatrix(  XMLoadFloat4x4(&GetWorld()->GetWorld()));
-	XMMATRIX view_to_model = view_to_world * world_to_model;
-	XMVECTOR v_direction_m = XMVector4Transform(FXMVECTOR{ 0, 0, 1, 1 }, XMMatrixTranspose(view_to_model));
- 	XMStoreFloat4(&_perframedata.vecView, v_direction_m);
+	XMMATRIX world_to_view =  XMLoadFloat4x4(view);
+	XMMATRIX model_to_world = XMLoadFloat4x4(&GetWorld()->GetWorld());
+	XMMATRIX model_to_view = model_to_world * world_to_view;
+
+	// XMMATRIX view_to_world = GetInverseMatrix(  XMLoadFloat4x4(view));
+	// XMMATRIX world_to_model = GetInverseMatrix(  XMLoadFloat4x4(&GetWorld()->GetWorld()));
+	// XMMATRIX view_to_model = view_to_world * world_to_model;
+
+	XMMATRIX view_to_model = GetInverseMatrix( model_to_view );
+	XMVECTOR viewdir_m = XMVector4Transform(FXMVECTOR{ 0, 0, 1, 1 }, XMMatrixTranspose(view_to_model));
+	viewdir_m = XMVector3Normalize(viewdir_m);
+ 	XMStoreFloat4(&_perframedata.vecView, viewdir_m);
 
 	float maxdot = 0.0f;
 	XMVECTOR v;
 	// sort vertices by dot product of a vertex by a v_direction_m
 	for (size_t i = 0; i < 8; i++) {
-		v = XMVector4Dot(v_direction_m, XMLoadFloat4(&_perframedata.vecVertices[i]));
+		v = XMVector4Dot(viewdir_m, XMLoadFloat4(&_perframedata.vecVertices[i]));
 		if (v.m128_f32[0] > maxdot) {
 			_perframedata.frontIndex = i;
 			maxdot = v.m128_f32[0];
 		}
 	}
 
+	auto back_m = XMLoadFloat4(&_perframedata.vecVertices[endOf[_perframedata.frontIndex]]);
+	back_m.m128_f32[3] = 1.0f;
+	auto back_v = XMVector4Transform(back_m, XMMatrixTranspose(model_to_view));
+	auto length = XMVector3Length(back_m);
+	_perframedata.dBack = length.m128_f32[0];
 	_perframebuffer = make_shared<ConstantBuffer<VASPerFrameData>>(device, &_perframedata);
 }
 

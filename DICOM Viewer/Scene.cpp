@@ -46,7 +46,7 @@ void Scene::LoadAssets(vector<task<void>>& tasks, shared_ptr<VanityCore>& vanity
 	// _texArray = make_shared<SceneTexture<Texture2D>>(DICOMdata.LoadTextureArray(CorticalBone, tasks, vanitycore));
 	_tex3D = make_shared<SceneTexture<Texture3D>>(DICOMdata.LoadTexture3D(CorticalBone, tasks, vanitycore));
 	_VAvolumetric = make_shared<VASBVolume>(device, 512, 512, 150, 1.0f, 1.0f, 1.0f);
-	auto slicepolygon = make_shared<BoxSlice>(1);
+	auto slicepolygon = make_shared<BoxSlice>(512);
 	tasks.push_back(slicepolygon->CreateAsync(device));
 	_VAvolumetric->SetMesh(slicepolygon);
 	_VAvolumetric->SetTexture(_tex3D);
@@ -77,7 +77,6 @@ void Scene::LoadAssets(vector<task<void>>& tasks, shared_ptr<VanityCore>& vanity
 	// _pointcloud = make_shared<SceneObject<VertexPosition, uint16_t>>();
 	// _pointcloud->SetMesh(pointmesh);
 	// _pointcloud->SetWorld(world);
-
 }
 
 void Scene::SetTextures(shared_ptr<VanityCore>& vanitycore) {

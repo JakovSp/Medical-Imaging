@@ -27,6 +27,7 @@ cbuffer VAPerFrame : register(b4)
 	float4 vecView;
 	float samplingrate;
 	uint frontIndex;
+	float dBack;
 };
 
 struct VertexShaderInput
@@ -45,7 +46,7 @@ VertexShaderOutput main(VertexShaderInput input, uint InstanceID : SV_InstanceID
 	float4 Position;
 	float4 pos;
 
-	float dPlane = 0.0f - InstanceID*samplingrate;
+	float dPlane = dBack - InstanceID*samplingrate;
 	for (int e = 0; e < 4; e++) {
 		int vidx1 = nSequence[int(frontIndex * 8 + v1[input.id.x * 4 + e])];
 		int vidx2 = nSequence[int(frontIndex * 8 + v2[input.id.x * 4 + e])];
