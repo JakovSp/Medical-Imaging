@@ -9,9 +9,8 @@ struct PixelShaderInput
 
 float4 main(PixelShaderInput input) : SV_TARGET
 {
-	// float4 color = Texture.Sample(Sampler, input.tex);
-	// color = float4(color.x, color.x, color.x, color.x);
-	float4 color = float4(1.0f, 1.0f, 1.0f, 1.0f);
+	float4 color = Texture.Sample(Sampler, input.tex);
+	color = float4(color.x, color.x, color.x, color.x);
 
 	return color;
 }

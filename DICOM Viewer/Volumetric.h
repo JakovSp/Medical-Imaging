@@ -36,13 +36,18 @@ namespace vxe {
 		uint32_t pad[3] = {0};
 	};
 
-	// TODO: check if data needs to be serialized with pragma pack
-	struct VASPerFrameData {
+	struct VASPerObjectData {
 		DirectX::XMFLOAT4 vecVertices[8];
-		DirectX::XMFLOAT4 vecView;
 		float samplingrate;
-		uint32_t frontIndex;
 		float dBack;
+		float width;
+		float height;
+		float depth;
+	};
+
+	struct VASPerFrameData {
+		DirectX::XMFLOAT4 vecView;
+		uint32_t frontIndex;
 	};
 
 	struct VASConstantData {
@@ -87,7 +92,9 @@ namespace vxe {
 	private:
 		const uint16_t endOf[8] = {7, 6, 4, 5, 2, 3, 1, 0};
 		VASConstantData _constantdata;
+		VASPerObjectData _perobjectdata;
 		VASPerFrameData _perframedata;
+		std::shared_ptr<ConstantBuffer<VASPerObjectData>> _perobjectbuffer;
 		std::shared_ptr<ConstantBuffer<VASPerFrameData>> _perframebuffer;
 		std::shared_ptr<ConstantBuffer<VASConstantData>> _constantbuffer;
 		std::shared_ptr<BoxSlice> _slicepolygon;

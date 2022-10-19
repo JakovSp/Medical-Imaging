@@ -160,7 +160,7 @@ void Scene::DrawVAVolumetric(shared_ptr<VanityCore>& vanitycore, bool indexed) {
 	auto device = vanitycore->GetD3DDevice();
 	auto context = vanitycore->GetD3DDeviceContext();
 
-	// vanitycore->SetBlenderState();
+	vanitycore->SetBlenderState();
 	_VAvolumetric->SwitchSamplingDirection(device, &_camera.GetView());
 	_VAvolumetric->Draw(context);
 }

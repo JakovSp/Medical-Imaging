@@ -97,25 +97,29 @@ VASBVolume::VASBVolume(_In_ ID3D11Device2* device, int32_t samples_x, uint32_t s
 	float norm_y = height/largest;
 	float norm_z = depth/largest;
 
-	_perframedata.vecVertices[0] = XMFLOAT4(-norm_x / 2.0f, norm_y / 2.0f, -norm_z / 2.0f, 0.0f);
-	_perframedata.vecVertices[1] = XMFLOAT4(norm_x / 2.0f, norm_y / 2.0f, -norm_z / 2.0f, 0.0f);
-	_perframedata.vecVertices[2] = XMFLOAT4(-norm_x / 2.0f, -norm_y / 2.0f, -norm_z / 2.0f, 0.0f);
-	_perframedata.vecVertices[3] = XMFLOAT4(-norm_x / 2.0f, norm_y / 2.0f, norm_z / 2.0f, 0.0f);
-	_perframedata.vecVertices[4] = XMFLOAT4(norm_x / 2.0f, norm_y / 2.0f, norm_z / 2.0f, 0.0f);
-	_perframedata.vecVertices[5] = XMFLOAT4(norm_x / 2.0f, -norm_y / 2.0f, -norm_z / 2.0f, 0.0f);
-	_perframedata.vecVertices[6] = XMFLOAT4(-norm_x / 2.0f, -norm_y / 2.0f, norm_z / 2.0f, 0.0f);
-	_perframedata.vecVertices[7] = XMFLOAT4(norm_x / 2.0f, -norm_y / 2.0f, norm_z / 2.0f, 0.0f);
+	_perobjectdata.vecVertices[0] = XMFLOAT4(-norm_x / 2.0f, norm_y / 2.0f, -norm_z / 2.0f, 0.0f);
+	_perobjectdata.vecVertices[1] = XMFLOAT4(norm_x / 2.0f, norm_y / 2.0f, -norm_z / 2.0f, 0.0f);
+	_perobjectdata.vecVertices[2] = XMFLOAT4(-norm_x / 2.0f, -norm_y / 2.0f, -norm_z / 2.0f, 0.0f);
+	_perobjectdata.vecVertices[3] = XMFLOAT4(-norm_x / 2.0f, norm_y / 2.0f, norm_z / 2.0f, 0.0f);
+	_perobjectdata.vecVertices[4] = XMFLOAT4(norm_x / 2.0f, norm_y / 2.0f, norm_z / 2.0f, 0.0f);
+	_perobjectdata.vecVertices[5] = XMFLOAT4(norm_x / 2.0f, -norm_y / 2.0f, -norm_z / 2.0f, 0.0f);
+	_perobjectdata.vecVertices[6] = XMFLOAT4(-norm_x / 2.0f, -norm_y / 2.0f, norm_z / 2.0f, 0.0f);
+	_perobjectdata.vecVertices[7] = XMFLOAT4(norm_x / 2.0f, -norm_y / 2.0f, norm_z / 2.0f, 0.0f);
  	_perframedata.frontIndex = 0;
 
 	auto diagonal = XMVectorSubtract(
-		XMLoadFloat4(&_perframedata.vecVertices[7]),
-		XMLoadFloat4(&_perframedata.vecVertices[0]) );
+		XMLoadFloat4(&_perobjectdata.vecVertices[7]),
+		XMLoadFloat4(&_perobjectdata.vecVertices[0]) );
 
 	XMVECTOR diaglength = XMVector3Length(diagonal);
-	_perframedata.samplingrate = diaglength.m128_f32[0]/largest;
-	_perframedata.dBack = diaglength.m128_f32[0] / 2;
+	_perobjectdata.samplingrate = diaglength.m128_f32[0]/largest;
+	_perobjectdata.dBack = diaglength.m128_f32[0] / 2;
+	_perobjectdata.width = norm_x;
+	_perobjectdata.height = norm_y;
+	_perobjectdata.depth = norm_z;
 
 	_constantbuffer = make_shared<ConstantBuffer<VASConstantData>>(device, &_constantdata);
+	_perobjectbuffer = make_shared<ConstantBuffer<VASPerObjectData>>(device, &_perobjectdata);
 }
 
 void VASBVolume::SwitchSamplingDirection(_In_ ID3D11Device2* device, DirectX::XMFLOAT4X4* view){
@@ -128,7 +132,7 @@ void VASBVolume::SwitchSamplingDirection(_In_ ID3D11Device2* device, DirectX::XM
 	// XMMATRIX view_to_model = view_to_world * world_to_model;
 
 	XMMATRIX view_to_model = GetInverseMatrix( model_to_view );
-	XMVECTOR viewdir_m = XMVector4Transform(FXMVECTOR{ 0, 0, 0.1, 1 }, XMMatrixTranspose(view_to_model));
+	XMVECTOR viewdir_m = XMVector4Transform(FXMVECTOR{ 0, 0, 0.01, 1 }, XMMatrixTranspose(view_to_model));
 	viewdir_m = XMVector3Normalize(viewdir_m);
  	XMStoreFloat4(&_perframedata.vecView, viewdir_m);
 
@@ -136,7 +140,7 @@ void VASBVolume::SwitchSamplingDirection(_In_ ID3D11Device2* device, DirectX::XM
 	XMVECTOR v;
 	// sort vertices by dot product of a vertex by a v_direction_m
 	for (size_t i = 0; i < 8; i++) {
-		v = XMVector4Dot(viewdir_m, XMLoadFloat4(&_perframedata.vecVertices[i]));
+		v = XMVector4Dot(viewdir_m, XMLoadFloat4(&_perobjectdata.vecVertices[i]));
 		if (v.m128_f32[0] > maxdot) {
 			_perframedata.frontIndex = i;
 			maxdot = v.m128_f32[0];
@@ -157,8 +161,10 @@ void VASBVolume::BindTexture(std::shared_ptr<VanityCore>& vanitycore){
 void VASBVolume::Draw(_In_ ID3D11DeviceContext2* context, bool indexed){
 	_constantbuffer->Update(context, _constantdata);
 	_constantbuffer->Bind(context, ProgrammableStage::VertexShaderStage, 3);
+	_perobjectbuffer->Update(context, _perobjectdata);
+	_perobjectbuffer->Bind(context, ProgrammableStage::VertexShaderStage, 4);
 	_perframebuffer->Update(context, _perframedata);
-	_perframebuffer->Bind(context, ProgrammableStage::VertexShaderStage, 4);
+	_perframebuffer->Bind(context, ProgrammableStage::VertexShaderStage, 5);
 	Bind(context);
 	_slicepolygon->DrawIndexedInstanced(context);
 }

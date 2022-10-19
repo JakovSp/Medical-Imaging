@@ -21,13 +21,20 @@ cbuffer VAConstant : register(b3)
 	uint v2[24];
 };
 
-cbuffer VAPerFrame : register(b4)
+cbuffer VAPerObject : register(b4)
 {
 	float4 vecVertices[8];
-	float4 vecView;
 	float samplingrate;
-	uint frontIndex;
 	float dBack;
+	float width;
+	float height;
+	float depth;
+};
+
+cbuffer VAPerFrame : register(b5)
+{
+	float4 vecView;
+	uint frontIndex;
 };
 
 struct VertexShaderInput
@@ -43,7 +50,6 @@ struct VertexShaderOutput
 
 VertexShaderOutput main(VertexShaderInput input, uint InstanceID : SV_InstanceID){
 	VertexShaderOutput output;
-	float4 Position;
 	float4 pos;
 
 	float dPlane = dBack - InstanceID*samplingrate;
@@ -58,21 +64,22 @@ VertexShaderOutput main(VertexShaderInput input, uint InstanceID : SV_InstanceID
 		float lambda = (denom != 0.0) ?
 			(dPlane - dot(vecStart, vecView)) / denom : -1.0f;
 		if (lambda >= 0.0f && lambda <= 1.0f) {
-			Position = vecStart + lambda * vecDir;
+			pos = vecStart + lambda * vecDir;
 			break;
 		}
 	}
 
-	Position.w = 1.0f;
-	pos = Position;
+	// adjust tex coord ranges from [-length/2, length/2] to [0, 1]
+	output.tex.x = (width/2 + pos.x)/(width);
+	output.tex.y = (height/2 + pos.y)/(height);
+	output.tex.z = (depth/2 + pos.z)/(depth);
+
+	pos.w = 1.0f;
 	pos = mul(pos, World);
 	pos = mul(pos, View);
 	pos = mul(pos, Projection);
-	output.pos = pos;
-	output.tex.x = 0.5 + Position.x*0.5;
-	output.tex.y = 0.5 + Position.y*0.5;
-	output.tex.z = 0.5 + Position.z*(1.0f/(2.0f * 0.146));
 
+	output.pos = pos;
 
 	return output;
 }

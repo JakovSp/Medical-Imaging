@@ -66,8 +66,8 @@ void Renderer::Render()
 	//_pipeline->SetRenderTargets(_vanitycore);
 	// switch (_objectbound) {
 	// case Wireframe:
-		_wireframepipeline->BindShaders(_vanitycore);
-		_scene->DrawTriMesh(_vanitycore);
+		// _wireframepipeline->BindShaders(_vanitycore);
+		// _scene->DrawTriMesh(_vanitycore);
 		// break;
 	// case VolumetricVAMesh:
 		_VAvolumetricpipeline->BindShaders(_vanitycore);
