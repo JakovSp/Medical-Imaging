@@ -137,7 +137,7 @@ SceneTexture<Texture3D> DICOMLoader::LoadTexture3D(Matter matter, vector<task<vo
 	}
 
 	uint8_t* texturedata = VolumeTexture.Points();
-	scenetexture3D.Load(tasks, vector<uint8_t>(texturedata, texturedata + depth * width * height));
+	scenetexture3D.Load(tasks, texturedata);
 
 	return scenetexture3D;
 }
@@ -174,7 +174,7 @@ SceneTexture<Texture2D> DICOMLoader::LoadTextureArray(Matter matter, vector<task
 	}
 
 	uint8_t* texturedata = VolumeTexture.Points();
-	scenetexarray.Load(tasks, vector<uint8_t>(texturedata, texturedata + depth * width * height));
+	scenetexarray.Load(tasks, texturedata);
 
 	return scenetexarray;
 

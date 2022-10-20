@@ -48,7 +48,7 @@ namespace vxe::med {
 	private:
 		std::filesystem::path _localfolderpath;
 		std::filesystem::path _installfolderpath;
-		bool _caching = true;
+		bool _caching = false;
 		FileCache _cache;
 		std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> _utfconverter;
 	};
